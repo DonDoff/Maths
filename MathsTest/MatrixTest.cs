@@ -134,9 +134,9 @@ namespace MathsTests {
         [TestMethod]
         public void MatrixTestHouseHolder() {
             Matrix A = Matrix.ParseFrom("4, 2, 2, 1; 2, -3, 1, 1; 2, 1, 3, 1; 1, 1, 1, 2");
-            Matrix H = MatrixMath.CalculateHouseholderTransform(new Vector(A, 0));
+            Matrix H = MatrixMath.CalculateHouseholderTransform(new ColumnVector(A, 0));
 
-            Assert.AreEqual((H * A)[Vector.Arrange(1, A.Height), 0], Matrix.Zeros(A.Height - 1, 1));
+            Assert.AreEqual((H * A)[ColumnVector.Arrange(1, A.Height), 0], Matrix.Zeros(A.Height - 1, 1));
         }
 
         [TestMethod]

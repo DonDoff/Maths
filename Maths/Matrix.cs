@@ -50,27 +50,6 @@ namespace Maths {
             }
         }
 
-        // Constructs a matrix with a Matlab style construction.
-        public Matrix(string matString) {
-            // Format string
-            matString = matString.Replace(" ", "");
-
-            string[] rows = matString.Split(';');
-            Height = rows.Length;
-            Width = rows[0].Split(',').Length;
-            Mat = new ComplexNumber[Height, Width];
-            try {
-                for (int i = 0; i < Height; i++) {
-                    string[] columns = rows[i].Split(',');
-                    for (int j = 0; j < Width; j++) {
-                        Mat[i, j] = new ComplexNumber(columns[j]);
-                    }
-                }
-            } catch (Exception e) {
-                Console.WriteLine(e.Message);
-            }
-        }
-
         public static Matrix ParseFrom(string matString) {
             matString = matString.Replace(" ", "");
 
@@ -157,9 +136,9 @@ namespace Maths {
             }
         }
 
-        public Vector this[Vector v, int column] {
+        public ColumnVector this[ColumnVector v, int column] {
             get {
-                Vector newVec = new Vector(v.Size);
+                ColumnVector newVec = new ColumnVector(v.Size);
                 for (int i = 0; i < v.Size; i++) {
                     newVec[i] = Mat[(int)v[i].R, column];
                 }
@@ -172,9 +151,9 @@ namespace Maths {
             }
         }
 
-        public Vector this[int row, Vector v] {
+        public ColumnVector this[int row, ColumnVector v] {
             get {
-                Vector newVec = new Vector(v.Size);
+                ColumnVector newVec = new ColumnVector(v.Size);
                 for (int i = 0; i < v.Size; i++) {
                     newVec[i] = Mat[row, (int)v[i].R];
                 }
@@ -394,19 +373,19 @@ namespace Maths {
             return new Matrix(this);
         }
 
-        public Vector GetColumnVector(int column) {
+        public ColumnVector GetColumnVector(int column) {
             if (column < 0 || column >= Width) {
                 throw new MatrixException("Exceeds matrix dimensions!");
             }
 
-            Vector v = new Vector(Height);
+            ColumnVector v = new ColumnVector(Height);
             for (int i = 0; i < Height; i++) {
                 v[i] = this[i, column];
             }
             return v;
         }
 
-        public void SetColumnVector(Vector v, int column) {
+        public void SetColumnVector(ColumnVector v, int column) {
             if (column < 0 || column >= Width || Height != v.Size) {
                 throw new MatrixException("Exceeds matrix dimensions!");
             }
@@ -574,11 +553,11 @@ namespace Maths {
             return AppyToAllElements(x => new ComplexNumber(0, x.I));
         }
 
-        public Vector ToColumnVector() {
+        public ColumnVector ToColumnVector() {
             if (Width != 1) {
                 throw new MatrixException("Wrong matrix dimension to convert to column vector!");
             }
-            Vector v = new Vector(Height);
+            ColumnVector v = new ColumnVector(Height);
             for (int i = 0; i < Height; i++) {
                 v[i] = Mat[i, 0];
             }

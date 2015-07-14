@@ -62,14 +62,14 @@ namespace Maths {
             return m.AppyToAllElements(x => ComplexNumberMath.Sqrt(x));
         }
 
-        public static Matrix CalculateHouseholderTransform(Vector x) {
+        public static Matrix CalculateHouseholderTransform(ColumnVector x) {
             if (x.EuclidianNorm() == 0) {
                 return Matrix.IdentityMatrix(x.Height);
             }
 
             double a = Math.Sign(x[0].R) * x.EuclidianNorm();
-            Vector u = x + a * Vector.Ei(x.Size, 0);
-            Vector v = u / u.EuclidianNorm();
+            ColumnVector u = x + a * ColumnVector.Ei(x.Size, 0);
+            ColumnVector v = u / u.EuclidianNorm();
 
             ComplexNumber w = (x.ConjugateTranspose() * v).ToComplexNumber() / (v.ConjugateTranspose() * x).ToComplexNumber();
             return (Matrix.IdentityMatrix(x.Height) - (1.0 + w) * v * v.ConjugateTranspose());

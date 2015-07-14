@@ -23,7 +23,7 @@ namespace Maths {
             Matrix[] Qs = new Matrix[Math.Min(M.Height - 1, M.Width)];
 
             for (int k = 0; k < Qs.Length; k++) {
-                Vector x = new Vector(A, 0);
+                ColumnVector x = new ColumnVector(A, 0);
                 Matrix Q = MatrixMath.CalculateHouseholderTransform(x);
                 Matrix QA = Q * A;
                 A = QA.SubMatrix(1, A.Height, 1, A.Width);

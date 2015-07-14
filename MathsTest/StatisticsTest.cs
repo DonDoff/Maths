@@ -8,7 +8,7 @@ namespace MathsTests {
 
         [TestMethod]
         public void StatisticsTestExpectedValue() {
-            Vector v1 = Vector.ParseFrom("2, 4, 4, 4, 5, 5, 7, 9");
+            ColumnVector v1 = ColumnVector.ParseFrom("2, 4, 4, 4, 5, 5, 7, 9");
             VectorMath S = new VectorMath(v1);
             
             ComplexNumber mActual = S.ExpectedValue();
@@ -18,7 +18,7 @@ namespace MathsTests {
 
         [TestMethod]
         public void StatisticsTestVariance() {
-            Vector v1 = Vector.ParseFrom("2, 4, 4, 4, 5, 5, 7, 9");
+            ColumnVector v1 = ColumnVector.ParseFrom("2, 4, 4, 4, 5, 5, 7, 9");
             VectorMath S = new VectorMath(v1);
             
             ComplexNumber mActual = S.PopulationVariance();
@@ -28,8 +28,8 @@ namespace MathsTests {
 
         [TestMethod]
         public void StatisticsTestCovariance() {
-            Vector v1 = Vector.ParseFrom("1, 3, 7, 5, 6, 4");
-            Vector v2 = Vector.ParseFrom("2, 7, 3, 2, 5, 1");
+            ColumnVector v1 = ColumnVector.ParseFrom("1, 3, 7, 5, 6, 4");
+            ColumnVector v2 = ColumnVector.ParseFrom("2, 7, 3, 2, 5, 1");
 
             ComplexNumber mActual = new VectorMath(v1).SampleCovariance(v2);
             ComplexNumber mExpected = 4.0/15;
@@ -38,8 +38,8 @@ namespace MathsTests {
 
         [TestMethod]
         public void StatisticsTestCorrelation() {
-            Vector v1 = Vector.ParseFrom("1, 3, 7, 5, 6, 4");
-            Vector v2 = Vector.ParseFrom("2, 7, 3, 2, 5, 1");
+            ColumnVector v1 = ColumnVector.ParseFrom("1, 3, 7, 5, 6, 4");
+            ColumnVector v2 = ColumnVector.ParseFrom("2, 7, 3, 2, 5, 1");
 
             ComplexNumber mActual = new VectorMath(v1).SampleCorrelation(v2);
             ComplexNumber mExpected = Math.Sqrt(2.0/665);

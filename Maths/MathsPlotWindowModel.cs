@@ -18,7 +18,7 @@ namespace Maths {
             set { plotModel = value; OnPropertyChanged("PlotModel"); }
         }
         
-        public MathsPlotWindowModel(List<Vector> xs, List<Vector> ys)
+        public MathsPlotWindowModel(List<ColumnVector> xs, List<ColumnVector> ys)
         {
             PlotModel = new PlotModel();
             SetUpModel(xs, ys);
@@ -33,7 +33,7 @@ namespace Maths {
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void SetUpModel(List<Vector> xs, List<Vector> ys) {
+        private void SetUpModel(List<ColumnVector> xs, List<ColumnVector> ys) {
             double minX = double.MaxValue, maxX = double.MinValue;
             double minY = double.MaxValue, maxY = double.MinValue;
 
@@ -42,7 +42,15 @@ namespace Maths {
                 for (int j = 0; j < xs[i].Size; j++) {
                     l.Points.Add(new DataPoint(xs[i][j].R, ys[i][j].R));
                 }
+                //ScatterSeries l = new ScatterSeries();
+                //for (int j = 0; j < xs[i].Size; j++) {
+                //    l.Points.Add(new ScatterPoint(xs[i][j].R, ys[i][j].R));
+                //}
 
+                PlotModel.Series.Add(l);
+            }
+
+            for (int i = 0; i < xs.Count; i++) {
                 if (MatrixMath.Min(xs[i]).R < minX) {
                     minX = MatrixMath.Min(xs[i]).R;
                 }
@@ -55,8 +63,6 @@ namespace Maths {
                 if (MatrixMath.Max(ys[i]).R > maxY) {
                     maxY = MatrixMath.Max(ys[i]).R;
                 }
-
-                PlotModel.Series.Add(l);
             }
 
             PlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Minimum = minX, Maximum = maxX });

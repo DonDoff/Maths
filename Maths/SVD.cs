@@ -37,14 +37,14 @@ namespace Maths {
 
                 U = new Matrix(M.Height, V.Width);
                 for (int i = 0; i < V.Width; i++) {
-                    U[Vector.Arrange(M.Height), i] = (M * V[Vector.Arrange(V.Height), i] / D[i, i]).ToColumnVector();
+                    U[ColumnVector.Arrange(M.Height), i] = (M * V[ColumnVector.Arrange(V.Height), i] / D[i, i]).ToColumnVector();
                 }
             } else {
                 V = bid.V;
                 D = MatrixMath.Sqrt(D);
                 U = new Matrix(M.Height, V.Width);
                 for (int i = 0; i < V.Width; i++) {
-                    U[Vector.Arrange(M.Height), i] = (M * V[Vector.Arrange(V.Height), i] / D[i, i]).ToColumnVector();
+                    U[ColumnVector.Arrange(M.Height), i] = (M * V[ColumnVector.Arrange(V.Height), i] / D[i, i]).ToColumnVector();
                 }
             }
         }

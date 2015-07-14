@@ -20,16 +20,22 @@ namespace ConsoleApplication {
             //A = Matrix.ParseFrom("1, 1, 3");
             //A = Matrix.ParseFrom("4, 3, 0, 2; 2, 1, 2, 1; 4, 4, 0, 3");
             //A = Matrix.ParseFrom("4, 2, 0; 2, -3, 1; 3, 2, 5");
-            A = Matrix.ParseFrom("1, 1, 2; 1, 2, 3");
-            Vector b = Vector.ParseFrom("6, 5");
+            A = Matrix.ParseFrom("1, 1; 1, 2; 1, 3; 1, 4; 1, 5");
+            ColumnVector b = ColumnVector.ParseFrom("6, 5, 7, 10, 15");
             
             Console.WriteLine("A:\n" + A + "\n");
             Console.WriteLine("b:\n" + b + "\n");
 
             SolveLinearEquations sle = new SolveLinearEquations(A);
-            Vector x = sle.Solve(b);
+            ColumnVector x = sle.Solve(b);
 
             Console.WriteLine("x:\n" + x + "\n");
+
+            ColumnVector xx = A.GetColumnVector(1);
+            ColumnVector y = x[0] * A.GetColumnVector(0) + x[1] * xx;
+
+            Plot.CreateMathsPlotWindow(new List<ColumnVector> { xx, xx }, new List<ColumnVector> { b, y });
+            //Plot.CreateMathsPlotWindow(x, b);
 
             //Bidiagonalization bid = A.Bidiagonalization();
             //Console.WriteLine("U:\n" + bid.U + "\n");

@@ -81,7 +81,7 @@
     <Compile Include="SimpleKalmanFilter.cs" />
     <Compile Include="SVD.cs" />
     <Compile Include="TriangularSmoothingFilter.cs" />
-    <Compile Include="Vector.cs" />
+    <Compile Include="ColumnVector.cs" />
     <Compile Include="VectorMath.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -29,7 +29,7 @@ namespace Maths {
 
 
             for (int k = 0; k < Hs.Length; k++) {
-                Vector x = A[Vector.Arrange(k + 1, A.Height), k];
+                ColumnVector x = A[ColumnVector.Arrange(k + 1, A.Height), k];
                 HT = MatrixMath.CalculateHouseholderTransform(x);
 
                 Matrix H_k = Matrix.IdentityMatrix(M.Height);

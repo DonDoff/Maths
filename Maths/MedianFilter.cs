@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Maths {
     class MedianFilter : IFilter {
-        public Vector Data { get; private set; }
+        public ColumnVector Data { get; private set; }
         public int WindowSize { get; set; }
 
-        public MedianFilter(Vector data, int windowSize = 5) {
+        public MedianFilter(ColumnVector data, int windowSize = 5) {
             Data = data.Copy();
             WindowSize = windowSize;
         }
