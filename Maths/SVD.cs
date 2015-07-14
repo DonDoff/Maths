@@ -50,29 +50,43 @@ namespace Maths {
         }
 
         private Matrix EigenDecomp() {
-            Matrix subBTB = D.SubMatrix(D.Height - 2, D.Height, D.Width - 2, D.Width);
-            ComplexNumber trace = subBTB.Trace();
-            ComplexNumber det = subBTB.Determinant();
-            ComplexNumber eig1 = (trace + ComplexNumberMath.Sqrt(trace * trace - 4 * det)) / 2;
-            ComplexNumber eig2 = (trace - ComplexNumberMath.Sqrt(trace * trace - 4 * det)) / 2;
-            ComplexNumber smallest = ComplexNumberMath.Min(eig1, eig2);
-            ComplexNumber eigenSquared = smallest * smallest;
-            Matrix shift = eigenSquared * Matrix.IdentityMatrix(D.Height);
 
+
+            Matrix shift = ComputeShift(D);
             QRDecomposition qr = (D - shift).QR();
             Matrix Eigenvector = qr.Q;
 
             for (int i = 0; i < ITERATION_DEPTH; i++) {
                 D = qr.R * qr.Q + shift;
+                shift = ComputeShift(D);
                 qr = (D - shift).QR();
 
                 Eigenvector *= qr.Q;
 
                 if (D.IsDiagonal()) {
+                    Console.WriteLine(i);
                     break;
                 }
             }
             return Eigenvector;
         }
+
+        /// <summary>
+        /// The shift is generally taken to be the smallest eigenvalue of the 2 × 2 matrix in the bottom.
+        /// </summary>
+        /// <returns></returns>
+        private Matrix ComputeShift(Matrix mat) {
+            Matrix subMat = mat.SubMatrix(mat.Height - 2, mat.Height, mat.Width - 2, mat.Width);
+            ComplexNumber trace = subMat.Trace();
+            ComplexNumber det = subMat.Determinant();
+            ComplexNumber eig1 = (trace + ComplexNumberMath.Sqrt(trace * trace - 4 * det)) / 2;
+            ComplexNumber eig2 = (trace - ComplexNumberMath.Sqrt(trace * trace - 4 * det)) / 2;
+            ComplexNumber smallest = ComplexNumberMath.Min(eig1, eig2);
+            ComplexNumber eigenSquared = smallest * smallest;
+            Matrix shift = eigenSquared * Matrix.IdentityMatrix(mat.Height);
+            return shift;
+        }
+
+
     }
 }
