@@ -63,6 +63,10 @@ namespace Maths {
         }
 
         public static Matrix CalculateHouseholderTransform(Vector x) {
+            if (x.EuclidianNorm() == 0) {
+                return Matrix.IdentityMatrix(x.Height);
+            }
+
             double a = Math.Sign(x[0].R) * x.EuclidianNorm();
             Vector u = x + a * Vector.Ei(x.Size, 0);
             Vector v = u / u.EuclidianNorm();

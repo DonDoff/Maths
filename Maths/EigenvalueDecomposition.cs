@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Maths {
-    public class EigenvalueDecomposition {
+    public class EigenvalueDecomposition : IDecomposition {
         private static int ITERATION_DEPTH = 50;
 
         public Vector Eigenvalues { get; private set; }

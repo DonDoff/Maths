@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Maths {
-    public class Bidiagonalization {
+    public class Bidiagonalization : IDecomposition {
         public Matrix U { get; private set; }
         public Matrix B { get; private set; }
         public Matrix V { get; private set; }
@@ -18,38 +18,55 @@ namespace Maths {
         }
 
         private void MakeDecomposition() {
-            if (M.Height < M.Width) {
-                throw new MatrixException("The number of rows should be equal or greater than the number of columns!");
-            }
-
             Matrix A = M.Copy();
-            Matrix[] Us = new Matrix[M.Width];
+            Matrix[] Us;
             Matrix[] Vs;
-            if (M.Width > 1) {
-                Vs = new Matrix[M.Width - 2];
-            } else {
+
+            if (M.Width == 1) {
+                Us = new Matrix[M.Width];
                 Vs = new Matrix[0];
+            } else if (M.Height == 1) {
+                Us = new Matrix[0];
+                Vs = new Matrix[M.Height];
+            } else {
+                if (M.Height > M.Width) {
+                    Us = new Matrix[M.Width];
+                } else {
+                    Us = new Matrix[M.Height - 1];
+                }
+
+                if (M.Height >= M.Width) {
+                    Vs = new Matrix[M.Width - 2];
+                } else if (M.Height == M.Width - 1) {
+                    Vs = new Matrix[M.Height - 1];
+                } else {
+                    Vs = new Matrix[M.Height];
+                }
             }
 
-            for (int k = 0; k < Us.Length; k++) {
+            for (int k = 0; k < Math.Max(Us.Length, Vs.Length); k++) {
                 // Left-hand reduction
-                Vector x = new Vector(A, 0);
-                U = MatrixMath.CalculateHouseholderTransform(x);
+                if (k < Us.Length) {
+                    Vector x = new Vector(A, 0);
+                    U = MatrixMath.CalculateHouseholderTransform(x);
 
-                A = (U * A).SubMatrix(0, A.Height, 1, A.Width);
+                    A = (U * A).SubMatrix(0, A.Height, 1, A.Width);
 
-                Matrix U_k = Matrix.IdentityMatrix(M.Height);
-                for (int i = 0; i < U.Height; i++) {
-                    for (int j = 0; j < U.Width; j++) {
-                        U_k[i + k, j + k] = U[i, j];
+                    Matrix U_k = Matrix.IdentityMatrix(M.Height);
+                    for (int i = 0; i < U.Height; i++) {
+                        for (int j = 0; j < U.Width; j++) {
+                            U_k[i + k, j + k] = U[i, j];
+                        }
                     }
+                    Us[k] = U_k;
+                } else {
+                    A = A.SubMatrix(0, A.Height, 1, A.Width);
                 }
-                Us[k] = U_k;
 
                 // Right-hand reduction
                 if (k < Vs.Length) {
                     A = A.Transpose();
-                    x = new Vector(A, 0);
+                    Vector x = new Vector(A, 0);
                     V = MatrixMath.CalculateHouseholderTransform(x);
                     A = (V * A).SubMatrix(0, A.Height, 1, A.Width);
                     A = A.Transpose();
@@ -66,9 +83,13 @@ namespace Maths {
                 }
             }
 
-            U = Us[0];
-            for (int i = 1; i < Us.Length; i++) {
-                U *= Us[i];
+            if (Us.Length == 0) {
+                U = Matrix.IdentityMatrix(M.Height);
+            } else {
+                U = Us[0];
+                for (int i = 1; i < Us.Length; i++) {
+                    U *= Us[i];
+                }
             }
 
             if (Vs.Length == 0) {

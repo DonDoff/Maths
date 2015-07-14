@@ -63,7 +63,9 @@
     <Compile Include="EigenvalueDecomposition.cs" />
     <Compile Include="FFT.cs" />
     <Compile Include="HessenbergDecomposition.cs" />
+    <Compile Include="IDecomposition.cs" />
     <Compile Include="IFilter.cs" />
+    <Compile Include="SolveLinearEquations.cs" />
     <Compile Include="LUDecomposition.cs" />
     <Compile Include="MathsPlotWindow.xaml.cs">
       <DependentUpon>MathsPlotWindow.xaml</DependentUpon>

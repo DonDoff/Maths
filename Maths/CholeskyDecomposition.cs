@@ -5,12 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Maths {
-    public class CholeskyDecomposition {
+    public class CholeskyDecomposition : IDecomposition {
 
         public Matrix L { get; private set; }
         public bool IsPositiveDefinite { get; private set; }
         private Matrix M;
 
+        /// <summary>
+        /// An exception is thrown if the matrix is not hermitian.
+        /// </summary>
+        /// <param name="m"></param>
         public CholeskyDecomposition(Matrix m) {
             M = m;
             MakeDecomposition();

@@ -358,18 +358,8 @@ namespace Maths {
 
         /// Function returns the inverted matrix
         public Matrix Invert() {
-            LUDecomposition lu = LU();
-            Matrix newMat = new Matrix(Height, Width);
-
-            for (int i = 0; i < Height; i++) {
-                Vector Ei = Vector.Ei(Height, i);
-                Vector col = lu.LinearSolver(Ei);
-
-                for (int j = 0; j < Height; ++j) {
-                    newMat[j, i] = col[j];
-                }
-            }
-            return newMat;
+            SolveLinearEquations sle = new SolveLinearEquations(this);
+            return sle.Solve(IdentityMatrix(Height));
         }
 
         public LUDecomposition LU() {

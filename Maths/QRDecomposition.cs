@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Maths {
-    public class QRDecomposition {
+    public class QRDecomposition : IDecomposition {
 
         public Matrix Q { get; private set; }
         public Matrix R { get; private set; }
@@ -18,8 +18,9 @@ namespace Maths {
         }
 
         private void MakeDecomposition() {
-            Matrix[] Qs = new Matrix[Math.Min(M.Height - 1, M.Width)];
             Matrix A = M.Copy();
+
+            Matrix[] Qs = new Matrix[Math.Min(M.Height - 1, M.Width)];
 
             for (int k = 0; k < Qs.Length; k++) {
                 Vector x = new Vector(A, 0);
@@ -37,13 +38,15 @@ namespace Maths {
                 Qs[k] = Q_k;
             }
 
-            // Q
-            this.Q = Qs[0];
-            for (int i = 1; i < Qs.Length; i++) {
-                Q *= Qs[i];
+            if (Qs.Length == 0) {
+                Q = Matrix.IdentityMatrix(M.Height);
+            } else {
+                Q = Qs[0];
+                for (int i = 1; i < Qs.Length; i++) {
+                    Q *= Qs[i];
+                }
             }
 
-            // R
             R = Q.ConjugateTranspose() * M;
         }
     }

@@ -185,6 +185,25 @@ namespace MathsTests {
 
             // R is upper triangular
             Assert.IsTrue(qr.R.IsUpperTriangular());
+
+
+
+            m1 = Matrix.ParseFrom("3, -6, 4, 7");
+            qr = m1.QR();
+
+            // A = Q*R
+            mActual = qr.Q * qr.R;
+            mExpected = m1;
+            Assert.AreEqual(mExpected, mActual);
+
+            // Q is orthogonal
+            mActual = qr.Q.Transpose() * qr.Q;
+            mExpected = Matrix.IdentityMatrix(qr.Q.Height);
+            Assert.AreEqual(mExpected, mActual);
+
+            // R is upper triangular
+            Assert.IsTrue(qr.R.IsUpperTriangular());
+
         }
 
         [TestMethod]

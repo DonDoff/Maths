@@ -10,31 +10,38 @@ using Maths;
 namespace ConsoleApplication {
     class Program {
         static void Main(string[] args) {
-             Matrix A;
+            Matrix A;
 
-            //A = Matrix.ParseFrom("4, 2, 2, 1; 2, -3, 1, 1; 2, 1, 3, 1; 1, 1, 1, 2");
+            //A = Matrix.ParseFrom("4, 2, 2, 1; 2, -3, 1, 1; 2, 1, 3, 1; 1, 1, 1, 2; 1, 2, 3, 4; 3, 2, 4, 1");
             //A = Matrix.ParseFrom("1, 0, 0, 0, 2; 0, 0, 3, 0, 0; 0, 0, 0, 0, 0; 0, 4, 0, 0, 0");
             //A = Matrix.ParseFrom("1, 1, 1; 1, 1, 1; 1, -1, 1; 1, 1, -1");
-             A = Matrix.ParseFrom("1, 1, 1, 1; 1, 1, -1, 1; 1, 1, 1, -1");
+            //A = Matrix.ParseFrom("1, 1, 1, 1; 1, 1, -1, 1; 1, 1, 1, -1");
             //A = Matrix.ParseFrom("1; 1; 3");
-
+            //A = Matrix.ParseFrom("1, 1, 3");
+            //A = Matrix.ParseFrom("4, 3, 0, 2; 2, 1, 2, 1; 4, 4, 0, 3");
+            //A = Matrix.ParseFrom("4, 2, 0; 2, -3, 1; 3, 2, 5");
+            A = Matrix.ParseFrom("1, 1, 2; 1, 2, 3");
+            Vector b = Vector.ParseFrom("6, 5");
+            
             Console.WriteLine("A:\n" + A + "\n");
+            Console.WriteLine("b:\n" + b + "\n");
 
-            Bidiagonalization bid = A.Bidiagonalization();
-            Console.WriteLine("U:\n" + bid.U + "\n");
-            Console.WriteLine("B:\n" + bid.B + "\n");
-            Console.WriteLine("V:\n" + bid.V + "\n");
-            Console.WriteLine("UBV:\n" + bid.U * bid.B * bid.V.ConjugateTranspose() + "\n");
+            SolveLinearEquations sle = new SolveLinearEquations(A);
+            Vector x = sle.Solve(b);
 
-            SVD svd = A.SVD();
-            Console.WriteLine("U:\n" + svd.U + "\n");
-            Console.WriteLine("D:\n" + svd.D + "\n");
-            Console.WriteLine("V:\n" + svd.V + "\n");
-            Console.WriteLine("UDV:\n" + svd.U * svd.D * svd.V.ConjugateTranspose() + "\n");
+            Console.WriteLine("x:\n" + x + "\n");
 
-            //Console.WriteLine("U Unitary?:\n" + svd.U.IsUnitary() + "\n");
-            //Console.WriteLine("D Diagonal?:\n" + (svd.D.ConjugateTranspose() * svd.D).IsDiagonal() + "\n");
-            //Console.WriteLine("V Unitary?:\n" + svd.V.IsUnitary() + "\n");
+            //Bidiagonalization bid = A.Bidiagonalization();
+            //Console.WriteLine("U:\n" + bid.U + "\n");
+            //Console.WriteLine("B:\n" + bid.B + "\n");
+            //Console.WriteLine("V:\n" + bid.V + "\n");
+            //Console.WriteLine("UBV:\n" + bid.U * bid.B * bid.V.ConjugateTranspose() + "\n");
+
+            //SVD svd = A.SVD();
+            //Console.WriteLine("U:\n" + svd.U + "\n");
+            //Console.WriteLine("D:\n" + svd.D + "\n");
+            //Console.WriteLine("V:\n" + svd.V + "\n");
+            //Console.WriteLine("UDV:\n" + svd.U * svd.D * svd.V.ConjugateTranspose() + "\n");
 
             //int N = 1000;
             //double tStart = 0;
@@ -71,14 +78,8 @@ namespace ConsoleApplication {
 
             //Vector f = Vector.Linspace(-Fs / 2, Fs / 2, fft.Size);
 
-            //Thread thread = new Thread(() => {
-            //    Plot.CreateMathsPlotWindow(new List<Vector> { t }, new List<Vector> { y });
-            //    Plot.CreateMathsPlotWindow(new List<Vector> { f },
-            //        new List<Vector> { VectorMath.FFTNormalize(VectorMath.FFTShift(fft)) });
-            //    System.Windows.Threading.Dispatcher.Run();
-            //});
-            //thread.SetApartmentState(ApartmentState.STA);
-            //thread.Start();
+            //Plot.CreateMathsPlotWindow(t, y);
+            //Plot.CreateMathsPlotWindow(f, VectorMath.FFTNormalize(VectorMath.FFTShift(fft)));
         }
 
 
