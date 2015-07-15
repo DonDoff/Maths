@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Maths {
     class RectangularSmoothingFilter : IFilter {
-        public ColumnVector Data { get; private set; }
+        public Vector Data { get; private set; }
 
-        public RectangularSmoothingFilter(ColumnVector data) {
+        public RectangularSmoothingFilter(Vector data) {
             Data = data.Copy();
         }
 

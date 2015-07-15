@@ -20,7 +20,7 @@ namespace Maths {
         public Matrix Solve(Matrix b) {
             Matrix x = new Matrix(M.Height, b.Width);
 
-            ColumnVector wholeCollumnIdx = ColumnVector.Arrange(M.Height);
+            Vector wholeCollumnIdx = Vector.Arrange(M.Height);
             for (int i = 0; i < b.Width; i++) {
                 x[wholeCollumnIdx, i] = Solve(b[wholeCollumnIdx, i]);
             }
@@ -28,20 +28,20 @@ namespace Maths {
             return x;
         }
 
-        public ColumnVector Solve(ColumnVector b) {
+        public Vector Solve(Vector b) {
             if (M.Height != b.Height) {
                 throw new MatrixException("Wrong number of results in solution vector!");
             }
 
-            ColumnVector x = new ColumnVector(M.Height);
+            Vector x = new Vector(M.Height);
 
             if (M.IsSquare()) {
                 // use LU decomposition
                 LUDecomposition lu = M.LU();
-                ColumnVector bp = (lu.P * b).ToColumnVector();
+                Vector bp = (lu.P * b).ToColumnVector();
 
                 // Solves Ly = b using forward substitution
-                ColumnVector y = ForwardSubstitution(lu.L, bp);
+                Vector y = ForwardSubstitution(lu.L, bp);
 
                 // Solves Ux = y using back substitution
                 x = BackSubstitution(lu.U, y);
@@ -76,8 +76,8 @@ namespace Maths {
         /// <param name="A"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        private ColumnVector ForwardSubstitution(Matrix A, ColumnVector b) {
-            ColumnVector x = new ColumnVector(A.Height);
+        private Vector ForwardSubstitution(Matrix A, Vector b) {
+            Vector x = new Vector(A.Height);
             for (int i = 0; i < A.Height; i++) {
                 x[i] = b[i];
                 for (int j = 0; j < i; j++) {
@@ -94,8 +94,8 @@ namespace Maths {
         /// <param name="A"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        private ColumnVector BackSubstitution(Matrix A, ColumnVector b) {
-            ColumnVector x = new ColumnVector(A.Height);
+        private Vector BackSubstitution(Matrix A, Vector b) {
+            Vector x = new Vector(A.Height);
             for (int i = A.Height - 1; i > -1; i--) {
                 x[i] = b[i];
                 for (int j = A.Width - 1; j > i; j--) {

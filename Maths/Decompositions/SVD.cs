@@ -21,37 +21,64 @@ namespace Maths {
 
         private void MakeDecomposition() {
             Bidiagonalization bid = M.Bidiagonalization();
-            Matrix B = bid.B;
-            D = B.ConjugateTranspose() * B;
+            Matrix B = bid.B.Copy();
 
-            if (D.Height > 1) {                
-                V = EigenDecomp();
-                V = bid.V * V;
+            QRDecomposition qr = B.QR();
+            V = qr.Q;
 
-                //D = B * B.ConjugateTranspose();
-                //U = EigenDecomp();
-                //U = bid.U * U;
-                //D = D.SubMatrix(0, M.Height, 0, M.Width);
+            for (int i = 0; i < ITERATION_DEPTH; i++) {
 
-                D = MatrixMath.Sqrt(D);
+                Console.WriteLine("Q:\n" + qr.Q + "\n");
+                Console.WriteLine("R:\n" + qr.R + "\n");
 
-                U = new Matrix(M.Height, V.Width);
-                for (int i = 0; i < V.Width; i++) {
-                    U[ColumnVector.Arrange(M.Height), i] = (M * V[ColumnVector.Arrange(V.Height), i] / D[i, i]).ToColumnVector();
-                }
-            } else {
-                V = bid.V;
-                D = MatrixMath.Sqrt(D);
-                U = new Matrix(M.Height, V.Width);
-                for (int i = 0; i < V.Width; i++) {
-                    U[ColumnVector.Arrange(M.Height), i] = (M * V[ColumnVector.Arrange(V.Height), i] / D[i, i]).ToColumnVector();
+                B = qr.Q.ConjugateTranspose() * B * qr.Q;
+                qr = B.QR();
+
+                V *= qr.Q;
+
+                if (D.IsDiagonal()) {
+                    Console.WriteLine("Iterations stopped after: " + i);
+                    break;
                 }
             }
+
+            V = bid.V * V;
+
+            D = B;
+
+            U = new Matrix(M.Height, V.Width);
+            for (int i = 0; i < V.Width; i++) {
+                U[Vector.Arrange(M.Height), i] = (M * V[Vector.Arrange(V.Height), i] / D[i, i]).ToColumnVector();
+            }
+
+            //D = B.ConjugateTranspose() * B;
+
+            //if (D.Height > 1) {                
+            //    V = EigenDecomp();
+            //    V = bid.V * V;
+
+            //    //D = B * B.ConjugateTranspose();
+            //    //U = EigenDecomp();
+            //    //U = bid.U * U;
+            //    //D = D.SubMatrix(0, M.Height, 0, M.Width);
+
+            //    D = MatrixMath.Sqrt(D);
+
+            //    U = new Matrix(M.Height, V.Width);
+            //    for (int i = 0; i < V.Width; i++) {
+            //        U[ColumnVector.Arrange(M.Height), i] = (M * V[ColumnVector.Arrange(V.Height), i] / D[i, i]).ToColumnVector();
+            //    }
+            //} else {
+            //    V = bid.V;
+            //    D = MatrixMath.Sqrt(D);
+            //    U = new Matrix(M.Height, V.Width);
+            //    for (int i = 0; i < V.Width; i++) {
+            //        U[ColumnVector.Arrange(M.Height), i] = (M * V[ColumnVector.Arrange(V.Height), i] / D[i, i]).ToColumnVector();
+            //    }
+            //}
         }
 
         private Matrix EigenDecomp() {
-
-
             Matrix shift = ComputeShift(D);
             QRDecomposition qr = (D - shift).QR();
             Matrix Eigenvector = qr.Q;

@@ -15,6 +15,7 @@ namespace Maths {
         public QRDecomposition(Matrix m) {
             M = m;
             MakeDecomposition();
+            //MakeDecompositionUsingGivens();
         }
 
         private void MakeDecomposition() {
@@ -23,19 +24,13 @@ namespace Maths {
             Matrix[] Qs = new Matrix[Math.Min(M.Height - 1, M.Width)];
 
             for (int k = 0; k < Qs.Length; k++) {
-                ColumnVector x = new ColumnVector(A, 0);
+                Vector x = new Vector(A, 0);
                 Matrix Q = MatrixMath.CalculateHouseholderTransform(x);
                 Matrix QA = Q * A;
                 A = QA.SubMatrix(1, A.Height, 1, A.Width);
 
-                Matrix Q_k = Matrix.IdentityMatrix(M.Height);
-                for (int i = 0; i < Q.Height; i++) {
-                    for (int j = 0; j < Q.Width; j++) {
-                        Q_k[i + k, j + k] = Q[i, j];
-                    }
-                }
-
-                Qs[k] = Q_k;
+                Qs[k] = Matrix.IdentityMatrix(M.Height);
+                Qs[k][Vector.Arrange(k, M.Height), Vector.Arrange(k, M.Height)] = Q;
             }
 
             if (Qs.Length == 0) {
@@ -49,5 +44,26 @@ namespace Maths {
 
             R = Q.ConjugateTranspose() * M;
         }
+
+        private void MakeDecompositionUsingGivens() {
+            Matrix A = M.Copy();
+            Matrix G;
+            Q = Matrix.IdentityMatrix(M.Height);
+
+            for (int j = 0; j < M.Width; j++) {
+                for (int i = M.Height - 1; i > j; i--) {
+                    if (A[i, j] != 0) {
+                        G = Matrix.IdentityMatrix(M.Height);
+                        //Vector.Arrange(i - 1, i + 1);
+                        G[Vector.Arrange(i - 1, i + 1), Vector.Arrange(i - 1, i + 1)] = MatrixMath.CalculatGivensRotation(A[i - 1, j], A[i, j]);
+
+                        A = G * A;
+                        Q *= G.ConjugateTranspose();
+                    }
+                }
+            }
+            R = A;
+        }
+
     }
 }

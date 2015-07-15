@@ -18,7 +18,7 @@ namespace Maths {
             set { plotModel = value; OnPropertyChanged("PlotModel"); }
         }
         
-        public MathsPlotWindowModel(List<ColumnVector> xs, List<ColumnVector> ys)
+        public MathsPlotWindowModel(List<Vector> xs, List<Vector> ys)
         {
             PlotModel = new PlotModel();
             SetUpModel(xs, ys);
@@ -33,7 +33,7 @@ namespace Maths {
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void SetUpModel(List<ColumnVector> xs, List<ColumnVector> ys) {
+        private void SetUpModel(List<Vector> xs, List<Vector> ys) {
             double minX = double.MaxValue, maxX = double.MinValue;
             double minY = double.MaxValue, maxY = double.MinValue;
 

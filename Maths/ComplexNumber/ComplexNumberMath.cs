@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Maths {
-    public class ComplexNumberMath {
+    public static class ComplexNumberMath {
         public static ComplexNumber Sin(ComplexNumber c) {
             return Math.Sin(c.R) * Math.Cosh(c.I) +
                 ComplexNumber.UNIT_I * Math.Cos(c.R) * Math.Sinh(c.I);
@@ -57,8 +57,8 @@ namespace Maths {
         public static double Argument(ComplexNumber c) {
             return Math.Atan2(c.I, c.R);
         }
-        
-        public static ComplexNumber Pow(ComplexNumber c, double n) {
+
+        public static ComplexNumber Pow(this ComplexNumber c, double n) {
             // De Moivre's theorem
             double r = Abs(c);
             double arg = Argument(c);
@@ -66,7 +66,7 @@ namespace Maths {
             return Math.Pow(r, n)*(Math.Cos(n*arg) + ComplexNumber.UNIT_I*Math.Sin(n*arg));
         }
 
-        public static ComplexNumber Sqrt(ComplexNumber c) {
+        public static ComplexNumber Sqrt(this ComplexNumber c) {
             return Pow(c, 1.0/2);
         }
 

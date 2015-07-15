@@ -47,7 +47,7 @@ namespace Maths {
             for (int k = 0; k < Math.Max(Us.Length, Vs.Length); k++) {
                 // Left-hand reduction
                 if (k < Us.Length) {
-                    ColumnVector x = new ColumnVector(A, 0);
+                    Vector x = new Vector(A, 0);
                     U = MatrixMath.CalculateHouseholderTransform(x);
 
                     A = (U * A).SubMatrix(0, A.Height, 1, A.Width);
@@ -66,7 +66,7 @@ namespace Maths {
                 // Right-hand reduction
                 if (k < Vs.Length) {
                     A = A.Transpose();
-                    ColumnVector x = new ColumnVector(A, 0);
+                    Vector x = new Vector(A, 0);
                     V = MatrixMath.CalculateHouseholderTransform(x);
                     A = (V * A).SubMatrix(0, A.Height, 1, A.Width);
                     A = A.Transpose();

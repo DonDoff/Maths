@@ -80,7 +80,7 @@
     <Compile Include="Filters\RectangularSmoothingFilter.cs" />
     <Compile Include="Decompositions\SVD.cs" />
     <Compile Include="Filters\TriangularSmoothingFilter.cs" />
-    <Compile Include="Vectors\ColumnVector.cs" />
+    <Compile Include="Vectors\Vector.cs" />
     <Compile Include="Vectors\VectorMath.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -56,6 +56,33 @@ namespace MathsTests {
         }
 
         [TestMethod]
+        public void MatrixTestColumnIndexing() {
+            Matrix m1 = Matrix.ParseFrom("4, 2, 2, 1; 2, -3, 1, 1; 2, 1, 3, 1; 1, 1, 1, 2");
+
+            Matrix mActual = m1[Vector.ParseFrom("0, 1, 2, 3"), 1];
+            Matrix mExpected = Matrix.ParseFrom("2; -3; 1; 1");
+            Assert.AreEqual(mExpected, mActual);
+        }
+
+        [TestMethod]
+        public void MatrixTestRowIndexing() {
+            Matrix m1 = Matrix.ParseFrom("4, 2, 2, 1; 2, -3, 1, 1; 2, 1, 3, 1; 1, 1, 1, 2");
+
+            Matrix mActual = m1[1, Vector.ParseFrom("0, 1, 2, 3")];
+            Matrix mExpected = Matrix.ParseFrom("2; -3; 1; 1");
+            Assert.AreEqual(mExpected, mActual);
+        }
+
+        [TestMethod]
+        public void MatrixTestMatrixIndexing() {
+            Matrix m1 = Matrix.ParseFrom("4, 2, 2, 1; 2, -3, 1, 1; 2, 1, 5, 1; 1, 1, 1, 2");
+
+            Matrix mActual = m1[Vector.ParseFrom("1, 2"), Vector.ParseFrom("1, 2, 3")];
+            Matrix mExpected = Matrix.ParseFrom("-3, 1, 1; 1, 5, 1");
+            Assert.AreEqual(mExpected, mActual);
+        }
+
+        [TestMethod]
         public void MatrixTestEquals() {
             Matrix mActual = Matrix.ParseFrom("1, 1; 1, 2");
             Matrix mExpected = Matrix.ParseFrom("1, 1; 1, 2");
@@ -134,9 +161,17 @@ namespace MathsTests {
         [TestMethod]
         public void MatrixTestHouseHolder() {
             Matrix A = Matrix.ParseFrom("4, 2, 2, 1; 2, -3, 1, 1; 2, 1, 3, 1; 1, 1, 1, 2");
-            Matrix H = MatrixMath.CalculateHouseholderTransform(new ColumnVector(A, 0));
+            Matrix H = MatrixMath.CalculateHouseholderTransform(new Vector(A, 0));
 
-            Assert.AreEqual((H * A)[ColumnVector.Arrange(1, A.Height), 0], Matrix.Zeros(A.Height - 1, 1));
+            Assert.AreEqual((H * A)[Vector.Arrange(1, A.Height), 0], Matrix.Zeros(A.Height - 1, 1));
+        }
+
+        [TestMethod]
+        public void MatrixTestGivensRotation() {
+            Matrix A = Matrix.ParseFrom("4, 2, 2, 1; 2, -3, 1, 1; 2, 1, 3, 1; 1, 1, 1, 2");
+            Matrix H = MatrixMath.CalculateHouseholderTransform(new Vector(A, 0));
+
+            Assert.AreEqual((H * A)[Vector.Arrange(1, A.Height), 0], Matrix.Zeros(A.Height - 1, 1));
         }
 
         [TestMethod]

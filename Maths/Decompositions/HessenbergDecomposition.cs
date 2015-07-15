@@ -20,8 +20,8 @@ namespace Maths {
         }
 
         private void MakeDecomposition() {
-            if (M.Width != M.Height) {
-                throw new MatrixException("The number of rows should be equal or greater than the number of columns!");
+            if (!M.IsSquare()) {
+                throw new MatrixException("The matrix is not square!");
             }
 
             Matrix A = M.Copy();
@@ -29,7 +29,7 @@ namespace Maths {
 
 
             for (int k = 0; k < Hs.Length; k++) {
-                ColumnVector x = A[ColumnVector.Arrange(k + 1, A.Height), k];
+                Vector x = A[Vector.Arrange(k + 1, A.Height), k];
                 HT = MatrixMath.CalculateHouseholderTransform(x);
 
                 Matrix H_k = Matrix.IdentityMatrix(M.Height);

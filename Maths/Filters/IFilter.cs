@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 namespace Maths {
     interface IFilter {
         IFilter Filter();
-        ColumnVector Data { get; }
+        Vector Data { get; }
     }
 }

@@ -4,7 +4,7 @@
         xmlns:oxy="http://oxyplot.org/wpf"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <oxy:Plot x:Name="Plot1" Title="A Graph" Model="{Binding PlotModel}" Margin="10" Grid.Row="1">
-        </oxy:Plot>
+        <oxy:PlotView x:Name="Plot1" Title="A Graph" Model="{Binding PlotModel}" Margin="10" Grid.Row="1">
+        </oxy:PlotView>
     </Grid>
 </Window>

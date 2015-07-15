@@ -8,7 +8,7 @@ namespace Maths {
     public class EigenvalueDecomposition : IDecomposition {
         private static int ITERATION_DEPTH = 50;
 
-        public ColumnVector Eigenvalues { get; private set; }
+        public Vector Eigenvalues { get; private set; }
         public Matrix Eigenvectors { get; private set; }
 
         public Matrix M { get; set; }
@@ -26,7 +26,7 @@ namespace Maths {
             Matrix Ai = M.Copy();
             QRDecomposition qr = Ai.QR();
 
-            Eigenvalues = new ColumnVector(Ai.Width);
+            Eigenvalues = new Vector(Ai.Width);
             Eigenvectors = qr.Q;
 
             for (int i = 0; i < ITERATION_DEPTH; i++) {

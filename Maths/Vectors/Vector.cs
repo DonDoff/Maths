@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Maths {
-    public class ColumnVector : Matrix {
+    public class Vector : Matrix {
         public int Size { get; private set; }
 
-        public ColumnVector() : base() { Size = this.Height; }
-        public ColumnVector(int size) : base(size, 1) { Size = this.Height; }
-        public ColumnVector(ColumnVector v) : base(v) { Size = this.Height; }
+        public Vector() : base() { Size = this.Height; }
+        public Vector(int size) : base(size, 1) { Size = this.Height; }
+        public Vector(Vector v) : base(v) { Size = this.Height; }
 
-        public ColumnVector(Matrix mat, int column)
+        public Vector(Matrix mat, int column)
             : base(mat.Height, 1) {
             Size = this.Height;
             if (column >= mat.Width) {
@@ -23,11 +23,11 @@ namespace Maths {
             }
         }
 
-        public static new ColumnVector ParseFrom(string vecString) {
+        public static new Vector ParseFrom(string vecString) {
             vecString = vecString.Replace(" ", "");
 
             string[] rows = vecString.Split(new char[] { ',', ';' });
-            ColumnVector newVec = new ColumnVector(rows.Length);
+            Vector newVec = new Vector(rows.Length);
 
             try {
                 for (int i = 0; i < newVec.Size; i++) {
@@ -39,12 +39,12 @@ namespace Maths {
             return newVec;
         }
 
-        public new ColumnVector Copy() {
-            return new ColumnVector(this);
+        public new Vector Copy() {
+            return new Vector(this);
         }
 
-        public static ColumnVector Ei(int size, int pos) {
-            ColumnVector v = ColumnVector.Zeros(size);
+        public static Vector Ei(int size, int pos) {
+            Vector v = Vector.Zeros(size);
             v[pos] = 1;
             return v;
         }
@@ -57,18 +57,18 @@ namespace Maths {
             return Math.Sqrt(norm.R);
         }
 
-        public ColumnVector CrossProduct(ColumnVector v) {
+        public Vector CrossProduct(Vector v) {
             if (Size != 3) {
                 throw new MatrixException("Cross product only exists in 3D");
             }
-            ColumnVector newV = new ColumnVector(3);
+            Vector newV = new Vector(3);
             newV[0] = this[2] * v[3] - v[2] * this[3];
             newV[1] = this[3] * v[1] - v[3] * this[1];
             newV[2] = this[1] * v[2] - v[1] * this[2];
             return newV;
         }
 
-        public ComplexNumber DotProduct(ColumnVector v) {
+        public ComplexNumber DotProduct(Vector v) {
             if (Size != v.Size) {
                 throw new IncompatibleMatrixDimensionsException(this, v);
             }
@@ -79,8 +79,8 @@ namespace Maths {
             return cSum;
         }
 
-        public ColumnVector CircShift(int shift) {
-            ColumnVector newV = new ColumnVector(Size);
+        public Vector CircShift(int shift) {
+            Vector newV = new Vector(Size);
             for (int i = 0; i < Size; i++) {
                 newV[i] = this[ComplexNumberMath.Mod((i + shift), Size)];
             }
@@ -88,42 +88,42 @@ namespace Maths {
         }
 
         // Fill the vector with 1s
-        public static ColumnVector Zeros(int size) {
+        public static Vector Zeros(int size) {
             return Matrix.Zeros(size, 1).ToColumnVector();
         }
 
         // Fill the vector with 1s
-        public static ColumnVector Ones(int size) {
+        public static Vector Ones(int size) {
             return Matrix.Ones(size, 1).ToColumnVector();
         }
 
         // Fill the vector with random complex numbers
-        public static ColumnVector RandomComplex(int size, Random seed) {
+        public static Vector RandomComplex(int size, Random seed) {
             return Matrix.RandomComplex(size, 1, seed).ToColumnVector();
         }
 
         // Fill the vector with random real numbers
-        public static ColumnVector RandomReal(int size, Random seed) {
+        public static Vector RandomReal(int size, Random seed) {
             return Matrix.RandomReal(size, 1, seed).ToColumnVector();
         }
 
         // Create a vector starting from 0 until end, in steps of 1
-        public static ColumnVector Linspace(double end) {
+        public static Vector Linspace(double end) {
             return Linspace(0, end);
         }
 
         // Create a vector starting from start until end, in steps of 1
-        public static ColumnVector Linspace(double start, double end) {
+        public static Vector Linspace(double start, double end) {
             return Linspace(start, end, (int)(end - start) - 1);
         }
 
         // Create a vector starting from start until end, in the specified amount of steps
-        public static ColumnVector Linspace(double start, double end, int steps) {
-            ColumnVector v = new ColumnVector(0);
+        public static Vector Linspace(double start, double end, int steps) {
+            Vector v = new Vector(0);
             double length = end - start;
             if (length >= 0) {
                 double delta = (length + 0.0) / steps;
-                v = new ColumnVector(steps);
+                v = new Vector(steps);
                 for (int i = 0; i < steps; i++) {
                     v[i] = start + i * delta;
                 }
@@ -132,22 +132,22 @@ namespace Maths {
         }
 
         // Create a vector starting from 0 until end, in steps of 1
-        public static ColumnVector Arrange(double end) {
+        public static Vector Arrange(double end) {
             return Arrange(0, end);
         }
 
         // Create a vector starting from start until end, in steps of 1
-        public static ColumnVector Arrange(double start, double end) {
+        public static Vector Arrange(double start, double end) {
             return Arrange(start, end, 1);
         }
 
         // Create a vector starting from start until end, in steps of delta
-        public static ColumnVector Arrange(double start, double end, double delta) {
-            ColumnVector v = new ColumnVector(0);
+        public static Vector Arrange(double start, double end, double delta) {
+            Vector v = new Vector(0);
             double length = end - start;
             if (length >= 0) {
                 int steps = (int)Math.Round(length / delta);
-                v = new ColumnVector(steps);
+                v = new Vector(steps);
                 for (int i = 0; i < steps; i++) {
                     v[i] = start + i * delta;
                 }
@@ -164,7 +164,7 @@ namespace Maths {
             return sum;
         }
 
-        public bool IsOrthogonalTo(ColumnVector v) {
+        public bool IsOrthogonalTo(Vector v) {
             return DotProduct(v) == 0;
         }
 
@@ -178,7 +178,7 @@ namespace Maths {
             }
         }
 
-        public ColumnVector this[ColumnVector v] {
+        public Vector this[Vector v] {
             get {
                 return this[v, 0];
             }
@@ -188,43 +188,43 @@ namespace Maths {
         }
 
 
-        public static ColumnVector operator +(ComplexNumber scalar, ColumnVector vec1) {
+        public static Vector operator +(ComplexNumber scalar, Vector vec1) {
             return (vec1.Add(scalar)).ToColumnVector();
         }
 
-        public static ColumnVector operator +(ColumnVector vec1, ComplexNumber scalar) {
+        public static Vector operator +(Vector vec1, ComplexNumber scalar) {
             return scalar + vec1;
         }
 
-        public static ColumnVector operator -(ComplexNumber scalar, ColumnVector vec1) {
+        public static Vector operator -(ComplexNumber scalar, Vector vec1) {
             return scalar + (-1 * vec1);
         }
 
-        public static ColumnVector operator -(ColumnVector vec1, ComplexNumber scalar) {
+        public static Vector operator -(Vector vec1, ComplexNumber scalar) {
             return vec1 + (-1 * scalar);
         }
 
-        public static ColumnVector operator *(ComplexNumber scalar, ColumnVector vec1) {
+        public static Vector operator *(ComplexNumber scalar, Vector vec1) {
             return (vec1.Multiply(scalar)).ToColumnVector();
         }
 
-        public static ColumnVector operator *(ColumnVector vec1, ComplexNumber scalar) {
+        public static Vector operator *(Vector vec1, ComplexNumber scalar) {
             return scalar * vec1;
         }
 
-        public static ColumnVector operator /(ColumnVector vec1, ComplexNumber scalar) {
+        public static Vector operator /(Vector vec1, ComplexNumber scalar) {
             return (vec1.Divide(scalar)).ToColumnVector();
         }
 
-        public static ColumnVector operator +(ColumnVector vec1, ColumnVector vec2) {
+        public static Vector operator +(Vector vec1, Vector vec2) {
             return (vec1.Add(vec2)).ToColumnVector();
         }
 
-        public static ColumnVector operator -(ColumnVector vec1, ColumnVector vec2) {
+        public static Vector operator -(Vector vec1, Vector vec2) {
             return (vec1.Subtract(vec2)).ToColumnVector();
         }
 
-        public static ColumnVector operator -(ColumnVector vec1) {
+        public static Vector operator -(Vector vec1) {
             return -1*vec1.ToColumnVector();
         }
 
