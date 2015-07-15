@@ -55,37 +55,36 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bidiagonalization.cs" />
-    <Compile Include="CholeskyDecomposition.cs" />
-    <Compile Include="ComplexNumber.cs" />
-    <Compile Include="ComplexNumberMath.cs" />
+    <Compile Include="Decompositions\Bidiagonalization.cs" />
+    <Compile Include="Decompositions\CholeskyDecomposition.cs" />
+    <Compile Include="ComplexNumber\ComplexNumber.cs" />
+    <Compile Include="ComplexNumber\ComplexNumberMath.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="EigenvalueDecomposition.cs" />
-    <Compile Include="FFT.cs" />
-    <Compile Include="HessenbergDecomposition.cs" />
-    <Compile Include="IDecomposition.cs" />
-    <Compile Include="IFilter.cs" />
-    <Compile Include="SolveLinearEquations.cs" />
-    <Compile Include="LUDecomposition.cs" />
-    <Compile Include="MathsPlotWindow.xaml.cs">
+    <Compile Include="Decompositions\EigenvalueDecomposition.cs" />
+    <Compile Include="SignalProcessing\FFT.cs" />
+    <Compile Include="Decompositions\HessenbergDecomposition.cs" />
+    <Compile Include="Decompositions\IDecomposition.cs" />
+    <Compile Include="Filters\IFilter.cs" />
+    <Compile Include="Decompositions\SolveLinearEquations.cs" />
+    <Compile Include="Decompositions\LUDecomposition.cs" />
+    <Compile Include="Plot\MathsPlotWindow.xaml.cs">
       <DependentUpon>MathsPlotWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MathsPlotWindowModel.cs" />
-    <Compile Include="Matrix.cs" />
-    <Compile Include="MatrixMath.cs" />
-    <Compile Include="MedianFilter.cs" />
-    <Compile Include="Plot.cs" />
+    <Compile Include="Plot\MathsPlotWindowModel.cs" />
+    <Compile Include="Matrix\Matrix.cs" />
+    <Compile Include="Matrix\MatrixMath.cs" />
+    <Compile Include="Filters\MedianFilter.cs" />
+    <Compile Include="Plot\Plot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QRDecomposition.cs" />
-    <Compile Include="RectangularSmoothingFilter.cs" />
-    <Compile Include="SimpleKalmanFilter.cs" />
-    <Compile Include="SVD.cs" />
-    <Compile Include="TriangularSmoothingFilter.cs" />
-    <Compile Include="ColumnVector.cs" />
-    <Compile Include="VectorMath.cs" />
+    <Compile Include="Decompositions\QRDecomposition.cs" />
+    <Compile Include="Filters\RectangularSmoothingFilter.cs" />
+    <Compile Include="Decompositions\SVD.cs" />
+    <Compile Include="Filters\TriangularSmoothingFilter.cs" />
+    <Compile Include="Vectors\ColumnVector.cs" />
+    <Compile Include="Vectors\VectorMath.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MathsPlotWindow.xaml">
+    <Page Include="Plot\MathsPlotWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -93,6 +92,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
