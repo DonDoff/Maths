@@ -7,6 +7,17 @@ namespace MathsTests {
     public class MatrixTest {
 
         [TestMethod]
+        public void MatrixTestCopy() {
+            Matrix m1 = MatrixFactory.ParseFrom("1, 1; 1, 2");
+            Matrix m2 = m1.Copy();
+            m1[0, 0] = 2;
+        
+            Assert.AreNotEqual(m1, m2);
+            Assert.AreEqual(m1[0, 0], new ComplexNumber(2, 0));
+            Assert.AreEqual(m2[0, 0], new ComplexNumber(1, 0));
+        }
+
+        [TestMethod]
         public void MatrixTestAddition() {
             Matrix m1 = MatrixFactory.ParseFrom("1, 1; 1, 2");
             Matrix m2 = MatrixFactory.ParseFrom("2, 3; 4, 1");

@@ -50,12 +50,16 @@ namespace Maths {
             }
         }
 
-        
-
         //////////////////////////////////////////////////////
         //               Index Operations                   //
         //////////////////////////////////////////////////////
 
+        /// <summary>
+        /// Index the matrix at the specified row and column.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
         public ComplexNumber this[int row, int column] {
             get {
                 return Mat[row, column];
@@ -65,6 +69,12 @@ namespace Maths {
             }
         }
 
+        /// <summary>
+        /// Index the matrix at the specified column with vector v.
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
         public Vector this[Vector v, int column] {
             get {
                 Vector newVec = new Vector(v.Size);
@@ -80,6 +90,12 @@ namespace Maths {
             }
         }
 
+        /// <summary>
+        /// Index the matrix at the specified row with vector v.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="v"></param>
+        /// <returns></returns>
         public Vector this[int row, Vector v] {
             get {
                 Vector newVec = new Vector(v.Size);
@@ -95,6 +111,12 @@ namespace Maths {
             }
         }
 
+        /// <summary>
+        /// Index the matrix with all column vector and row vector indices.
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public Matrix this[Vector column, Vector row] {
             get {
                 Matrix newMat = new Matrix(column.Size, row.Size);
@@ -121,16 +143,16 @@ namespace Maths {
         /// <summary>
         /// Check if the dimensions and the elements of the matrices are equal.
         /// </summary>
-        /// <param name="mat2"></param>
+        /// <param name="mat"></param>
         /// <returns>true if all values in A == corresponding values in B</returns>
-        public bool MatrixEquals(Matrix mat2) {
-            if (!AreDimensionsEqual(mat2)) {
+        public bool MatrixEquals(Matrix mat) {
+            if (!AreDimensionsEqual(mat)) {
                 return false;
             }
 
             for (int i = 0; i < Height; ++i) {
                 for (int j = 0; j < Width; ++j) {
-                    if (this[i, j] != mat2[i, j]) {
+                    if (this[i, j] != mat[i, j]) {
                         return false;
                     }
                 }
@@ -145,23 +167,23 @@ namespace Maths {
             }
 
             // If parameter cannot be cast to Matrix return false:
-            Matrix mat2 = obj as Matrix;
-            if ((object)mat2 == null) {
+            Matrix mat = obj as Matrix;
+            if ((object)mat == null) {
                 return false;
             }
 
             // Return true if the fields match:
-            return MatrixEquals(mat2);
+            return MatrixEquals(mat);
         }
 
-        public bool Equals(Matrix mat2) {
+        public bool Equals(Matrix mat) {
             // If parameter is null return false:
-            if ((object)mat2 == null) {
+            if ((object)mat == null) {
                 return false;
             }
 
             // Return true if the fields match:
-            return MatrixEquals(mat2);
+            return MatrixEquals(mat);
         }
 
         public override int GetHashCode() {
@@ -174,15 +196,15 @@ namespace Maths {
         }
 
         // Adds two matrices and returns the result.
-        public Matrix Add(Matrix mat2) {
-            if (Height != mat2.Height || Width != mat2.Width) {
-                throw new IncompatibleMatrixDimensionsException(this, mat2);
+        public Matrix Add(Matrix mat) {
+            if (Height != mat.Height || Width != mat.Width) {
+                throw new IncompatibleMatrixDimensionsException(this, mat);
             }
 
             Matrix newMat = new Matrix(Height, Width);
             for (int i = 0; i < Height; i++) {
                 for (int j = 0; j < Width; j++) {
-                    newMat[i, j] = this[i, j] + mat2[i, j];
+                    newMat[i, j] = this[i, j] + mat[i, j];
                 }
             }
             return newMat;
@@ -198,22 +220,23 @@ namespace Maths {
             return AppyToAllElements(x => x * scalar);
         }
 
+        // Divides the matrix by a scalar.
         public Matrix Divide(ComplexNumber scalar) {
             return Multiply(1.0 / scalar);
         }
 
         // Multiplies two matrices and returns the result.
-        public Matrix Multiply(Matrix mat2) {
-            if (Width != mat2.Height) {
-                throw new IncompatibleMatrixDimensionsException(this, mat2);
+        public Matrix Multiply(Matrix mat) {
+            if (Width != mat.Height) {
+                throw new IncompatibleMatrixDimensionsException(this, mat);
             }
 
             ComplexNumber sum = 0;
-            Matrix newMat = new Matrix(Height, mat2.Width);
+            Matrix newMat = new Matrix(Height, mat.Width);
             for (int i = 0; i < Height; i++) {
-                for (int j = 0; j < mat2.Width; j++) {
+                for (int j = 0; j < mat.Width; j++) {
                     for (int k = 0; k < Width; k++) {
-                        sum += this[i, k] * mat2[k, j];
+                        sum += this[i, k] * mat[k, j];
                     }
                     newMat[i, j] = sum;
                     sum = 0;
@@ -224,15 +247,15 @@ namespace Maths {
         }
 
         // Multiplies two matrices element-wise and returns the result.
-        public Matrix ElementMultiply(Matrix mat2) {
-            if (Width != mat2.Width || Height != mat2.Height) {
-                throw new IncompatibleMatrixDimensionsException(this, mat2);
+        public Matrix ElementMultiply(Matrix mat) {
+            if (Width != mat.Width || Height != mat.Height) {
+                throw new IncompatibleMatrixDimensionsException(this, mat);
             }
 
             Matrix newMat = new Matrix(Height, Width);
             for (int i = 0; i < Height; i++) {
                 for (int j = 0; j < Width; j++) {
-                    newMat[i, j] = this[i, j] * mat2[i, j];
+                    newMat[i, j] = this[i, j] * mat[i, j];
                 }
             }
 
@@ -253,7 +276,6 @@ namespace Maths {
             return trace;
         }
 
-        // Transpose matrix
         public Matrix Transpose() {
             Matrix newMat = new Matrix(Width, Height);
             for (int i = 0; i < Height; i++) {
