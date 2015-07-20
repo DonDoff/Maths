@@ -67,6 +67,43 @@ namespace Maths {
             return newMat;
         }
 
+        public static Matrix Symmetric(int size, Random seed = null) {
+            if (seed == null) {
+                seed = new Random();
+            }
+
+            Matrix newMat = new Matrix(size);
+            for (int i = 0; i < size; i++) {
+                for (int j = i; j < size; j++) {
+                    newMat[i, j] = seed.NextDouble();
+                }
+            }
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < i; j++) {
+                    newMat[i, j] = newMat[j, i];
+                }
+            }
+
+            return newMat;
+        }
+
+        public static Matrix Hankel(int size, Vector firstColumn, Vector lastColumn) {
+            if (size != firstColumn.Size || size != lastColumn.Size) {
+                throw new MatrixException("The specified size and vector sizes don't match!");
+            }
+            if (firstColumn[firstColumn.Size - 1] != lastColumn[0]) {
+                throw new MatrixException("The last and first index of the specified vectors don't match!");
+            }
+
+            Vector concat = firstColumn.ConcatenateRows(lastColumn[Vector.Arrange(1, lastColumn.Size)]).ToColumnVector();
+            
+            Matrix newMat = new Matrix(size);
+            for (int i = 0; i < size; i++) {
+                newMat[Vector.Arrange(size), i] = concat.SubMatrix(i, i+size, 0, 1).ToColumnVector();
+            }
+            return newMat;
+        }
+
         public static Matrix Zeros(int rows, int columns) {
             return new Matrix(rows, columns);
         }

@@ -54,6 +54,9 @@
     <Compile Include="MatrixTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatisticsTest.cs" />
+    <Compile Include="MatrixDecompositionTest.cs" />
+    <Compile Include="MatrixFactoryTest.cs" />
+    <Compile Include="MatrixMathTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Maths\Maths.csproj">

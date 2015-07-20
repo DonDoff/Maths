@@ -41,8 +41,6 @@ namespace ConsoleApplication {
             //Plot.CreateMathsPlotWindow(new List<ColumnVector> { xx, xx }, new List<ColumnVector> { b, y });
 
 
-
-
             //Bidiagonalization bid = A.Bidiagonalization();
             //Console.WriteLine("U:\n" + bid.U + "\n");
             //Console.WriteLine("B:\n" + bid.B + "\n");

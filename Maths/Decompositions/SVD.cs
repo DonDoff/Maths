@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Maths {
     // Based on: https://math.dartmouth.edu/~m56s13/Southworth_proj.pdf
-    public class SVD {
+    public class SVD : IDecomposition {
         private static int ITERATION_DEPTH = 50;
 
         public Matrix U { get; private set; }

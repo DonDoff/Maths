@@ -20,28 +20,20 @@ namespace Maths {
 
         private void MakeDecomposition() {
             Matrix A = M.Copy();
+            int length = Math.Min(M.Height - 1, M.Width);
+            Q = MatrixFactory.IdentityMatrix(M.Height);
 
-            Matrix[] Qs = new Matrix[Math.Min(M.Height - 1, M.Width)];
-
-            for (int k = 0; k < Qs.Length; k++) {
+            for (int k = 0; k < length; k++) {
                 Vector x = new Vector(A, 0);
-                Matrix Q = MatrixMath.CalculateHouseholderTransform(x);
-                Matrix QA = Q * A;
-                A = QA.SubMatrix(1, A.Height, 1, A.Width);
+                Matrix Q_k = MatrixMath.CalculateHouseholderTransform(x);
+                A = (Q_k * A).SubMatrix(1, A.Height, 1, A.Width);
 
-                Qs[k] = MatrixFactory.IdentityMatrix(M.Height);
-                Qs[k][Vector.Arrange(k, M.Height), Vector.Arrange(k, M.Height)] = Q;
+                Matrix Q_temp = MatrixFactory.IdentityMatrix(M.Height);
+                Q_temp[Vector.Arrange(k, M.Height), Vector.Arrange(k, M.Height)] = Q_k;
+
+                Q *= Q_temp;
             }
-
-            if (Qs.Length == 0) {
-                Q = MatrixFactory.IdentityMatrix(M.Height);
-            } else {
-                Q = Qs[0];
-                for (int i = 1; i < Qs.Length; i++) {
-                    Q *= Qs[i];
-                }
-            }
-
+            
             R = Q.ConjugateTranspose() * M;
         }
 

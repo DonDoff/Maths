@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication", "Conso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathsTest", "MathsTest\MathsTest.csproj", "{10E5FCE1-514D-4BC5-B754-CC1C6D12AEC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfPlotApplication", "WpfPlotApplication\WpfPlotApplication.csproj", "{C73756F1-0617-44C3-9511-4963A8CDE48D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,18 +57,6 @@ Global
 		{10E5FCE1-514D-4BC5-B754-CC1C6D12AEC4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{10E5FCE1-514D-4BC5-B754-CC1C6D12AEC4}.Release|Win32.ActiveCfg = Release|Any CPU
 		{10E5FCE1-514D-4BC5-B754-CC1C6D12AEC4}.Release|x86.ActiveCfg = Release|Any CPU
-		{C73756F1-0617-44C3-9511-4963A8CDE48D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C73756F1-0617-44C3-9511-4963A8CDE48D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C73756F1-0617-44C3-9511-4963A8CDE48D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{C73756F1-0617-44C3-9511-4963A8CDE48D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{C73756F1-0617-44C3-9511-4963A8CDE48D}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{C73756F1-0617-44C3-9511-4963A8CDE48D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C73756F1-0617-44C3-9511-4963A8CDE48D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C73756F1-0617-44C3-9511-4963A8CDE48D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C73756F1-0617-44C3-9511-4963A8CDE48D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{C73756F1-0617-44C3-9511-4963A8CDE48D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{C73756F1-0617-44C3-9511-4963A8CDE48D}.Release|Win32.ActiveCfg = Release|Any CPU
-		{C73756F1-0617-44C3-9511-4963A8CDE48D}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
