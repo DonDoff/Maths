@@ -39,89 +39,18 @@ namespace Maths {
         }
 
         // Constructs a Matrix from another matrix, copying the elements.
-        public Matrix(Matrix mat2) {
-            Height = mat2.Height;
-            Width = mat2.Width;
+        public Matrix(Matrix m) {
+            Height = m.Height;
+            Width = m.Width;
             Mat = new ComplexNumber[Height, Width];
             for (int i = 0; i < Height; i++) {
                 for (int j = 0; j < Width; j++) {
-                    Mat[i, j] = mat2[i, j];
+                    Mat[i, j] = m[i, j];
                 }
             }
         }
 
-        public static Matrix ParseFrom(string matString) {
-            matString = matString.Replace(" ", "");
-
-            string[] rows = matString.Split(';');
-            Matrix newMat = new Matrix(rows.Length, rows[0].Split(',').Length);
-
-            try {
-                for (int i = 0; i < newMat.Height; i++) {
-                    string[] columns = rows[i].Split(',');
-                    for (int j = 0; j < newMat.Width; j++) {
-                        newMat[i, j] = new ComplexNumber(columns[j]);
-                    }
-                }
-            } catch (Exception e) {
-                Console.WriteLine(e.Message);
-            }
-            return newMat;
-        }
-
-        public static Matrix IdentityMatrix(int size) {
-            Matrix newMat = new Matrix(size, size);
-            for (int i = 0; i < size; i++) {
-                for (int j = 0; j < size; j++) {
-                    newMat[i, j] = 0;
-                }
-                newMat[i, i] = 1;
-            }
-            return newMat;
-        }
-
-        // Fill the matrix with random complex numbers
-        public static Matrix RandomComplex(int rows, int columns, Random seed = null) {
-            if (seed == null) {
-                seed = new Random();
-            }
-
-            Matrix newMat = new Matrix(rows, columns);
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < columns; j++) {
-                    newMat[i, j] = new ComplexNumber(seed.NextDouble(), seed.NextDouble());
-                }
-            }
-            return newMat;
-        }
-
-        // Fill the matrix with random real numbers
-        public static Matrix RandomReal(int rows, int columns, Random seed = null) {
-            if (seed == null) {
-                seed = new Random();
-            }
-
-            Matrix newMat = new Matrix(rows, columns);
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < columns; j++) {
-                    newMat[i, j] = seed.NextDouble();
-                }
-            }
-            return newMat;
-        }
-
-        public static Matrix Zeros(int rows, int columns) {
-            return new Matrix(rows, columns);
-        }
-
-        public static Matrix Ones(int rows, int columns) {
-            return new Matrix(rows, columns).AppyToAllElements(x => 1);
-        }
-
-        // Fill the matrix with complex number c
-        public void Fill(ComplexNumber c) {
-            this.AppyToAllElements(x => c);
-        }
+        
 
         //////////////////////////////////////////////////////
         //               Index Operations                   //
@@ -357,7 +286,7 @@ namespace Maths {
         /// Function returns the inverted matrix
         public Matrix Invert() {
             SolveLinearEquations sle = new SolveLinearEquations(this);
-            return sle.Solve(IdentityMatrix(Height));
+            return sle.Solve(MatrixFactory.IdentityMatrix(Height));
         }
 
         public LUDecomposition LU() {
@@ -544,7 +473,7 @@ namespace Maths {
         }
 
         public bool IsUnitary() {
-            return IsSquare() && (this.ConjugateTranspose() * this) == IdentityMatrix(this.Height);
+            return IsSquare() && (this.ConjugateTranspose() * this) == MatrixFactory.IdentityMatrix(this.Height);
         }
 
         public bool IsPositiveDefinite() {

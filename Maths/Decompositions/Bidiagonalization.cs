@@ -52,7 +52,7 @@ namespace Maths {
 
                     A = (U * A).SubMatrix(0, A.Height, 1, A.Width);
 
-                    Matrix U_k = Matrix.IdentityMatrix(M.Height);
+                    Matrix U_k = MatrixFactory.IdentityMatrix(M.Height);
                     for (int i = 0; i < U.Height; i++) {
                         for (int j = 0; j < U.Width; j++) {
                             U_k[i + k, j + k] = U[i, j];
@@ -71,7 +71,7 @@ namespace Maths {
                     A = (V * A).SubMatrix(0, A.Height, 1, A.Width);
                     A = A.Transpose();
 
-                    Matrix V_k = Matrix.IdentityMatrix(M.Width);
+                    Matrix V_k = MatrixFactory.IdentityMatrix(M.Width);
                     for (int i = 0; i < V.Height; i++) {
                         for (int j = 0; j < V.Width; j++) {
                             V_k[i + k + 1, j + k + 1] = V[i, j];
@@ -84,7 +84,7 @@ namespace Maths {
             }
 
             if (Us.Length == 0) {
-                U = Matrix.IdentityMatrix(M.Height);
+                U = MatrixFactory.IdentityMatrix(M.Height);
             } else {
                 U = Us[0];
                 for (int i = 1; i < Us.Length; i++) {
@@ -93,7 +93,7 @@ namespace Maths {
             }
 
             if (Vs.Length == 0) {
-                V = Matrix.IdentityMatrix(M.Width);
+                V = MatrixFactory.IdentityMatrix(M.Width);
             } else {
                 V = Vs[0];
                 for (int i = 1; i < Vs.Length; i++) {

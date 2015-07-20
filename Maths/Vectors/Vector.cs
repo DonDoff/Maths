@@ -23,7 +23,7 @@ namespace Maths {
             }
         }
 
-        public static new Vector ParseFrom(string vecString) {
+        public static Vector ParseFrom(string vecString) {
             vecString = vecString.Replace(" ", "");
 
             string[] rows = vecString.Split(new char[] { ',', ';' });
@@ -89,22 +89,22 @@ namespace Maths {
 
         // Fill the vector with 1s
         public static Vector Zeros(int size) {
-            return Matrix.Zeros(size, 1).ToColumnVector();
+            return MatrixFactory.Zeros(size, 1).ToColumnVector();
         }
 
         // Fill the vector with 1s
         public static Vector Ones(int size) {
-            return Matrix.Ones(size, 1).ToColumnVector();
+            return MatrixFactory.Ones(size, 1).ToColumnVector();
         }
 
         // Fill the vector with random complex numbers
         public static Vector RandomComplex(int size, Random seed) {
-            return Matrix.RandomComplex(size, 1, seed).ToColumnVector();
+            return MatrixFactory.RandomComplex(size, 1, seed).ToColumnVector();
         }
 
         // Fill the vector with random real numbers
         public static Vector RandomReal(int size, Random seed) {
-            return Matrix.RandomReal(size, 1, seed).ToColumnVector();
+            return MatrixFactory.RandomReal(size, 1, seed).ToColumnVector();
         }
 
         // Create a vector starting from 0 until end, in steps of 1

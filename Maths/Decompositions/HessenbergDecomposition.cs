@@ -32,7 +32,7 @@ namespace Maths {
                 Vector x = A[Vector.Arrange(k + 1, A.Height), k];
                 HT = MatrixMath.CalculateHouseholderTransform(x);
 
-                Matrix H_k = Matrix.IdentityMatrix(M.Height);
+                Matrix H_k = MatrixFactory.IdentityMatrix(M.Height);
                 for (int i = 0; i < HT.Height; i++) {
                     for (int j = 0; j < HT.Width; j++) {
                         H_k[i + k + 1, j + k + 1] = HT[i, j];
@@ -44,7 +44,7 @@ namespace Maths {
             }
 
             if (Hs.Length == 0) {
-                HT = Matrix.IdentityMatrix(M.Height);
+                HT = MatrixFactory.IdentityMatrix(M.Height);
             } else {
                 HT = Hs[Hs.Length - 1];
                 for (int i = Hs.Length - 2; i >= 0; i--) {

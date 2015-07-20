@@ -15,12 +15,13 @@ namespace Maths {
 
         public static void CreateMathsPlotWindow(List<Vector> xs, List<Vector> ys) {
             Thread thread = new Thread(() => {
-                MathsPlotWindowModel vm = new MathsPlotWindowModel(xs, ys);
+                MathsPlotViewModel vm = new MathsPlotViewModel(xs, ys);
                 MathsPlotWindow w = new MathsPlotWindow(vm);
                 w.Show();
                 System.Windows.Threading.Dispatcher.Run();
             });
             thread.SetApartmentState(ApartmentState.STA);
+            thread.IsBackground = true;
             thread.Start();
         }
     }

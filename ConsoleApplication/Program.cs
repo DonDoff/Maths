@@ -12,23 +12,23 @@ namespace ConsoleApplication {
         static void Main(string[] args) {
             Matrix A;
 
-            //A = Matrix.ParseFrom("4, 2, 2, 1; 2, -3, 1, 1; 2, 1, 3, 1; 1, 1, 1, 2; 1, 2, 3, 4; 3, 2, 4, 1");
-            //A = Matrix.ParseFrom("1, 0, 0, 0, 2; 0, 0, 3, 0, 0; 0, 0, 0, 0, 0; 0, 4, 0, 0, 0");
-            //A = Matrix.ParseFrom("1, 1, 1; 1, 1, 1; 1, -1, 1; 1, 1, -1");
-            //A = Matrix.ParseFrom("1, 1, 1, 1; 1, 1, -1, 1; 1, 1, 1, -1");
-            //A = Matrix.ParseFrom("1; 1; 3");
-            //A = Matrix.ParseFrom("1, 1, 3");
-            //A = Matrix.ParseFrom("4, 2, 0; 2, -3, 1; 3, 2, 5");
-            //A = Matrix.ParseFrom("1, 1; 1, 2; 1, 3; 1, 4; 1, 5");
-            //A = Matrix.ParseFrom("4, 3, 0, 2; 2, 1, 2, 1; 4, 4, 0, 3");
-            A = Matrix.ParseFrom("1, -1, 4; 1, 4, -2; 1, 4, 2; 1, -1, 0");
+            A = MatrixFactory.ParseFrom("4, 2, 2, 1, 5; 2, -3, 1, 1, 3; 2, 1, 3, 1, 4; 1, 1, 1, 2, 3; 1, 2, 6, 4, 1");
+            //A = MatrixFactory.ParseFrom("1, 0, 0, 0, 2; 0, 0, 3, 0, 0; 0, 0, 0, 0, 0; 0, 4, 0, 0, 0");
+            //A = MatrixFactory.ParseFrom("1, 1, 1; 1, 1, 1; 1, -1, 1; 1, 1, -1");
+            //A = MatrixFactory.ParseFrom("1, 1, 1, 1; 1, 1, -1, 1; 1, 1, 1, -1");
+            //A = MatrixFactory.ParseFrom("1; 1; 3");
+            //A = MatrixFactory.ParseFrom("1, 1, 3");
+            //A = MatrixFactory.ParseFrom("4, 2, 0; 2, -3, 1; 3, 2, 5");
+            //A = MatrixFactory.ParseFrom("1, 1; 1, 2; 1, 3; 1, 4; 1, 5");
+            //A = MatrixFactory.ParseFrom("4, 3, 0, 2; 2, 1, 2, 1; 4, 4, 0, 3");
+            //A = MatrixFactory.ParseFrom("1, -1, 4; 1, 4, -2; 1, 4, 2; 1, -1, 0");
 
             Console.WriteLine("A:\n" + A + "\n");
 
-            QRDecomposition qr = A.QR();
-            Console.WriteLine("Q:\n" + qr.Q + "\n");
-            Console.WriteLine("R:\n" + qr.R + "\n");
-            Console.WriteLine("QR:\n" + qr.Q * qr.R + "\n");
+            //QRDecomposition qr = A.QR();
+            //Console.WriteLine("Q:\n" + qr.Q + "\n");
+            //Console.WriteLine("R:\n" + qr.R + "\n");
+            //Console.WriteLine("QR:\n" + qr.Q * qr.R + "\n");
 
 
             //ColumnVector b = ColumnVector.ParseFrom("6, 5, 7, 10, 15");
@@ -49,11 +49,11 @@ namespace ConsoleApplication {
             //Console.WriteLine("V:\n" + bid.V + "\n");
             //Console.WriteLine("UBV:\n" + bid.U * bid.B * bid.V.ConjugateTranspose() + "\n");
 
-            //SVD svd = A.SVD();
-            //Console.WriteLine("U:\n" + svd.U + "\n");
-            //Console.WriteLine("D:\n" + svd.D + "\n");
-            //Console.WriteLine("V:\n" + svd.V + "\n");
-            //Console.WriteLine("UDV:\n" + svd.U * svd.D * svd.V.ConjugateTranspose() + "\n");
+            SVD svd = A.SVD();
+            Console.WriteLine("U:\n" + svd.U + "\n");
+            Console.WriteLine("D:\n" + svd.D + "\n");
+            Console.WriteLine("V:\n" + svd.V + "\n");
+            Console.WriteLine("UDV:\n" + svd.U * svd.D * svd.V.ConjugateTranspose() + "\n");
 
             //int N = 1000;
             //double tStart = 0;

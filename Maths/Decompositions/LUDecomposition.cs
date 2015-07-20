@@ -25,10 +25,10 @@ namespace Maths {
                 throw new MatrixException("The matrix is not square!");
             }
 
-            L = Matrix.IdentityMatrix(M.Height);
+            L = MatrixFactory.IdentityMatrix(M.Height);
             U = M.Copy();
 
-            P = Matrix.IdentityMatrix(M.Height);
+            P = MatrixFactory.IdentityMatrix(M.Height);
 
             ComplexNumber p = 0;
             ComplexNumber pom2;

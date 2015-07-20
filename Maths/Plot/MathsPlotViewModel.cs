@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System;
 
 namespace Maths {
-    public class MathsPlotWindowModel : INotifyPropertyChanged {
+    public class MathsPlotViewModel : INotifyPropertyChanged {
 
         private PlotModel plotModel;
         public PlotModel PlotModel
@@ -18,7 +18,7 @@ namespace Maths {
             set { plotModel = value; OnPropertyChanged("PlotModel"); }
         }
         
-        public MathsPlotWindowModel(List<Vector> xs, List<Vector> ys)
+        public MathsPlotViewModel(List<Vector> xs, List<Vector> ys)
         {
             PlotModel = new PlotModel();
             SetUpModel(xs, ys);

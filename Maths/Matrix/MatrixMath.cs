@@ -64,7 +64,7 @@ namespace Maths {
 
         public static Matrix CalculateHouseholderTransform(Vector x) {
             if (x.EuclidianNorm() == 0) {
-                return Matrix.IdentityMatrix(x.Height);
+                return MatrixFactory.IdentityMatrix(x.Height);
             }
 
             double a = Math.Sign(x[0].R) * x.EuclidianNorm();
@@ -72,7 +72,7 @@ namespace Maths {
             Vector v = u / u.EuclidianNorm();
 
             ComplexNumber w = (x.ConjugateTranspose() * v).ToComplexNumber() / (v.ConjugateTranspose() * x).ToComplexNumber();
-            return (Matrix.IdentityMatrix(x.Height) - (1.0 + w) * v * v.ConjugateTranspose());
+            return (MatrixFactory.IdentityMatrix(x.Height) - (1.0 + w) * v * v.ConjugateTranspose());
         }
 
         public static Matrix CalculatGivensRotation(ComplexNumber a, ComplexNumber b) {
