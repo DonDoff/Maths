@@ -31,7 +31,7 @@ namespace Maths {
 
             try {
                 for (int i = 0; i < newVec.Size; i++) {
-                    newVec[i] = new ComplexNumber(rows[i]);
+                    newVec[i] = new Complex(rows[i]);
                 }
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
@@ -50,9 +50,9 @@ namespace Maths {
         }
 
         public double EuclidianNorm() {
-            ComplexNumber norm = 0;
+            Complex norm = 0;
             for (int i = 0; i < Size; i++) {
-                norm += this[i] * this[i];
+                norm += this[i].Conjugate() * this[i];
             }
             return Math.Sqrt(norm.R);
         }
@@ -68,11 +68,11 @@ namespace Maths {
             return newV;
         }
 
-        public ComplexNumber DotProduct(Vector v) {
+        public Complex DotProduct(Vector v) {
             if (Size != v.Size) {
                 throw new IncompatibleMatrixDimensionsException(this, v);
             }
-            ComplexNumber cSum = new ComplexNumber();
+            Complex cSum = new Complex();
             for (int i = 0; i < Size; i++) {
                 cSum += this[i] * v[i].Conjugate();
             }
@@ -82,7 +82,7 @@ namespace Maths {
         public Vector CircShift(int shift) {
             Vector newV = new Vector(Size);
             for (int i = 0; i < Size; i++) {
-                newV[i] = this[ComplexNumberMath.Mod((i + shift), Size)];
+                newV[i] = this[ComplexMath.Mod((i + shift), Size)];
             }
             return newV;
         }
@@ -99,7 +99,7 @@ namespace Maths {
 
         // Fill the vector with random complex numbers
         public static Vector RandomComplex(int size, Random seed) {
-            return MatrixFactory.RandomComplex(size, 1, seed).ToColumnVector();
+            return MatrixFactory.Random(size, 1, seed).ToColumnVector();
         }
 
         // Fill the vector with random real numbers
@@ -156,8 +156,8 @@ namespace Maths {
         }
 
         // Computes the sum of the vector elements
-        public ComplexNumber Sum() {
-            ComplexNumber sum = 0;
+        public Complex Sum() {
+            Complex sum = 0;
             for (int i = 0; i < Size; i++) {
                 sum += this[i];
             }
@@ -169,7 +169,7 @@ namespace Maths {
         }
 
         // Overloads the index operator.
-        public ComplexNumber this[int pos] {
+        public Complex this[int pos] {
             get {
                 return this[pos, 0];
             }
@@ -188,31 +188,31 @@ namespace Maths {
         }
 
 
-        public static Vector operator +(ComplexNumber scalar, Vector vec1) {
+        public static Vector operator +(Complex scalar, Vector vec1) {
             return (vec1.Add(scalar)).ToColumnVector();
         }
 
-        public static Vector operator +(Vector vec1, ComplexNumber scalar) {
+        public static Vector operator +(Vector vec1, Complex scalar) {
             return scalar + vec1;
         }
 
-        public static Vector operator -(ComplexNumber scalar, Vector vec1) {
+        public static Vector operator -(Complex scalar, Vector vec1) {
             return scalar + (-1 * vec1);
         }
 
-        public static Vector operator -(Vector vec1, ComplexNumber scalar) {
+        public static Vector operator -(Vector vec1, Complex scalar) {
             return vec1 + (-1 * scalar);
         }
 
-        public static Vector operator *(ComplexNumber scalar, Vector vec1) {
+        public static Vector operator *(Complex scalar, Vector vec1) {
             return (vec1.Multiply(scalar)).ToColumnVector();
         }
 
-        public static Vector operator *(Vector vec1, ComplexNumber scalar) {
+        public static Vector operator *(Vector vec1, Complex scalar) {
             return scalar * vec1;
         }
 
-        public static Vector operator /(Vector vec1, ComplexNumber scalar) {
+        public static Vector operator /(Vector vec1, Complex scalar) {
             return (vec1.Divide(scalar)).ToColumnVector();
         }
 

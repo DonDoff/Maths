@@ -17,7 +17,7 @@ namespace Maths {
         public IFilter Filter() {
             int halfWindowSize = WindowSize / 2;
             for (int i = halfWindowSize; i < Data.Size - halfWindowSize; i++) {
-                IList<ComplexNumber> windowedData = new List<ComplexNumber>(WindowSize);
+                IList<Complex> windowedData = new List<Complex>(WindowSize);
                 for (int j = 0; j < WindowSize; j++) {
                     windowedData.Add(Data[i + j - halfWindowSize]);
                 }

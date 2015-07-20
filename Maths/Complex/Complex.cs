@@ -7,34 +7,34 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Maths {
-    public class ComplexNumber {
+    public class Complex {
 
         private const double EPSILON = 1e-10;
         private const int roundedDecimals = 2;
 
-        public static ComplexNumber MAX = new ComplexNumber(double.MaxValue, double.MaxValue);
-        public static ComplexNumber MIN = new ComplexNumber(double.MinValue, double.MinValue);
-        public static ComplexNumber UNIT_I = new ComplexNumber(0, 1);
+        public static Complex MAX = new Complex(double.MaxValue, double.MaxValue);
+        public static Complex MIN = new Complex(double.MinValue, double.MinValue);
+        public static Complex UNIT_I = new Complex(0, 1);
 
         public double R { get; set; }
         public double I { get; set; }
 
-        public ComplexNumber() {
+        public Complex() {
             R = 0;
             I = 0;
         }
 
-        public ComplexNumber(double r, double i) {
+        public Complex(double r, double i) {
             R = r;
             I = i;
         }
 
-        public ComplexNumber(ComplexNumber c) {
+        public Complex(Complex c) {
             R = c.R;
             I = c.I;
         }
 
-        public ComplexNumber(string cString) {
+        public Complex(string cString) {
             cString = cString.Replace(" ", "");
             Regex regex = new Regex(@"^(?:\+?(?<r>-?(?:\d+\.?\d*|\d*\.?\d+))" + //Find a complex number and name the first group r. Capture the - and not the + sign.
                 @"(?=[+-])\+?(?<i>-?(?:\d+\.?\d*|\d*\.?\d+)?[ij]))" +           //Find the imaginary number corresponding with the complex number and name the group i. Capture the - and not the + sign.
@@ -63,33 +63,33 @@ namespace Maths {
             }
         }
 
-        public static implicit operator ComplexNumber(double scalar) {
-            return new ComplexNumber(scalar, 0);
+        public static implicit operator Complex(double scalar) {
+            return new Complex(scalar, 0);
         }
 
         public double Abs() {
-            return ComplexNumberMath.Abs(this);
+            return ComplexMath.Abs(this);
         }
 
-        public ComplexNumber Conjugate() {
-            return new ComplexNumber(R, -I);
+        public Complex Conjugate() {
+            return new Complex(R, -I);
         }
 
-        public ComplexNumber Add(ComplexNumber c) {
-            return new ComplexNumber(R + c.R, I + c.I);
+        public Complex Add(Complex c) {
+            return new Complex(R + c.R, I + c.I);
         }
 
-        public ComplexNumber Multiply(ComplexNumber c) {
-            return new ComplexNumber(R * c.R - I * c.I, R*c.I + I*c.R);
+        public Complex Multiply(Complex c) {
+            return new Complex(R * c.R - I * c.I, R*c.I + I*c.R);
         }
         
-        public ComplexNumber Divide(ComplexNumber c) {
-            return new ComplexNumber((R * c.R + I * c.I) / (c.R * c.R + c.I * c.I), 
+        public Complex Divide(Complex c) {
+            return new Complex((R * c.R + I * c.I) / (c.R * c.R + c.I * c.I), 
                 (I * c.R - R * c.I) / (c.R * c.R + c.I * c.I));
         }
 
-        public ComplexNumber Round(int decimals) {
-            return new ComplexNumber(Math.Round(R, decimals), Math.Round(I, decimals));
+        public Complex Round(int decimals) {
+            return new Complex(Math.Round(R, decimals), Math.Round(I, decimals));
         }
 
         public bool IsReal() {
@@ -101,47 +101,47 @@ namespace Maths {
         }
 
         // Addition operators
-        public static ComplexNumber operator +(ComplexNumber c1, ComplexNumber c2) {
+        public static Complex operator +(Complex c1, Complex c2) {
             return c1.Add(c2);
         }
 
         // Subtract operators
-        public static ComplexNumber operator -(ComplexNumber c1) {
+        public static Complex operator -(Complex c1) {
             return -1*c1;
         }
 
         // Subtract operators
-        public static ComplexNumber operator -(ComplexNumber c1, ComplexNumber c2) {
+        public static Complex operator -(Complex c1, Complex c2) {
             return c1.Add(-1 * c2);
         }
 
         // Multiply operators        
-        public static ComplexNumber operator *(ComplexNumber c1, ComplexNumber c2) {
+        public static Complex operator *(Complex c1, Complex c2) {
             return c1.Multiply(c2);
         }
 
         // Division operators
-        public static ComplexNumber operator /(ComplexNumber c1, ComplexNumber c2) {
+        public static Complex operator /(Complex c1, Complex c2) {
             return c1.Divide(c2);
         }
 
-        public static bool operator >(ComplexNumber c1, ComplexNumber c2) {
+        public static bool operator >(Complex c1, Complex c2) {
             return c1.R > c2.R;
         }
 
-        public static bool operator >=(ComplexNumber c1, ComplexNumber c2) {
+        public static bool operator >=(Complex c1, Complex c2) {
             return c1.R >= c2.R;
         }
 
-        public static bool operator <(ComplexNumber c1, ComplexNumber c2) {
+        public static bool operator <(Complex c1, Complex c2) {
             return c1.R < c2.R;
         }
 
-        public static bool operator <=(ComplexNumber c1, ComplexNumber c2) {
+        public static bool operator <=(Complex c1, Complex c2) {
             return c1.R<= c2.R;
         }
 
-        private bool fieldsMatch(ComplexNumber c) {
+        private bool fieldsMatch(Complex c) {
             return Math.Abs(R - c.R) < EPSILON && Math.Abs(I - c.I) < EPSILON;
         }
 
@@ -152,7 +152,7 @@ namespace Maths {
             }
 
             // If parameter cannot be cast to Complex return false.
-            ComplexNumber c = obj as ComplexNumber;
+            Complex c = obj as Complex;
             if ((System.Object)c == null) {
                 return false;
             }
@@ -161,7 +161,7 @@ namespace Maths {
             return fieldsMatch(c);
         }
 
-        public bool Equals(ComplexNumber c) {
+        public bool Equals(Complex c) {
             // If parameter is null return false:
             if ((object)c == null) {
                 return false;
@@ -175,7 +175,7 @@ namespace Maths {
             return (int) R ^ (int) I;
         }
         
-        public static bool operator ==(ComplexNumber c1, ComplexNumber c2) {
+        public static bool operator ==(Complex c1, Complex c2) {
             // If both are null, or both are same instance, return true.
             if (System.Object.ReferenceEquals(c1, c2)) {
                 return true;
@@ -190,7 +190,7 @@ namespace Maths {
             return c1.fieldsMatch(c2);
         }
 
-        public static bool operator !=(ComplexNumber c1, ComplexNumber c2) {
+        public static bool operator !=(Complex c1, Complex c2) {
             return !(c1 == c2);
         }
         

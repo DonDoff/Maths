@@ -28,11 +28,11 @@ namespace Maths {
             L = new Matrix(M.Height);
             for (int i = 0; i < M.Height; i++) {
                 for (int j = 0; j < (i + 1); j++) {
-                    ComplexNumber sum = 0;
+                    Complex sum = 0;
                     for (int k = 0; k < j; k++) {
                         sum += L[i, k] * L[j, k].Conjugate();
                     }
-                    L[i, j] = (i == j) ? ComplexNumberMath.Sqrt(M[j, j] - sum) :
+                    L[i, j] = (i == j) ? ComplexMath.Sqrt(M[j, j] - sum) :
                         (1.0 / L[j, j] * (M[i, j] - sum));
                 }
             }

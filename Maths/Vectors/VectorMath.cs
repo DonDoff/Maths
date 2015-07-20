@@ -13,11 +13,11 @@ namespace Maths {
             V = v;
         }
 
-        public ComplexNumber ExpectedValue() {
+        public Complex ExpectedValue() {
             return V.Sum()/((double) V.Size);
         }
 
-        public ComplexNumber PopulationMean() {
+        public Complex PopulationMean() {
             return ExpectedValue();
         }
 
@@ -37,19 +37,19 @@ namespace Maths {
             return Math.Sqrt(PopulationVariance());
         }
 
-        public ComplexNumber SampleCovariance(Vector v2) {
+        public Complex SampleCovariance(Vector v2) {
             return Covariance(v2) / (V.Size - 1.0);
         }
 
-        public ComplexNumber PopulationCovariance(Vector v2) {
+        public Complex PopulationCovariance(Vector v2) {
             return Covariance(v2) / (V.Size - 0.0);
         }
 
-        public ComplexNumber SampleCorrelation(Vector v2) {
+        public Complex SampleCorrelation(Vector v2) {
             return SampleCovariance(v2)/(SampleStandardDeviation()*new VectorMath(v2).SampleStandardDeviation());
         }
 
-        public ComplexNumber PopulationCorrelation(Vector v2) {
+        public Complex PopulationCorrelation(Vector v2) {
             return PopulationCovariance(v2) / (PopulationStandardDeviation() * new VectorMath(v2).PopulationStandardDeviation());
         }
 
@@ -58,7 +58,7 @@ namespace Maths {
             return (x.ConjugateTranspose() * x).ToComplexNumber().R;
         }
 
-        private ComplexNumber Covariance(Vector v) {
+        private Complex Covariance(Vector v) {
             Vector x = V - ExpectedValue();
             Vector y = v - new VectorMath(v).ExpectedValue();
             return (x.Transpose() * y).ToComplexNumber();

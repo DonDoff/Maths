@@ -12,18 +12,20 @@ namespace Maths {
 
         private Matrix M;
 
-        public QRDecomposition(Matrix m) {
+        public QRDecomposition(Matrix m, bool usingGivens = false) {
             M = m;
-            MakeDecomposition();
-            //MakeDecompositionUsingGivens();
+            if (usingGivens) {
+                MakeDecompositionUsingGivens();
+            } else {
+                MakeDecomposition();
+            }
         }
 
         private void MakeDecomposition() {
             Matrix A = M.Copy();
-            int length = Math.Min(M.Height - 1, M.Width);
             Q = MatrixFactory.IdentityMatrix(M.Height);
 
-            for (int k = 0; k < length; k++) {
+            for (int k = 0; k < Math.Min(M.Height - 1, M.Width); k++) {
                 Vector x = new Vector(A, 0);
                 Matrix Q_k = MatrixMath.CalculateHouseholderTransform(x);
                 A = (Q_k * A).SubMatrix(1, A.Height, 1, A.Width);

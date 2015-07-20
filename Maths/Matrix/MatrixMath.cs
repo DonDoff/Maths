@@ -11,27 +11,27 @@ namespace Maths {
         //////////////////////////////////////////////////////
 
         public static Matrix Sin(Matrix m) {
-            return m.AppyToAllElements(x => ComplexNumberMath.Sin(x));
+            return m.AppyToAllElements(x => ComplexMath.Sin(x));
         }
 
         public static Matrix Cos(Matrix m) {
-            return m.AppyToAllElements(x => ComplexNumberMath.Cos(x));
+            return m.AppyToAllElements(x => ComplexMath.Cos(x));
         }
 
         public static Matrix Sinh(Matrix m) {
-            return m.AppyToAllElements(x => ComplexNumberMath.Sinh(x));
+            return m.AppyToAllElements(x => ComplexMath.Sinh(x));
         }
 
         public static Matrix Cosh(Matrix m) {
-            return m.AppyToAllElements(x => ComplexNumberMath.Cosh(x));
+            return m.AppyToAllElements(x => ComplexMath.Cosh(x));
         }
 
         public static Matrix Sinc(Matrix m) {
-            return m.AppyToAllElements(x => ComplexNumberMath.Sinc(x));
+            return m.AppyToAllElements(x => ComplexMath.Sinc(x));
         }
 
-        public static ComplexNumber Min(Matrix m) {
-            ComplexNumber min = ComplexNumber.MAX;
+        public static Complex Min(Matrix m) {
+            Complex min = Complex.MAX;
             for (int i = 0; i < m.Height; i++) {
                 for (int j = 0; j < m.Width; j++) {
                     if (m[i, j] < min) {
@@ -42,8 +42,8 @@ namespace Maths {
             return min;
         }
 
-        public static ComplexNumber Max(Matrix m) {
-            ComplexNumber max = ComplexNumber.MIN;
+        public static Complex Max(Matrix m) {
+            Complex max = Complex.MIN;
             for (int i = 0; i < m.Height; i++) {
                 for (int j = 0; j < m.Width; j++) {
                     if (m[i, j] > max) {
@@ -55,11 +55,15 @@ namespace Maths {
         }
 
         public static Matrix Exp(Matrix m) {
-            return m.AppyToAllElements(x => ComplexNumberMath.Exp(x));
+            return m.AppyToAllElements(x => ComplexMath.Exp(x));
         }
 
         public static Matrix Sqrt(Matrix m) {
-            return m.AppyToAllElements(x => ComplexNumberMath.Sqrt(x));
+            return m.AppyToAllElements(x => ComplexMath.Sqrt(x));
+        }
+
+        public static Matrix Abs(Matrix m) {
+            return m.AppyToAllElements(x => ComplexMath.Abs(x));
         }
 
         public static Matrix CalculateHouseholderTransform(Vector x) {
@@ -71,12 +75,12 @@ namespace Maths {
             Vector u = x + a * Vector.Ei(x.Size, 0);
             Vector v = u / u.EuclidianNorm();
 
-            ComplexNumber w = (x.ConjugateTranspose() * v).ToComplexNumber() / (v.ConjugateTranspose() * x).ToComplexNumber();
+            Complex w = (x.ConjugateTranspose() * v).ToComplexNumber() / (v.ConjugateTranspose() * x).ToComplexNumber();
             return (MatrixFactory.IdentityMatrix(x.Height) - (1.0 + w) * v * v.ConjugateTranspose());
         }
 
-        public static Matrix CalculatGivensRotation(ComplexNumber a, ComplexNumber b) {
-            ComplexNumber c, s, r;
+        public static Matrix CalculatGivensRotation(Complex a, Complex b) {
+            Complex c, s, r;
 
             if (b == 0) {
                 c = 1;
@@ -84,11 +88,11 @@ namespace Maths {
             } else {
                 if (b.Abs() > a.Abs()) {
                     r = a / b;
-                    s = 1 / ComplexNumberMath.Sqrt(1 + r * r);
+                    s = 1 / ComplexMath.Sqrt(1 + r * r);
                     c = s * r;
                 } else {
                     r = b / a;
-                    c = 1 / ComplexNumberMath.Sqrt(1 + r * r);
+                    c = 1 / ComplexMath.Sqrt(1 + r * r);
                     s = c * r;
                 }
             }

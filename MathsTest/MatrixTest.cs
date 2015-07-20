@@ -13,8 +13,8 @@ namespace MathsTests {
             m1[0, 0] = 2;
         
             Assert.AreNotEqual(m1, m2);
-            Assert.AreEqual(m1[0, 0], new ComplexNumber(2, 0));
-            Assert.AreEqual(m2[0, 0], new ComplexNumber(1, 0));
+            Assert.AreEqual(m1[0, 0], new Complex(2, 0));
+            Assert.AreEqual(m2[0, 0], new Complex(1, 0));
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@ namespace MathsTests {
         [TestMethod]
         public void MatrixTestDivision() {
             Matrix m1 = MatrixFactory.ParseFrom("4, 6; 0, 10 + 2i");
-            ComplexNumber c1 = 2;
+            Complex c1 = 2;
 
             Matrix mActual = m1 / c1;
             Matrix mExpected = MatrixFactory.ParseFrom("2 ,3; 0, 5+i");
@@ -111,8 +111,8 @@ namespace MathsTests {
         public void MatrixTestDeterminant() {
             Matrix m1 = MatrixFactory.ParseFrom("3, -6; 2, 3");
 
-            ComplexNumber mActual = m1.Determinant();
-            ComplexNumber mExpected = 21;
+            Complex mActual = m1.Determinant();
+            Complex mExpected = 21;
             Assert.AreEqual(mExpected, mActual);
         }
 

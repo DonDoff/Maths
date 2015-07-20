@@ -10,16 +10,11 @@ namespace MathsTest {
             Matrix m1 = MatrixFactory.ParseFrom("4, 2; 8, 3");
             LUDecomposition lu = m1.LU();
 
-            Matrix mActual = lu.L;
-            Matrix mExpected = MatrixFactory.ParseFrom("1, 0; 0.5, 1");
-            Assert.AreEqual(mExpected, mActual);
+            Assert.IsTrue(lu.L.IsLowerTriangular());
+            Assert.IsTrue(lu.U.IsUpperTriangular());
 
-            mActual = lu.U;
-            mExpected = MatrixFactory.ParseFrom("8, 3; 0, 0.5");
-            Assert.AreEqual(mExpected, mActual);
-
-            mActual = lu.L * lu.U;
-            mExpected = lu.P * m1;
+            Matrix mActual = lu.L * lu.U;
+            Matrix mExpected = lu.P * m1;
             Assert.AreEqual(mExpected, mActual);
         }
 
@@ -28,13 +23,11 @@ namespace MathsTest {
             Matrix m1 = MatrixFactory.ParseFrom("25, 15, -5; 15, 18, 0; -5, 0, 11"); // the matrix needs to be symmetric and positive definite!
             CholeskyDecomposition chol = m1.Chol();
 
-            // A = L*L.H
+            Assert.IsTrue(chol.L.IsLowerTriangular());
+
             Matrix mActual = chol.L * chol.L.ConjugateTranspose();
             Matrix mExpected = m1;
             Assert.AreEqual(mExpected, mActual);
-
-            // L is lower triangular
-            Assert.IsTrue(chol.L.IsLowerTriangular());
         }        
 
         [TestMethod]
@@ -45,6 +38,10 @@ namespace MathsTest {
             Assert.IsTrue(svd.U.IsUnitary());
             Assert.IsTrue(svd.D.IsDiagonal());
             Assert.IsTrue(svd.V.IsUnitary());
+
+            Matrix mActual = svd.U * svd.D * svd.V.ConjugateTranspose();
+            Matrix mExpected = A;
+            Assert.AreEqual(mExpected, mActual);
         }
 
         [TestMethod]
@@ -55,6 +52,10 @@ namespace MathsTest {
             Assert.IsTrue(bid.U.IsUnitary());
             Assert.IsTrue(bid.B.IsBiDiagonal());
             Assert.IsTrue(bid.V.IsUnitary());
+
+            Matrix mActual = bid.U * bid.B * bid.V.ConjugateTranspose();
+            Matrix mExpected = A;
+            Assert.AreEqual(mExpected, mActual);
         }
 
         [TestMethod]
@@ -70,36 +71,22 @@ namespace MathsTest {
             Matrix mActual, mExpected;
             // Test with matrix
             Matrix m1 = MatrixFactory.ParseFrom("3, -6; 4, -8; 0, 1");
-            QRDecomposition qr = m1.QR();
+            QRDecomposition qr = m1.QR(true);
 
-            // A = Q*R
             mActual = qr.Q * qr.R;
             mExpected = m1;
             Assert.AreEqual(mExpected, mActual);
-
-            // Q is orthogonal
-            mActual = qr.Q.Transpose() * qr.Q;
-            mExpected = MatrixFactory.IdentityMatrix(qr.Q.Height);
-            Assert.AreEqual(mExpected, mActual);
-
-            // R is upper triangular
+            Assert.IsTrue(qr.Q.IsUnitary());
             Assert.IsTrue(qr.R.IsUpperTriangular());
 
             // Test with vector
             m1 = MatrixFactory.ParseFrom("3, -6, 4, 7");
-            qr = m1.QR();
+            qr = m1.QR(true);
 
-            // A = Q*R
             mActual = qr.Q * qr.R;
             mExpected = m1;
             Assert.AreEqual(mExpected, mActual);
-
-            // Q is orthogonal
-            mActual = qr.Q.Transpose() * qr.Q;
-            mExpected = MatrixFactory.IdentityMatrix(qr.Q.Height);
-            Assert.AreEqual(mExpected, mActual);
-
-            // R is upper triangular
+            Assert.IsTrue(qr.Q.IsUnitary());
             Assert.IsTrue(qr.R.IsUpperTriangular());
         }
 

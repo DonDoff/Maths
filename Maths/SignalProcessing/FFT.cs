@@ -36,7 +36,7 @@ namespace Maths {
             Vector firstHalf = Vector.Arrange(N / 2);
             Vector secondHalf = Vector.Arrange(N / 2, N);
 
-            Vector factor = MatrixMath.Exp(new ComplexNumber(0, 2) * Math.PI * Vector.Arrange(N) / N).ToColumnVector();
+            Vector factor = MatrixMath.Exp(new Complex(0, 2) * Math.PI * Vector.Arrange(N) / N).ToColumnVector();
 
             return (X_even + factor[firstHalf].ElementMultiply(X_odd)).ConcatenateRows(
                     X_even + factor[secondHalf].ElementMultiply(X_odd)).ToColumnVector();
@@ -46,7 +46,7 @@ namespace Maths {
             int N = x.Size;
             Vector k = Vector.Arrange(N);
             Matrix n = k.Transpose();
-            Matrix M = MatrixMath.Exp(new ComplexNumber(0, 2) * Math.PI * k * n / N);
+            Matrix M = MatrixMath.Exp(new Complex(0, 2) * Math.PI * k * n / N);
             return (M * x).ToColumnVector();
         }
 

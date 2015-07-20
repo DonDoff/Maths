@@ -32,7 +32,7 @@ namespace Maths {
                 Matrix CopyOfD = D.Copy();
                 D = MatrixFactory.IdentityMatrix(D.Height);
                 for (int i = 0; i < D.Height; i++) {
-                    D[i, i] = ComplexNumberMath.Sqrt(CopyOfD[i, i]);
+                    D[i, i] = ComplexMath.Sqrt(CopyOfD[i, i]);
                 }
 
                 U = new Matrix(M.Height, V.Width);
@@ -73,13 +73,13 @@ namespace Maths {
         /// The shift is generally taken to be the smallest eigenvalue of the 2 × 2 matrix in the bottom.
         /// </summary>
         /// <returns></returns>
-        private ComplexNumber ComputeShift(Matrix mat) {
+        private Complex ComputeShift(Matrix mat) {
             Matrix subMat = mat.SubMatrix(mat.Height - 2, mat.Height, mat.Width - 2, mat.Width);
-            ComplexNumber trace = subMat.Trace();
-            ComplexNumber det = subMat.Determinant();
-            ComplexNumber eig1 = (trace + ComplexNumberMath.Sqrt(trace * trace - 4 * det)) / 2;
-            ComplexNumber eig2 = (trace - ComplexNumberMath.Sqrt(trace * trace - 4 * det)) / 2;
-            ComplexNumber eigen = ComplexNumberMath.Min(eig1, eig2);
+            Complex trace = subMat.Trace();
+            Complex det = subMat.Determinant();
+            Complex eig1 = (trace + ComplexMath.Sqrt(trace * trace - 4 * det)) / 2;
+            Complex eig2 = (trace - ComplexMath.Sqrt(trace * trace - 4 * det)) / 2;
+            Complex eigen = ComplexMath.Min(eig1, eig2);
             return eigen;
         }
 

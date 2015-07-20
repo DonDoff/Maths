@@ -62,10 +62,11 @@
   <ItemGroup>
     <Compile Include="Decompositions\Bidiagonalization.cs" />
     <Compile Include="Decompositions\CholeskyDecomposition.cs" />
-    <Compile Include="ComplexNumber\ComplexNumber.cs" />
-    <Compile Include="ComplexNumber\ComplexNumberMath.cs" />
+    <Compile Include="Complex\Complex.cs" />
+    <Compile Include="Complex\ComplexMath.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Decompositions\EigenvalueDecomposition.cs" />
+    <Compile Include="Matrix\MatrixChecks.cs" />
     <Compile Include="Matrix\MatrixFactory.cs" />
     <Compile Include="SignalProcessing\FFT.cs" />
     <Compile Include="Decompositions\HessenbergDecomposition.cs" />

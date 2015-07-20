@@ -22,5 +22,17 @@ namespace MathsTest {
 
             Assert.AreEqual(MatrixFactory.Zeros(1, 1), (G * A)[Vector.Arrange(A.Height - 1, A.Height), 0]);
         }
+
+        [TestMethod]
+        public void MatrixMathTestSinAndCos() {
+            Matrix m1 = MatrixFactory.RandomReal(3, 3);
+            
+            Matrix sin = MatrixMath.Sin(m1);
+            Matrix cos = MatrixMath.Cos(m1);
+            Matrix mActual = sin.ElementMultiply(sin) + cos.ElementMultiply(cos);
+            Matrix mExpected = MatrixFactory.Ones(3, 3);
+
+            Assert.AreEqual(mExpected, mActual);
+        }
     }
 }

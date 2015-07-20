@@ -14,7 +14,7 @@ namespace Maths {
 
         public int Height { get; private set; }
         public int Width { get; private set; }
-        private ComplexNumber[,] Mat { get; set; }
+        private Complex[,] Mat { get; set; }
 
         //////////////////////////////////////////////////////
         //               Matrix Constructors                //
@@ -30,7 +30,7 @@ namespace Maths {
         public Matrix(int height, int width) {
             Height = height;
             Width = width;
-            Mat = new ComplexNumber[Height, Width];
+            Mat = new Complex[Height, Width];
             for (int i = 0; i < Height; i++) {
                 for (int j = 0; j < Width; j++) {
                     Mat[i, j] = 0;
@@ -42,7 +42,7 @@ namespace Maths {
         public Matrix(Matrix m) {
             Height = m.Height;
             Width = m.Width;
-            Mat = new ComplexNumber[Height, Width];
+            Mat = new Complex[Height, Width];
             for (int i = 0; i < Height; i++) {
                 for (int j = 0; j < Width; j++) {
                     Mat[i, j] = m[i, j];
@@ -60,7 +60,7 @@ namespace Maths {
         /// <param name="row"></param>
         /// <param name="column"></param>
         /// <returns></returns>
-        public ComplexNumber this[int row, int column] {
+        public Complex this[int row, int column] {
             get {
                 return Mat[row, column];
             }
@@ -191,7 +191,7 @@ namespace Maths {
         }
 
         // Adds a scalar to the matrix and returns the result.
-        public Matrix Add(ComplexNumber scalar) {
+        public Matrix Add(Complex scalar) {
             return AppyToAllElements(x => x + scalar);
         }
 
@@ -212,16 +212,16 @@ namespace Maths {
 
         // Subtracts two matrices and returns the result.
         public Matrix Subtract(Matrix mat2) {
-            return this.Add(new ComplexNumber(-1, 0) * mat2);
+            return this.Add(new Complex(-1, 0) * mat2);
         }
 
         // Multiplies a scalar with a matrix and returns the result.
-        public Matrix Multiply(ComplexNumber scalar) {
+        public Matrix Multiply(Complex scalar) {
             return AppyToAllElements(x => x * scalar);
         }
 
         // Divides the matrix by a scalar.
-        public Matrix Divide(ComplexNumber scalar) {
+        public Matrix Divide(Complex scalar) {
             return Multiply(1.0 / scalar);
         }
 
@@ -231,7 +231,7 @@ namespace Maths {
                 throw new IncompatibleMatrixDimensionsException(this, mat);
             }
 
-            ComplexNumber sum = 0;
+            Complex sum = 0;
             Matrix newMat = new Matrix(Height, mat.Width);
             for (int i = 0; i < Height; i++) {
                 for (int j = 0; j < mat.Width; j++) {
@@ -263,12 +263,12 @@ namespace Maths {
         }
 
         // Computes the trace of the matrix.
-        public ComplexNumber Trace() {
-            if (!IsSquare()) {
+        public Complex Trace() {
+            if (!this.IsSquare()) {
                 throw new MatrixException("Matrix needs to be square!");
             }
 
-            ComplexNumber trace = 0;
+            Complex trace = 0;
             for (int i = 0; i < Height; i++) {
                 trace += this[i, i];
             }
@@ -296,9 +296,9 @@ namespace Maths {
             return newMat;
         }
 
-        public ComplexNumber Determinant() {
+        public Complex Determinant() {
             LUDecomposition lu = LU();
-            ComplexNumber det = lu.DetOfP;
+            Complex det = lu.DetOfP;
             for (int i = 0; i < Height; i++) {
                 det *= lu.U[i, i];
             }
@@ -319,8 +319,8 @@ namespace Maths {
             return new CholeskyDecomposition(this);
         }
 
-        public QRDecomposition QR() {
-            return new QRDecomposition(this);
+        public QRDecomposition QR(bool usingGivens = false) {
+            return new QRDecomposition(this, usingGivens);
         }
 
         public EigenvalueDecomposition Eigen() {
@@ -371,15 +371,15 @@ namespace Maths {
             }
             Matrix newMat = this.Copy();
             for (int i = 0; i < Width; i++) {
-                ComplexNumber tempNumber = this[row1, i];
+                Complex tempNumber = this[row1, i];
                 newMat[row1, i] = this[row2, i];
                 newMat[row2, i] = tempNumber;
             }
             return newMat;
         }
 
-        public bool Contains(ComplexNumber c) {
-            foreach (ComplexNumber cElement in Mat) {
+        public bool Contains(Complex c) {
+            foreach (Complex cElement in Mat) {
                 if (cElement == c) {
                     return true;
                 }
@@ -426,91 +426,6 @@ namespace Maths {
             return Height == mat2.Height && Width == mat2.Width;
         }
 
-        public bool IsSquare() {
-            return Height == Width;
-        }
-
-        public bool IsReal() {
-            return CheckAllElements(x => x.IsReal());
-        }
-
-        public bool IsPureImaginary() {
-            return CheckAllElements(x => x.IsPureImaginary());
-        }
-
-        public bool IsSymmetric() {
-            return IsSquare() && this == this.Transpose();
-        }
-
-        public bool IsHermitian() {
-            return IsSquare() && this == this.ConjugateTranspose();
-        }
-
-        public bool IsDiagonal() {
-            for (int i = 0; i < Height; i++) {
-                for (int j = 0; j < Width; j++) {
-                    if (i != j && this[i, j] != 0) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        public bool IsBiDiagonal() {
-            for (int i = 0; i < Height; i++) {
-                for (int j = 0; j < Width; j++) {
-                    if (!(i == j || j == i + 1)  && this[i, j] != 0) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        public bool IsUpperTriangular() {
-            for (int i = 0; i < Height; i++) {
-                for (int j = 0; j < i; j++) {
-                    if (this[i, j] != 0) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        public bool IsLowerTriangular() {
-            return this.Transpose().IsUpperTriangular();
-        }
-
-        public bool IsUpperHessenberg() {
-            for (int i = 0; i < Height; i++) {
-                for (int j = 0; j < i - 1; j++) {
-                    if (this[i, j] != 0) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        public bool IsUnitary() {
-            return IsSquare() && (this.ConjugateTranspose() * this) == MatrixFactory.IdentityMatrix(this.Height);
-        }
-
-        public bool IsPositiveDefinite() {
-            try {
-                CholeskyDecomposition ch = Chol();
-                return ch.IsPositiveDefinite;
-            } catch (MatrixException) {
-                return false;
-            }
-        }
-
-        public bool IsSingular() {
-            return Determinant() == 0;
-        }
-
         //////////////////////////////////////////////////////
         //                Matrix Conversions                //
         //////////////////////////////////////////////////////
@@ -520,7 +435,7 @@ namespace Maths {
         }
 
         public Matrix ImPart() {
-            return AppyToAllElements(x => new ComplexNumber(0, x.I));
+            return AppyToAllElements(x => new Complex(0, x.I));
         }
 
         public Vector ToColumnVector() {
@@ -534,7 +449,7 @@ namespace Maths {
             return v;
         }
 
-        public ComplexNumber ToComplexNumber() {
+        public Complex ToComplexNumber() {
             if (Height != 1 || Width != 1) {
                 throw new MatrixException("Wrong matrix dimension to convert to ComplexNumber!");
             }
@@ -566,7 +481,7 @@ namespace Maths {
         /// </summary>
         /// <param name="func"></param>
         /// <returns></returns>
-        public Matrix AppyToAllElements(Func<ComplexNumber, ComplexNumber> func) {
+        public Matrix AppyToAllElements(Func<Complex, Complex> func) {
             Matrix newMat = new Matrix(Height, Width);
             for (int i = 0; i < Height; i++) {
                 for (int j = 0; j < Width; j++) {
@@ -581,7 +496,7 @@ namespace Maths {
         /// </summary>
         /// <param name="func"></param>
         /// <returns>false if the action is true</returns>
-        public bool CheckAllElements(Func<ComplexNumber, bool> func) {
+        public bool CheckAllElements(Func<Complex, bool> func) {
             for (int i = 0; i < Height; i++) {
                 for (int j = 0; j < Width; j++) {
                     if (func(this[i, j])) {
@@ -615,31 +530,31 @@ namespace Maths {
             return !(mat1 == mat2);
         }
 
-        public static Matrix operator +(ComplexNumber scalar, Matrix mat1) {
+        public static Matrix operator +(Complex scalar, Matrix mat1) {
             return mat1.Add(scalar);
         }
 
-        public static Matrix operator +(Matrix mat1, ComplexNumber scalar) {
+        public static Matrix operator +(Matrix mat1, Complex scalar) {
             return scalar + mat1;
         }
 
-        public static Matrix operator -(ComplexNumber scalar, Matrix mat1) {
+        public static Matrix operator -(Complex scalar, Matrix mat1) {
             return scalar + (-1 * mat1);
         }
 
-        public static Matrix operator -(Matrix mat1, ComplexNumber scalar) {
+        public static Matrix operator -(Matrix mat1, Complex scalar) {
             return mat1 + (-1 * scalar);
         }
 
-        public static Matrix operator *(ComplexNumber scalar, Matrix mat1) {
+        public static Matrix operator *(Complex scalar, Matrix mat1) {
             return mat1.Multiply(scalar);
         }
 
-        public static Matrix operator *(Matrix mat1, ComplexNumber scalar) {
+        public static Matrix operator *(Matrix mat1, Complex scalar) {
             return scalar * mat1;
         }
 
-        public static Matrix operator /(Matrix mat1, ComplexNumber scalar) {
+        public static Matrix operator /(Matrix mat1, Complex scalar) {
             return mat1.Divide(scalar);
         }
 

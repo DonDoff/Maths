@@ -30,16 +30,16 @@ namespace Maths {
 
             P = MatrixFactory.IdentityMatrix(M.Height);
 
-            ComplexNumber p = 0;
-            ComplexNumber pom2;
+            Complex p = 0;
+            Complex pom2;
             int k0 = 0;
 
             for (int k = 0; k < M.Width - 1; k++) {
                 p = 0;
                 // find the row with the biggest pivot
                 for (int i = k; i < M.Height; i++) {
-                    if (ComplexNumberMath.Abs(U[i, k]) > p) {
-                        p = ComplexNumberMath.Abs(U[i, k]);
+                    if (ComplexMath.Abs(U[i, k]) > p) {
+                        p = ComplexMath.Abs(U[i, k]);
                         k0 = i;
                     }
                 }

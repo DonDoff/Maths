@@ -11,8 +11,8 @@ namespace MathsTests {
             Vector v1 = Vector.ParseFrom("2, 4, 4, 4, 5, 5, 7, 9");
             VectorMath S = new VectorMath(v1);
             
-            ComplexNumber mActual = S.ExpectedValue();
-            ComplexNumber mExpected = 5;
+            Complex mActual = S.ExpectedValue();
+            Complex mExpected = 5;
             Assert.AreEqual(mExpected, mActual);
         }
 
@@ -21,8 +21,8 @@ namespace MathsTests {
             Vector v1 = Vector.ParseFrom("2, 4, 4, 4, 5, 5, 7, 9");
             VectorMath S = new VectorMath(v1);
             
-            ComplexNumber mActual = S.PopulationVariance();
-            ComplexNumber mExpected = 4;
+            Complex mActual = S.PopulationVariance();
+            Complex mExpected = 4;
             Assert.AreEqual(mExpected, mActual);
         }
 
@@ -31,8 +31,8 @@ namespace MathsTests {
             Vector v1 = Vector.ParseFrom("1, 3, 7, 5, 6, 4");
             Vector v2 = Vector.ParseFrom("2, 7, 3, 2, 5, 1");
 
-            ComplexNumber mActual = new VectorMath(v1).SampleCovariance(v2);
-            ComplexNumber mExpected = 4.0/15;
+            Complex mActual = new VectorMath(v1).SampleCovariance(v2);
+            Complex mExpected = 4.0/15;
             Assert.AreEqual(mExpected, mActual);
         }
 
@@ -41,8 +41,8 @@ namespace MathsTests {
             Vector v1 = Vector.ParseFrom("1, 3, 7, 5, 6, 4");
             Vector v2 = Vector.ParseFrom("2, 7, 3, 2, 5, 1");
 
-            ComplexNumber mActual = new VectorMath(v1).SampleCorrelation(v2);
-            ComplexNumber mExpected = Math.Sqrt(2.0/665);
+            Complex mActual = new VectorMath(v1).SampleCorrelation(v2);
+            Complex mExpected = Math.Sqrt(2.0/665);
             Assert.AreEqual(mExpected, mActual);
         }
     }
