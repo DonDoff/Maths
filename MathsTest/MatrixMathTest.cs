@@ -1,36 +1,39 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Maths;
+using NUnit.Framework;
 
 namespace MathsTest {
-    [TestClass]
+    [TestFixture]
     public class MatrixMathTest {
 
-        [TestMethod]
-        public void MatrixMathTestHouseHolder() {
-            Matrix A = MatrixFactory.ParseFrom("4, 2, 2, 1; 2, -3, 1, 1; 2, 1, 3, 1; 1, 1, 1, 2");
-            Matrix H = MatrixMath.CalculateHouseholderTransform(new Vector(A, 0));
+        [Test, TestCaseSource(typeof(TestMatrices), "RealMatrices")]
+        public void MatrixMathTestHouseHolderReal(Matrix m) {
+            Matrix H = MatrixMath.CalculateHouseholderTransform(new Vector(m, 0));
 
-            Assert.AreEqual(MatrixFactory.Zeros(A.Height - 1, 1), (H * A)[Vector.Arrange(1, A.Height), 0]);
+            Assert.AreEqual(MatrixFactory.Zeros(m.Height - 1, 1), (H * m)[Vector.Arrange(1, m.Height), 0]);
         }
 
-        [TestMethod]
-        public void MatrixMathTestGivensRotation() {
-            Matrix A = MatrixFactory.ParseFrom("4, 2, 1; 2, -3, 1; 2, 1, 1");
-            Matrix G = MatrixFactory.IdentityMatrix(A.Height);
-            G[Vector.Arrange(1, 3), Vector.Arrange(1, 3)] = MatrixMath.CalculatGivensRotation(A[1, 0], A[2, 0]);
+        [Test, TestCaseSource(typeof(TestMatrices), "ComplexMatrices")]
+        public void MatrixMathTestHouseHolderComplex(Matrix m) {
+            Matrix H = MatrixMath.CalculateHouseholderTransform(new Vector(m, 0));
 
-            Assert.AreEqual(MatrixFactory.Zeros(1, 1), (G * A)[Vector.Arrange(A.Height - 1, A.Height), 0]);
+            Assert.AreEqual(MatrixFactory.Zeros(m.Height - 1, 1), (H * m)[Vector.Arrange(1, m.Height), 0]);
         }
 
-        [TestMethod]
-        public void MatrixMathTestSinAndCos() {
-            Matrix m1 = MatrixFactory.RandomReal(3, 3);
-            
-            Matrix sin = MatrixMath.Sin(m1);
-            Matrix cos = MatrixMath.Cos(m1);
+        [Test, TestCaseSource(typeof(TestMatrices), "ComplexMatrices")]
+        public void MatrixMathTestGivensRotationComplex(Matrix m) {
+            Matrix G = MatrixFactory.IdentityMatrix(m.Height);
+            G[Vector.Arrange(1, 3), Vector.Arrange(1, 3)] = MatrixMath.CalculatGivensRotation(m[1, 0], m[2, 0]);
+
+            Assert.AreEqual(MatrixFactory.Zeros(1, 1), (G * m)[Vector.Arrange(m.Height - 1, m.Height), 0]);
+        }
+
+        [Test, TestCaseSource(typeof(TestMatrices), "ComplexMatrices")]
+        public void MatrixMathTestSinAndCosComplex(Matrix m) {
+            Matrix sin = MatrixMath.Sin(m);
+            Matrix cos = MatrixMath.Cos(m);
             Matrix mActual = sin.ElementMultiply(sin) + cos.ElementMultiply(cos);
-            Matrix mExpected = MatrixFactory.Ones(3, 3);
+            Matrix mExpected = MatrixFactory.Ones(m.Height, m.Width);
 
             Assert.AreEqual(mExpected, mActual);
         }

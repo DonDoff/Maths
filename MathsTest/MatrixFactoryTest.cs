@@ -79,6 +79,18 @@ namespace MathsTest {
             Assert.AreEqual(mExpected, mActual);
         }
 
+        [TestMethod]
+        public void MatrixFactoryTestSymmetricPositiveSemiDefinite() {
+            Matrix mActual = MatrixFactory.HermitianPositiveSemiDefinite(5, new Random());
+            Assert.IsTrue(mActual.IsHermitian());
+            Assert.IsTrue(mActual.IsPositiveSemiDefinite());
+        }
 
+        [TestMethod]
+        public void MatrixFactoryTestSymmetricPositiveDefinite() {
+            Matrix mActual = MatrixFactory.HermitianPositiveDefinite(5, new Random());
+            Assert.IsTrue(mActual.IsHermitian());
+            Assert.IsTrue(mActual.IsPositiveDefinite());
+        }
     }
 }

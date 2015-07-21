@@ -108,6 +108,24 @@ namespace MathsTests {
         }
 
         [TestMethod]
+        public void MatrixTestTranspose() {
+            Matrix m1 = MatrixFactory.ParseFrom("3, -6; 2, 4");
+
+            Matrix mActual = m1.Transpose();
+            Matrix mExpected = MatrixFactory.ParseFrom("3, 2; -6, 4");
+            Assert.AreEqual(mExpected, mActual);
+        }
+
+        [TestMethod]
+        public void MatrixTestConjugateTranspose() {
+            Matrix m1 = MatrixFactory.ParseFrom("3+i, -6-3i; 2+4i, 4-i");
+
+            Matrix mActual = m1.ConjugateTranspose();
+            Matrix mExpected = MatrixFactory.ParseFrom("3-i, 2-4i; -6+3i, 4+i");
+            Assert.AreEqual(mExpected, mActual);
+        }
+
+        [TestMethod]
         public void MatrixTestDeterminant() {
             Matrix m1 = MatrixFactory.ParseFrom("3, -6; 2, 3");
 
@@ -118,9 +136,19 @@ namespace MathsTests {
 
         [TestMethod]
         public void MatrixTestInvert() {
-            Matrix mActual = MatrixFactory.ParseFrom("1, 1; 1, 2").Invert();
-            Matrix mExpected = MatrixFactory.ParseFrom("2, -1;-1, 1");
+            Matrix m1 = MatrixFactory.ParseFrom("3, -6, 2; 2, 4, 1; 5, 3, 6");
 
+            Matrix mActual = m1 * m1.Invert();
+            Matrix mExpected = MatrixFactory.IdentityMatrix(3);
+            Assert.AreEqual(mExpected, mActual);
+        }
+
+        [TestMethod]
+        public void MatrixTestComplexInvert() {
+            Matrix m1 = MatrixFactory.ParseFrom("3+i, -6-3i, -5-2i; 2+4i, 4-i, 3+i; 4-2i, 6+i, 5-6i");
+
+            Matrix mActual = m1*m1.Invert();
+            Matrix mExpected = MatrixFactory.IdentityMatrix(3);
             Assert.AreEqual(mExpected, mActual);
         }
 

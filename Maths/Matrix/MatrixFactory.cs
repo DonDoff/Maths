@@ -84,7 +84,7 @@ namespace Maths {
         /// <param name="width"></param>
         /// <param name="seed"></param>
         /// <returns></returns>
-        public static Matrix Random(int height, int width, Random seed = null) {
+        public static Matrix Complex(int height, int width, Random seed = null) {
             return new Matrix(height, width).AppyToAllElements((x) => ComplexMath.Rand(seed));
         }
 
@@ -95,8 +95,8 @@ namespace Maths {
         /// <param name="width"></param>
         /// <param name="seed"></param>
         /// <returns></returns>
-        public static Matrix RandomReal(int height, int width, Random seed = null) {
-            return Random(height, width, seed).RealPart();
+        public static Matrix Real(int height, int width, Random seed = null) {
+            return Complex(height, width, seed).RealPart();
         }
 
         /// <summary>
@@ -178,30 +178,43 @@ namespace Maths {
         }
 
         /// <summary>
-        /// Create a random orthogonal matrix.
-        /// </summary>
-        /// <param name="size"></param>
-        /// <param name="seed"></param>
-        /// <returns></returns>
-        public static Matrix Orthogonal(int size, Random seed = null) {
-            Matrix m = RandomReal(size, size, seed);
-            QRDecomposition qr = m.QR();
-
-            return qr.Q;
-        }
-
-        /// <summary>
         /// Create a random unitary matrix.
         /// </summary>
         /// <param name="size"></param>
         /// <param name="seed"></param>
         /// <returns></returns>
         public static Matrix Unitary(int size, Random seed = null) {
-            Matrix m = Random(size, size, seed);
-            QRDecomposition qr = m.QR();
-
-            return qr.Q;
+            Matrix m = Complex(size, size, seed);
+            return m.QR().Q;
         }
 
+        /// <summary>
+        /// Create a random orthogonal matrix.
+        /// </summary>
+        /// <param name="size"></param>
+        /// <param name="seed"></param>
+        /// <returns></returns>
+        public static Matrix Orthogonal(int size, Random seed = null) {
+            Matrix m = Complex(size, size, seed).RealPart();
+            return m.QR().Q;
+        }
+
+        public static Matrix HermitianPositiveSemiDefinite(int size, Random seed = null) {
+            Matrix m = Complex(size, size, seed);
+            return m.ConjugateTranspose() * m;
+        }
+
+        public static Matrix HermitianPositiveDefinite(int size, Random seed = null) {
+            return HermitianPositiveSemiDefinite(size, seed) + IdentityMatrix(size);
+        }
+
+        public static Matrix SymmetricPositiveSemiDefinite(int size, Random seed = null) {
+            Matrix m = Real(size, size, seed);
+            return m.ConjugateTranspose() * m;
+        }
+
+        public static Matrix SymmetricPositiveDefinite(int size, Random seed = null) {
+            return SymmetricPositiveSemiDefinite(size, seed) + IdentityMatrix(size);
+        }
     }
 }

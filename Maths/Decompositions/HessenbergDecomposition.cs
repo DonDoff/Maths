@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Maths {
     public class HessenbergDecomposition : IDecomposition {
-        public Matrix HT { get; private set; }  // Hessenberg transform
-        public Matrix HM { get; private set; }  // Hessenberg matrix
+        public Matrix P { get; private set; }  // Hessenberg transform
+        public Matrix H { get; private set; }  // Hessenberg matrix
         private Matrix M;
 
         /// <summary>
@@ -26,33 +26,28 @@ namespace Maths {
 
             Matrix A = M.Copy();
             Matrix[] Hs = M.Height <= 2 ? new Matrix[0] : new Matrix[M.Height - 2];
-
-
+            
             for (int k = 0; k < Hs.Length; k++) {
                 Vector x = A[Vector.Arrange(k + 1, A.Height), k];
-                HT = MatrixMath.CalculateHouseholderTransform(x);
+                P = MatrixMath.CalculateHouseholderTransform(x);
 
                 Matrix H_k = MatrixFactory.IdentityMatrix(M.Height);
-                for (int i = 0; i < HT.Height; i++) {
-                    for (int j = 0; j < HT.Width; j++) {
-                        H_k[i + k + 1, j + k + 1] = HT[i, j];
-                    }
-                }
+                H_k[Vector.Arrange(k + 1, M.Height), Vector.Arrange(k + 1, M.Height)] = P;
                 Hs[k] = H_k;
 
                 A = H_k * A * H_k.ConjugateTranspose();
             }
 
             if (Hs.Length == 0) {
-                HT = MatrixFactory.IdentityMatrix(M.Height);
+                P = MatrixFactory.IdentityMatrix(M.Height);
             } else {
-                HT = Hs[Hs.Length - 1];
+                P = Hs[Hs.Length - 1];
                 for (int i = Hs.Length - 2; i >= 0; i--) {
-                    HT *= Hs[i];
+                    P *= Hs[i];
                 }
             }
 
-            HM = HT * M * HT.ConjugateTranspose();
+            H = P * M * P.ConjugateTranspose();
         }
 
     }

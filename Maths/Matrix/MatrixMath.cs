@@ -88,11 +88,11 @@ namespace Maths {
             } else {
                 if (b.Abs() > a.Abs()) {
                     r = a / b;
-                    s = 1 / ComplexMath.Sqrt(1 + r * r);
+                    s = 1.0 / ComplexMath.Sqrt(1 + r * r);
                     c = s * r;
                 } else {
                     r = b / a;
-                    c = 1 / ComplexMath.Sqrt(1 + r * r);
+                    c = 1.0 / ComplexMath.Sqrt(1 + r * r);
                     s = c * r;
                 }
             }

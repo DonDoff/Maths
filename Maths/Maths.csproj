@@ -68,6 +68,7 @@
     <Compile Include="Decompositions\EigenvalueDecomposition.cs" />
     <Compile Include="Matrix\MatrixChecks.cs" />
     <Compile Include="Matrix\MatrixFactory.cs" />
+    <Compile Include="Matrix\MatrixTypes.cs" />
     <Compile Include="SignalProcessing\FFT.cs" />
     <Compile Include="Decompositions\HessenbergDecomposition.cs" />
     <Compile Include="Decompositions\IDecomposition.cs" />

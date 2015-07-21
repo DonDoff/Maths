@@ -82,13 +82,20 @@ namespace Maths {
             return m.IsSquare() && (m.Transpose() * m) == MatrixFactory.IdentityMatrix(m.Height);
         }
 
+        public static bool IsPositiveSemiDefinite(this Matrix m) {
+            EigenvalueDecomposition eig = m.Eigen();
+            return eig.Eigenvalues.CheckAllElements(x => x < 0);
+        }
+
         public static bool IsPositiveDefinite(this Matrix m) {
-            try {
-                CholeskyDecomposition ch = m.Chol();
-                return ch.IsPositiveDefinite;
-            } catch (MatrixException) {
-                return false;
-            }
+            EigenvalueDecomposition eig = m.Eigen();
+            return eig.Eigenvalues.CheckAllElements(x => x < 0);
+            //try {
+            //    m.Chol();
+            //    return true;
+            //} catch (MatrixException) {
+            //    return false;
+            //}
         }
 
         public static bool IsSingular(this Matrix m) {

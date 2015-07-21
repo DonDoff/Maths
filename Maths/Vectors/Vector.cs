@@ -54,7 +54,7 @@ namespace Maths {
             for (int i = 0; i < Size; i++) {
                 norm += this[i].Conjugate() * this[i];
             }
-            return Math.Sqrt(norm.R);
+            return norm.Sqrt().R;
         }
 
         public Vector CrossProduct(Vector v) {
@@ -99,12 +99,12 @@ namespace Maths {
 
         // Fill the vector with random complex numbers
         public static Vector RandomComplex(int size, Random seed) {
-            return MatrixFactory.Random(size, 1, seed).ToColumnVector();
+            return MatrixFactory.Complex(size, 1, seed).ToColumnVector();
         }
 
         // Fill the vector with random real numbers
         public static Vector RandomReal(int size, Random seed) {
-            return MatrixFactory.RandomReal(size, 1, seed).ToColumnVector();
+            return MatrixFactory.Real(size, 1, seed).ToColumnVector();
         }
 
         // Create a vector starting from 0 until end, in steps of 1

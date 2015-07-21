@@ -8,7 +8,6 @@ namespace Maths {
     public class CholeskyDecomposition : IDecomposition {
 
         public Matrix L { get; private set; }
-        public bool IsPositiveDefinite { get; private set; }
         private Matrix M;
 
         /// <summary>
@@ -37,9 +36,7 @@ namespace Maths {
                 }
             }
 
-            if (L * L.ConjugateTranspose() == M) {
-                IsPositiveDefinite = true;
-            } else {
+            if (L * L.ConjugateTranspose() != M) {
                 throw new MatrixException("Cholesky Decomposition failed, the matrix is not positive definite!");
             }
 

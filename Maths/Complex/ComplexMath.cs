@@ -70,6 +70,11 @@ namespace Maths {
             return Pow(c, 1.0/2);
         }
 
+        /// <summary>
+        /// Returns a new complex number with the real and imaginary part between -1 and 1.
+        /// </summary>
+        /// <param name="seed"></param>
+        /// <returns></returns>
         public static Complex Rand(Random seed = null) {
             if (seed == null) {
                 seed = new Random();

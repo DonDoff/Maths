@@ -211,8 +211,8 @@ namespace Maths {
         }
 
         // Subtracts two matrices and returns the result.
-        public Matrix Subtract(Matrix mat2) {
-            return this.Add(new Complex(-1, 0) * mat2);
+        public Matrix Subtract(Matrix mat) {
+            return this.Add(new Complex(-1, 0) * mat);
         }
 
         // Multiplies a scalar with a matrix and returns the result.
@@ -419,9 +419,6 @@ namespace Maths {
             return newMat;
         }
 
-        //////////////////////////////////////////////////////
-        //                 Matrix Checks                    //
-        //////////////////////////////////////////////////////
         public bool AreDimensionsEqual(Matrix mat2) {
             return Height == mat2.Height && Width == mat2.Width;
         }
@@ -593,6 +590,20 @@ namespace Maths {
             return toString;
         }
 
+        public string ToStringAsInput() {
+            string toString = "";
+            if (Height > 0 && Width > 0) {
+                for (int i = 0; i < Height; i++) {
+                    for (int j = 0; j < Width; j++) {
+                        toString += this[i, j] + ", ";
+                    }
+                    toString = toString.Substring(0, toString.Length - 2);  // remove the ", "
+                    toString += "; ";
+                }
+                toString = toString.Substring(0, toString.Length - 2);  // remove the "; "
+            }
+            return toString;
+        }
     }
 
     class MatrixException : Exception {
