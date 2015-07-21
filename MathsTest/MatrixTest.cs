@@ -101,6 +101,18 @@ namespace MathsTests {
         }
 
         [TestMethod]
+        public void MatrixTestRealPart() {
+            Matrix m = MatrixFactory.Complex(3, 3, new Random()).RealPart();
+            Assert.IsTrue(m.IsReal());
+        }
+
+        [TestMethod]
+        public void MatrixTestImPart() {
+            Matrix m = MatrixFactory.Complex(3, 3, new Random()).ImPart();
+            Assert.IsTrue(m.IsPureImaginary());
+        }
+
+        [TestMethod]
         public void MatrixTestToString() {
             string mActual = MatrixFactory.ParseFrom("1, 1; 1, 2").ToString();
             string mExpected = "1, 1\n1, 2";

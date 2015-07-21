@@ -11,11 +11,11 @@ using MathsTest;
 namespace ConsoleApplication {
     class Program {
         static void Main(string[] args) {
-            TestMatrixGenerator.GenerateAll(10);
+            TestMatrixGenerator.GenerateAll(5);
 
             Matrix A;
 
-            A = MatrixFactory.ParseFrom("4, 2, 2, 1, 5; 2, -3, 1, 1, 3; 2, 1, 3, 1, 4; 1, 1, 1, 2, 3; 1, 2, 6, 4, 1");
+            //A = MatrixFactory.ParseFrom("4, 2, 2, 1, 5; 2, -3, 1, 1, 3; 2, 1, 3, 1, 4; 1, 1, 1, 2, 3; 1, 2, 6, 4, 1");
             //A = MatrixFactory.ParseFrom("1, 0, 0, 0, 2; 0, 0, 3, 0, 0; 0, 0, 0, 0, 0; 0, 4, 0, 0, 0");
             //A = MatrixFactory.ParseFrom("1, 1, 1; 1, 1, 1; 1, -1, 1; 1, 1, -1");
             //A = MatrixFactory.ParseFrom("1, 1, 1, 1; 1, 1, -1, 1; 1, 1, 1, -1");
@@ -25,25 +25,26 @@ namespace ConsoleApplication {
             //A = MatrixFactory.ParseFrom("1, 1; 1, 2; 1, 3; 1, 4; 1, 5");
             //A = MatrixFactory.ParseFrom("4, 3, 0, 2; 2, 1, 2, 1; 4, 4, 0, 3");
             //A = MatrixFactory.ParseFrom("1, -1, 4; 1, 4, -2; 1, 4, 2; 1, -1, 0");
-
-            HessenbergDecomposition hessen = new HessenbergDecomposition(A);
-            Matrix P = hessen.P;
-            Console.WriteLine("H:\n" + hessen.H + "\n");
-            Console.WriteLine("P:\n" + hessen.P + "\n");
-
-            Matrix mActual, mExpected;
-            EigenvalueDecomposition eigen;
-            //A = MatrixFactory.RandomReal(5, 5, new Random());
-            eigen = A.Eigen();
-
+            A = MatrixFactory.Real(3, 3, new Random());
             Console.WriteLine("A:\n" + A + "\n");
-            for (int i = 0; i < A.Height; i++) {
-                mActual = A * eigen.Eigenvectors.GetColumnVector(i) - eigen.Eigenvalues[i] * eigen.Eigenvectors.GetColumnVector(i);
-                mExpected = MatrixFactory.Zeros(A.Height, 1);
-                Console.WriteLine("A * v (" + i + "):\n" + A * eigen.Eigenvectors.GetColumnVector(i) + "\n");
-                Console.WriteLine("lambda * v (" + i + "):\n" + eigen.Eigenvalues[i] * eigen.Eigenvectors.GetColumnVector(i) + "\n");
-            }
 
+            //HessenbergDecomposition hessen = new HessenbergDecomposition(A);
+            //Matrix P = hessen.P;
+            //Console.WriteLine("H:\n" + hessen.H + "\n");
+            //Console.WriteLine("P:\n" + hessen.P + "\n");
+
+
+            //Matrix mActual, mExpected;
+            //EigenvalueDecomposition eigen;
+            //eigen = A.Eigen();
+
+
+            //for (int i = 0; i < A.Height; i++) {
+            //    mActual = A * eigen.Eigenvectors.GetColumnVector(i) - eigen.Eigenvalues[i] * eigen.Eigenvectors.GetColumnVector(i);
+            //    mExpected = MatrixFactory.Zeros(A.Height, 1);
+            //    Console.WriteLine("A * v (" + i + "):\n" + A * eigen.Eigenvectors.GetColumnVector(i) + "\n");
+            //    Console.WriteLine("lambda * v (" + i + "):\n" + eigen.Eigenvalues[i] * eigen.Eigenvectors.GetColumnVector(i) + "\n");
+            //}
 
 
             //QRDecomposition qr = A.QR();
@@ -70,9 +71,14 @@ namespace ConsoleApplication {
 
             SVD svd = A.SVD();
             Console.WriteLine("U:\n" + svd.U + "\n");
+            Console.WriteLine("U*UT:\n" + svd.U * svd.U.ConjugateTranspose() + "\n");
             Console.WriteLine("D:\n" + svd.D + "\n");
             Console.WriteLine("V:\n" + svd.V + "\n");
             Console.WriteLine("UDV:\n" + svd.U * svd.D * svd.V.ConjugateTranspose() + "\n");
+
+            Console.WriteLine("U?:\n" + svd.U.IsUnitary() + "\n");
+            Console.WriteLine("D?:\n" + svd.D.IsDiagonal()  + "\n");
+            Console.WriteLine("V?:\n" + svd.V.IsUnitary() + "\n");
 
             //int N = 1000;
             //double tStart = 0;

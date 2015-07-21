@@ -42,6 +42,18 @@ namespace MathsTest {
         }
 
         [TestMethod]
+        public void MatrixFactoryTestReal() {
+            Matrix m = MatrixFactory.Real(5, 5, new Random());
+            Assert.IsTrue(m.IsReal());
+        }
+
+        [TestMethod]
+        public void MatrixFactoryTestPureImaginary() {
+            Matrix m = MatrixFactory.Imaginary(5, 5, new Random());
+            Assert.IsTrue(m.IsPureImaginary());
+        }
+
+        [TestMethod]
         public void MatrixFactoryTestSymmetric() {
             Matrix m = MatrixFactory.Symmetric(5, new Random());
             Assert.IsTrue(m.IsSymmetric());
@@ -82,8 +94,8 @@ namespace MathsTest {
         [TestMethod]
         public void MatrixFactoryTestSymmetricPositiveSemiDefinite() {
             Matrix mActual = MatrixFactory.HermitianPositiveSemiDefinite(5, new Random());
-            Assert.IsTrue(mActual.IsHermitian());
-            Assert.IsTrue(mActual.IsPositiveSemiDefinite());
+            Assert.IsTrue(mActual.IsHermitian(), "Not Hermitian.");
+            Assert.IsTrue(mActual.IsPositiveSemiDefinite(), "Not positive semi-definite.");
         }
 
         [TestMethod]

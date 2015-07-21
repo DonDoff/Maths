@@ -489,10 +489,11 @@ namespace Maths {
         }
 
         /// <summary>
-        /// Check the func on all elements of the matrix
+        /// Check the func on all elements of the matrix.
+        /// Returns false if the func is true.
         /// </summary>
         /// <param name="func"></param>
-        /// <returns>false if the action is true</returns>
+        /// <returns></returns>
         public bool CheckAllElements(Func<Complex, bool> func) {
             for (int i = 0; i < Height; i++) {
                 for (int j = 0; j < Width; j++) {

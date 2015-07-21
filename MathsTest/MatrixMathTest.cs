@@ -20,12 +20,20 @@ namespace MathsTest {
             Assert.AreEqual(MatrixFactory.Zeros(m.Height - 1, 1), (H * m)[Vector.Arrange(1, m.Height), 0]);
         }
 
+        [Test, TestCaseSource(typeof(TestMatrices), "RealMatrices")]
+        public void MatrixMathTestGivensRotationReal(Matrix m) {
+            Vector v = m[Vector.Arrange(0, 2), 0];
+            Matrix G = MatrixMath.CalculatGivensRotation(m[0, 0], m[1, 0]);
+
+            Assert.AreEqual(new Complex(0, 0), (G * v)[1, 0]);
+        }
+
         [Test, TestCaseSource(typeof(TestMatrices), "ComplexMatrices")]
         public void MatrixMathTestGivensRotationComplex(Matrix m) {
-            Matrix G = MatrixFactory.IdentityMatrix(m.Height);
-            G[Vector.Arrange(1, 3), Vector.Arrange(1, 3)] = MatrixMath.CalculatGivensRotation(m[1, 0], m[2, 0]);
+            Vector v = m[Vector.Arrange(0, 2), 0];
+            Matrix G = MatrixMath.CalculatGivensRotation(m[0, 0], m[1, 0]);
 
-            Assert.AreEqual(MatrixFactory.Zeros(1, 1), (G * m)[Vector.Arrange(m.Height - 1, m.Height), 0]);
+            Assert.AreEqual(new Complex(0, 0), (G * v)[1, 0]);
         }
 
         [Test, TestCaseSource(typeof(TestMatrices), "ComplexMatrices")]

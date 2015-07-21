@@ -89,6 +89,17 @@ namespace Maths {
         }
 
         /// <summary>
+        /// Create a matrix with random pure imaginary numbers.
+        /// </summary>
+        /// <param name="height"></param>
+        /// <param name="width"></param>
+        /// <param name="seed"></param>
+        /// <returns></returns>
+        public static Matrix Imaginary(int height, int width, Random seed = null) {
+            return Complex(height, width, seed).ImPart();
+        }
+
+        /// <summary>
         /// Create a matrix with random real numbers.
         /// </summary>
         /// <param name="height"></param>
