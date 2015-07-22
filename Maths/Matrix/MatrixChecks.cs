@@ -83,8 +83,14 @@ namespace Maths {
         }
 
         public static bool IsPositiveSemiDefinite(this Matrix m) {
-            EigenvalueDecomposition eig = m.Eigen();
-            return eig.Eigenvalues.CheckAllElements(x => x < 0);
+            //EigenvalueDecomposition eig = m.Eigen();
+            //return eig.Eigenvalues.CheckAllElements(x => x < 0);
+            try {
+                m.Chol();
+                return true;
+            } catch (MatrixException) {
+                return false;
+            }
         }
 
         public static bool IsPositiveDefinite(this Matrix m) {

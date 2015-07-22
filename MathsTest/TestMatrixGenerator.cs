@@ -14,69 +14,97 @@ namespace MathsTest {
         public const string SM = PATH + "symmetric_matrices.txt";
         public const string SPM = PATH + "symmetric_positive_matrices.txt";
         public const string HPM = PATH + "hermitian_positive_matrices.txt";
-        private static int matrixSize = 5;
+        //private static int matrixSize = 5;
 
-        public static void GenerateAll(int nrOfMatrices) {
+        public static void GenerateAll(int maxMatrixSize) {
             Random seed = new Random();
 
-            GenerateRealMatrixFile(nrOfMatrices, seed);
-            GenerateComplexMatrixFile(nrOfMatrices, seed);
-            GenerateSymmetricMatrixFile(nrOfMatrices, seed);
-            GenerateSymmetricPositiveDefinite(nrOfMatrices, seed);
-            GenerateHermitianPositiveDefinite(nrOfMatrices, seed);
+            GenerateRealMatrixFile(maxMatrixSize, seed);
+            GenerateComplexMatrixFile(maxMatrixSize, seed);
+            GenerateSymmetricMatrixFile(maxMatrixSize, seed);
+            GenerateSymmetricPositiveDefinite(maxMatrixSize, seed);
+            GenerateHermitianPositiveDefinite(maxMatrixSize, seed);
         }
 
-        public static void GenerateRealMatrixFile(int nrOfMatrices, Random seed) {
+        public static void GenerateRealMatrixFile(int maxMatrixSize, Random seed) {
             System.IO.StreamWriter file = new System.IO.StreamWriter(RM);
 
-            for (int i = 0; i < nrOfMatrices; i++) {
-                Matrix m = MatrixFactory.Real(matrixSize, matrixSize, seed);
-                file.WriteLine(m.ToStringAsInput());
-            }
+            int m = (int)Math.Ceiling((0.0 + maxMatrixSize) / 2.0);
+
+            file.WriteLine(MatrixFactory.Real(1, maxMatrixSize, seed).ToStringAsInput());
+            file.WriteLine(MatrixFactory.Real(maxMatrixSize, 1, seed).ToStringAsInput());
+            file.WriteLine(MatrixFactory.Real(m, maxMatrixSize, seed).ToStringAsInput());
+            file.WriteLine(MatrixFactory.Real(maxMatrixSize, m, seed).ToStringAsInput());
+            file.WriteLine(MatrixFactory.Real(maxMatrixSize, maxMatrixSize, seed).ToStringAsInput());
+
+            //for (int i = 0; i < nrOfMatrices; i++) {
+            //    Matrix m = MatrixFactory.Real(matrixSize, matrixSize, seed);
+            //    file.WriteLine(m.ToStringAsInput());
+            //}
 
             file.Close();
         }
 
-        public static void GenerateComplexMatrixFile(int nrOfMatrices, Random seed) {
+        public static void GenerateComplexMatrixFile(int maxMatrixSize, Random seed) {
             System.IO.StreamWriter file = new System.IO.StreamWriter(CM);
 
-            for (int i = 0; i < nrOfMatrices; i++) {
-                Matrix m = MatrixFactory.Complex(matrixSize, matrixSize, seed);
-                file.WriteLine(m.ToStringAsInput());
-            }
+            int m = (int)Math.Ceiling((0.0 + maxMatrixSize) / 2.0);
+
+            file.WriteLine(MatrixFactory.Complex(1, maxMatrixSize, seed).ToStringAsInput());
+            file.WriteLine(MatrixFactory.Complex(maxMatrixSize, 1, seed).ToStringAsInput());
+            file.WriteLine(MatrixFactory.Complex(m, maxMatrixSize, seed).ToStringAsInput());
+            file.WriteLine(MatrixFactory.Complex(maxMatrixSize, m, seed).ToStringAsInput());
+            file.WriteLine(MatrixFactory.Complex(maxMatrixSize, maxMatrixSize, seed).ToStringAsInput());
+
+            //for (int i = 0; i < maxMatrixSize; i++) {
+            //    Matrix m = MatrixFactory.Complex(maxMatrixSize, maxMatrixSize, seed);
+            //    file.WriteLine(m.ToStringAsInput());
+            //}
 
             file.Close();
         }
 
-        public static void GenerateSymmetricMatrixFile(int nrOfMatrices, Random seed) {
+        public static void GenerateSymmetricMatrixFile(int maxMatrixSize, Random seed) {
             System.IO.StreamWriter file = new System.IO.StreamWriter(SM);
 
-            for (int i = 0; i < nrOfMatrices; i++) {
-                Matrix m = MatrixFactory.Symmetric(matrixSize, seed);
-                file.WriteLine(m.ToStringAsInput());
-            }
+            int m = (int)Math.Ceiling((0.0 + maxMatrixSize) / 2.0);
+
+            file.WriteLine(MatrixFactory.Symmetric(maxMatrixSize, seed).ToStringAsInput());
+
+            //for (int i = 0; i < maxMatrixSize; i++) {
+            //    Matrix m = MatrixFactory.Symmetric(maxMatrixSize, seed);
+            //    file.WriteLine(m.ToStringAsInput());
+            //}
 
             file.Close();
         }
 
-        public static void GenerateSymmetricPositiveDefinite(int nrOfMatrices, Random seed) {
+        public static void GenerateSymmetricPositiveDefinite(int maxMatrixSize, Random seed) {
             System.IO.StreamWriter file = new System.IO.StreamWriter(SPM);
 
-            for (int i = 0; i < nrOfMatrices; i++) {
-                Matrix m = MatrixFactory.SymmetricPositiveDefinite(matrixSize, seed);
-                file.WriteLine(m.ToStringAsInput());
-            }
+            int m = (int)Math.Ceiling((0.0 + maxMatrixSize) / 2.0);
+
+            file.WriteLine(MatrixFactory.SymmetricPositiveDefinite(maxMatrixSize, seed).ToStringAsInput());
+
+            //for (int i = 0; i < matrixSize; i++) {
+            //    Matrix m = MatrixFactory.SymmetricPositiveDefinite(matrixSize, seed);
+            //    file.WriteLine(m.ToStringAsInput());
+            //}
 
             file.Close();
         }
 
-        public static void GenerateHermitianPositiveDefinite(int nrOfMatrices, Random seed) {
+        public static void GenerateHermitianPositiveDefinite(int maxMatrixSize, Random seed) {
             System.IO.StreamWriter file = new System.IO.StreamWriter(HPM);
 
-            for (int i = 0; i < nrOfMatrices; i++) {
-                Matrix m = MatrixFactory.HermitianPositiveDefinite(matrixSize, seed);
-                file.WriteLine(m.ToStringAsInput());
-            }
+            int m = (int)Math.Ceiling((0.0 + maxMatrixSize) / 2.0);
+
+            file.WriteLine(MatrixFactory.HermitianPositiveDefinite(maxMatrixSize, seed).ToStringAsInput());
+
+            //for (int i = 0; i < maxMatrixSize; i++) {
+            //    Matrix m = MatrixFactory.HermitianPositiveDefinite(maxMatrixSize, seed);
+            //    file.WriteLine(m.ToStringAsInput());
+            //}
 
             file.Close();
         }

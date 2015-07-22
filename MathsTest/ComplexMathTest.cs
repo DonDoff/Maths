@@ -33,7 +33,7 @@ namespace MathsTest {
             // Complex
             cActual = ComplexMath.Pow(new Complex(1, -1), 10);
             cExpected = new Complex(0, -32);
-            Assert.AreEqual(cExpected, cActual);
+            Assert.AreEqual(cExpected, cActual); 
         }
 
         [TestMethod]

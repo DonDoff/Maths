@@ -71,7 +71,7 @@ namespace Maths {
                 return MatrixFactory.IdentityMatrix(x.Height);
             }
 
-            double a = Math.Sign(x[0].R) * x.EuclidianNorm();
+            double a = x[0].R == 0 ? x.EuclidianNorm() : Math.Sign(x[0].R) * x.EuclidianNorm();
             Vector u = x + a * Vector.Ei(x.Size, 0);
             Vector v = u / u.EuclidianNorm();
 
@@ -82,25 +82,23 @@ namespace Maths {
         public static Matrix CalculatGivensRotation(Complex a, Complex b) {
             Complex c, s, r;
 
+            r = ComplexMath.Sqrt(a.Conjugate() * a + b.Conjugate() * b);
+
             if (b == 0) {
                 c = 1;
                 s = 0;
+            } else if (a == 0) {
+                c = 0;
+                s = ComplexMath.Sign(b.Conjugate());
             } else {
-                if (b.Abs() > a.Abs()) {
-                    r = a / b;
-                    s = 1.0 / ComplexMath.Sqrt(1 + r * r);
-                    c = s * r;
-                } else {
-                    r = b / a;
-                    c = 1.0 / ComplexMath.Sqrt(1 + r * r);
-                    s = c * r;
-                }
+                c = a.Abs() / r;
+                s = ComplexMath.Sign(a) * b.Conjugate() / r;
             }
 
             Matrix givensRot = new Matrix(2);
             givensRot[0, 0] = c;
             givensRot[0, 1] = s;
-            givensRot[1, 0] = -s;
+            givensRot[1, 0] = -s.Conjugate();
             givensRot[1, 1] = c;
 
             return givensRot;

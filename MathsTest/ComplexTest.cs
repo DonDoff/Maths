@@ -143,6 +143,10 @@ namespace MathsTests {
             cActual = new Complex("20+50i");
             cExpected = new Complex(20, 50);
             Assert.AreEqual(cActual, cExpected);
+
+            cActual = new Complex("0.21-0.0215i");
+            cExpected = new Complex(0.21, -0.0215);
+            Assert.AreEqual(cActual, cExpected);
         }
     }
 }

@@ -93,16 +93,30 @@ namespace MathsTest {
 
         [TestMethod]
         public void MatrixFactoryTestSymmetricPositiveSemiDefinite() {
-            Matrix mActual = MatrixFactory.HermitianPositiveSemiDefinite(5, new Random());
-            Assert.IsTrue(mActual.IsHermitian(), "Not Hermitian.");
+            Matrix mActual = MatrixFactory.SymmetricPositiveDefinite(5, new Random());
+            Assert.IsTrue(mActual.IsSymmetric(), "Not symmetric.");
             Assert.IsTrue(mActual.IsPositiveSemiDefinite(), "Not positive semi-definite.");
         }
 
         [TestMethod]
         public void MatrixFactoryTestSymmetricPositiveDefinite() {
+            Matrix mActual = MatrixFactory.SymmetricPositiveDefinite(5, new Random());
+            Assert.IsTrue(mActual.IsSymmetric(), "Not symmetric.");
+            Assert.IsTrue(mActual.IsPositiveDefinite(), "Not positive semi-definite.");
+        }
+
+        [TestMethod]
+        public void MatrixFactoryTestHermitianPositiveSemiDefinite() {
             Matrix mActual = MatrixFactory.HermitianPositiveDefinite(5, new Random());
-            Assert.IsTrue(mActual.IsHermitian());
-            Assert.IsTrue(mActual.IsPositiveDefinite());
+            Assert.IsTrue(mActual.IsHermitian(), "Not Hermitian.");
+            Assert.IsTrue(mActual.IsPositiveSemiDefinite(), "Not positive semi-definite.");
+        }
+
+        [TestMethod]
+        public void MatrixFactoryTestHermitianPositiveDefinite() {
+            Matrix mActual = MatrixFactory.HermitianPositiveDefinite(5, new Random());
+            Assert.IsTrue(mActual.IsHermitian(), "Not Hermitian.");
+            Assert.IsTrue(mActual.IsPositiveDefinite(), "Not positive definite.");
         }
     }
 }

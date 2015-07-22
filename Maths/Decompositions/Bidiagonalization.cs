@@ -22,6 +22,7 @@ namespace Maths {
             Matrix[] Us;
             Matrix[] Vs;
 
+            // Create correct matrix sizes
             if (M.Width == 1) {
                 Us = new Matrix[M.Width];
                 Vs = new Matrix[0];

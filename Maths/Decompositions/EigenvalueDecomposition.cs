@@ -19,17 +19,17 @@ namespace Maths {
         }
 
         private void MakeDecomposition() {
-            if (!(M.IsSquare())) {
-                throw new MatrixException("The matrix needs to be square to compute the eigenvalues/eigenvectors!");
-            }
-            //if (!(M.IsReal() && M.IsSymmetric())) {
-            //    throw new MatrixException("The matrix needs to be real and symmetric, to reliably compute the eigenvalues/eigenvectors!");
+            //if (!(M.IsSquare())) {
+            //    throw new MatrixException("The matrix needs to be square to compute the eigenvalues/eigenvectors!");
             //}
+            if (!(M.IsReal() && M.IsSymmetric())) {
+                throw new MatrixException("The matrix needs to be real and symmetric, to reliably compute the eigenvalues/eigenvectors!");
+            }
 
             HessenbergDecomposition hessen = new HessenbergDecomposition(M);
-            Matrix HT = hessen.P;
+            Matrix P = hessen.P;
 
-            Matrix Ai = hessen.H.Copy();
+            Matrix Ai = M.Copy();
             QRDecomposition qr = Ai.QR();
 
             Eigenvalues = new Vector(Ai.Width);

@@ -31,16 +31,29 @@ namespace MathsTest {
         }
 
         [Test, TestCaseSource(typeof(TestMatrices), "RealMatrices")]
-        public void MatrixDecompositionTestSVD(Matrix m) {
+        public void MatrixDecompositionTestSVDReal(Matrix m) {
             SVD svd = m.SVD();
 
-            Assert.IsTrue(svd.U.IsUnitary());
-            Assert.IsTrue(svd.D.IsDiagonal());
-            Assert.IsTrue(svd.V.IsUnitary());
+            Assert.IsTrue(svd.U.IsUnitary(), "U is not unitary, U.H * U:\n" + svd.U.ConjugateTranspose() * svd.U);
+            Assert.IsTrue(svd.D.IsDiagonal(), "D is not diagonal, D:\n" + svd.D);
+            Assert.IsTrue(svd.V.IsUnitary(), "V is not unitary, V.H * V:\n" + svd.V.ConjugateTranspose() * svd.V);
 
             Matrix mActual = svd.U * svd.D * svd.V.ConjugateTranspose();
             Matrix mExpected = m;
-            Assert.AreEqual(mExpected, mActual);
+            Assert.AreEqual(mExpected, mActual, "A != UDV.T:\n" + mActual);
+        }
+
+        [Test, TestCaseSource(typeof(TestMatrices), "ComplexMatrices")]
+        public void MatrixDecompositionTestSVDComplex(Matrix m) {
+            SVD svd = m.SVD();
+
+            Assert.IsTrue(svd.U.IsUnitary(), "U is not unitary, U.H * U:\n" + svd.U.ConjugateTranspose() * svd.U);
+            Assert.IsTrue(svd.D.IsDiagonal(), "D is not diagonal, D:\n" + svd.D);
+            Assert.IsTrue(svd.V.IsUnitary(), "V is not unitary, V.H * V:\n" + svd.V.ConjugateTranspose() * svd.V);
+
+            Matrix mActual = svd.U * svd.D * svd.V.ConjugateTranspose();
+            Matrix mExpected = m;
+            Assert.AreEqual(mExpected, mActual, "A != UDV.T:\n" + mActual);
         }
 
         [Test, TestCaseSource(typeof(TestMatrices), "RealMatrices")]
@@ -68,27 +81,51 @@ namespace MathsTest {
         }
 
         [Test, TestCaseSource(typeof(TestMatrices), "RealMatrices")]
-        public void MatrixDecompositionTestQRDecomposition(Matrix m) {
+        public void MatrixDecompositionTestQRDecompositionReal(Matrix m) {
             QRDecomposition qr = m.QR();
 
-            Assert.IsTrue(qr.Q.IsUnitary());
-            Assert.IsTrue(qr.R.IsUpperTriangular());
+            Assert.IsTrue(qr.Q.IsUnitary(), "Q is not unitary, Q.H * Q:\n" + qr.Q.ConjugateTranspose() * qr.Q);
+            Assert.IsTrue(qr.R.IsUpperTriangular(), "R is not upper triangular, R:\n" + qr.R);
 
             Matrix mActual = qr.Q * qr.R;
             Matrix mExpected = m;
-            Assert.AreEqual(mExpected, mActual);
+            Assert.AreEqual(mExpected, mActual, "A != Q*R:\n" + mActual);
+        }
+
+        [Test, TestCaseSource(typeof(TestMatrices), "ComplexMatrices")]
+        public void MatrixDecompositionTestQRDecompositionComplex(Matrix m) {
+            QRDecomposition qr = m.QR();
+
+            Assert.IsTrue(qr.Q.IsUnitary(), "Q is not unitary, Q.H * Q:\n" + qr.Q.ConjugateTranspose() * qr.Q);
+            Assert.IsTrue(qr.R.IsUpperTriangular(), "R is not upper triangular, R:\n" + qr.R);
+
+            Matrix mActual = qr.Q * qr.R;
+            Matrix mExpected = m;
+            Assert.AreEqual(mExpected, mActual, "A != Q*R:\n" + mActual);
         }
 
         [Test, TestCaseSource(typeof(TestMatrices), "RealMatrices")]
-        public void MatrixDecompositionTestQRWithGivensDecomposition(Matrix m) {
+        public void MatrixDecompositionTestQRWithGivensDecompositionReal(Matrix m) {
             QRDecomposition qr = m.QR(true);
 
-            Assert.IsTrue(qr.Q.IsUnitary());
-            Assert.IsTrue(qr.R.IsUpperTriangular());
+            Assert.IsTrue(qr.Q.IsUnitary(), "Q is not unitary, Q.H * Q:\n" + qr.Q.ConjugateTranspose() * qr.Q);
+            Assert.IsTrue(qr.R.IsUpperTriangular(), "R is not upper triangular, R:\n" + qr.R);
 
             Matrix mActual = qr.Q * qr.R;
             Matrix mExpected = m;
-            Assert.AreEqual(mExpected, mActual);
+            Assert.AreEqual(mExpected, mActual, "A != Q*R:\n" + mActual);
+        }
+        
+        [Test, TestCaseSource(typeof(TestMatrices), "ComplexMatrices")]
+        public void MatrixDecompositionTestQRWithGivensDecompositionComplex(Matrix m) {
+            QRDecomposition qr = m.QR(true);
+
+            Assert.IsTrue(qr.Q.IsUnitary(), "Q is not unitary, Q.H * Q:\n" + qr.Q.ConjugateTranspose() * qr.Q);
+            Assert.IsTrue(qr.R.IsUpperTriangular(), "R is not upper triangular, R:\n" + qr.R);
+
+            Matrix mActual = qr.Q * qr.R;
+            Matrix mExpected = m;
+            Assert.AreEqual(mExpected, mActual, "A != Q*R:\n" + mActual);
         }
 
         [Test, TestCaseSource(typeof(TestMatrices), "SymmetricPositiveDefiniteMatrices")]

@@ -50,8 +50,16 @@ namespace Maths {
             return new Complex(r * Math.Cos(c.I), r * Math.Sin(c.I));
         }
 
-        public static double Abs(Complex c) {
+        public static double Abs(this Complex c) {
             return Math.Sqrt(c.R * c.R + c.I * c.I);
+        }
+
+        public static Complex Sign(this Complex c) {
+            if (c == 0) {
+                return 1;
+            } else {
+                return c / c.Abs();
+            }
         }
 
         public static double Argument(Complex c) {
@@ -83,3 +91,4 @@ namespace Maths {
         }
     }
 }
+ 

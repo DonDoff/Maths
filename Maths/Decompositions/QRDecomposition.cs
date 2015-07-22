@@ -33,7 +33,7 @@ namespace Maths {
                 Matrix Q_temp = MatrixFactory.IdentityMatrix(M.Height);
                 Q_temp[Vector.Arrange(k, M.Height), Vector.Arrange(k, M.Height)] = Q_k;
 
-                Q *= Q_temp;
+                Q *= Q_temp.ConjugateTranspose();
             }
             
             R = Q.ConjugateTranspose() * M;
@@ -51,11 +51,12 @@ namespace Maths {
                         G[Vector.Arrange(i - 1, i + 1), Vector.Arrange(i - 1, i + 1)] = MatrixMath.CalculatGivensRotation(A[i - 1, j], A[i, j]);
 
                         A = G * A;
+                        Matrix xx = G * G.ConjugateTranspose();
                         Q *= G.ConjugateTranspose();
                     }
                 }
             }
-            R = A;
+            R = Q.ConjugateTranspose() * M;
         }
 
     }

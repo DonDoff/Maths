@@ -67,10 +67,6 @@ namespace Maths {
             return new Complex(scalar, 0);
         }
 
-        public double Abs() {
-            return ComplexMath.Abs(this);
-        }
-
         public Complex Conjugate() {
             return new Complex(R, -I);
         }
