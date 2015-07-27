@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 namespace Maths {
     // Based on: https://math.dartmouth.edu/~m56s13/Southworth_proj.pdf
     public class SVD : IDecomposition {
-        private static int ITERATION_DEPTH = 50;
-
         public Matrix U { get; private set; }
         public Matrix D { get; private set; }
         public Matrix V { get; private set; }
@@ -23,49 +21,76 @@ namespace Maths {
             Bidiagonalization bid = M.Bidiagonalization();
             Matrix B = bid.B.Copy();
 
+            D = B * B.ConjugateTranspose();
+            U = EigenDecomp(D);
+            U = bid.U * U;
+
             D = B.ConjugateTranspose() * B;
+            V = EigenDecomp(D);
+            V = bid.V * V;
 
-            if (D.Height > 1) {
-                V = EigenDecomp();
-                V = bid.V * V;
-
-                Matrix CopyOfD = D.Copy();
-                D = MatrixFactory.IdentityMatrix(D.Height);
-                for (int i = 0; i < D.Height; i++) {
-                    D[i, i] = ComplexMath.Sqrt(CopyOfD[i, i]);
-                }
-
-                U = new Matrix(M.Height, V.Width);
-                for (int i = 0; i < V.Width; i++) {
-                    U[Vector.Arrange(M.Height), i] = (M * V[Vector.Arrange(V.Height), i] / D[i, i]).ToColumnVector();
-                }
-            } else {
-                V = bid.V;
-                D = MatrixMath.Sqrt(D);
-                U = new Matrix(M.Height, V.Width);
-                for (int i = 0; i < V.Width; i++) {
-                    U[Vector.Arrange(M.Height), i] = (M * V[Vector.Arrange(V.Height), i] / D[i, i]).ToColumnVector();
-                }
+            Matrix CopyOfD = D.Copy();
+            D = MatrixFactory.IdentityMatrix(D.Height);
+            for (int i = 0; i < D.Height; i++) {
+                D[i, i] = CopyOfD[i, i].Abs() < Constants.EPS ? 0 : ComplexMath.Sqrt(CopyOfD[i, i]);
             }
+
+            if (M.Height > M.Width) {
+                D = D.ConcatenateRows(MatrixFactory.Zeros(M.Height - D.Height, D.Width));
+            } else if (M.Height < M.Width) {
+                D = D.SubMatrix(0, M.Height, 0, D.Width);
+            }
+
+
+            //if (D.Height > 1) {
+            //    V = EigenDecomp(D);
+            //    V = bid.V * V;
+
+            //    D = B * B.ConjugateTranspose();
+
+            //    U = EigenDecomp(D);
+            //    U = bid.U * U;
+            //    if (U.Width > D.Height) {
+            //        U = U.SubMatrix(0, U.Height, 0, D.Width);
+            //    }
+
+            //    Matrix CopyOfD = D.Copy(); 
+            //    D = MatrixFactory.IdentityMatrix(D.Height);
+            //    for (int i = 0; i < D.Height; i++) {
+            //        D[i, i] = ComplexMath.Sqrt(CopyOfD[i, i]);
+            //    }
+
+            //    //U = new Matrix(M.Height, V.Width);
+            //    //for (int i = 0; i < V.Width; i++) {
+            //    //    U[Vector.Arrange(M.Height), i] = (M * V[Vector.Arrange(V.Height), i] / D[i, i]).ToColumnVector();
+            //    //}
+            //} else {
+            //    V = bid.V;
+            //    D = MatrixMath.Sqrt(D);
+            //    U = new Matrix(M.Height);
+            //    for (int i = 0; i < V.Width; i++) {
+            //        U[Vector.Arrange(M.Height), i] = (M * V[Vector.Arrange(V.Height), i] / D[i, i]).ToColumnVector();
+            //    }
+            //}
         }
 
-        private Matrix EigenDecomp() {
-            Matrix shift = MatrixFactory.IdentityMatrix(D.Height) * ComputeShift(D);
-            QRDecomposition qr = (D - shift).QR();
+        private Matrix EigenDecomp(Matrix M) {
+            Matrix shift = MatrixFactory.IdentityMatrix(M.Height) * ComputeShift(M);
+            QRDecomposition qr = (M - shift).QR();
             Matrix Eigenvector = qr.Q;
 
-            for (int i = 0; i < ITERATION_DEPTH; i++) {
-                D = qr.R * qr.Q + shift;
-                shift = MatrixFactory.IdentityMatrix(D.Height) * ComputeShift(D);
-                qr = (D - shift).QR();
+            for (int i = 0; i < Constants.ITERATION_DEPTH; i++) {
+                M = qr.R * qr.Q + shift;
+                shift = MatrixFactory.IdentityMatrix(M.Height) * ComputeShift(M);
+                qr = (M - shift).QR();
 
                 Eigenvector *= qr.Q;
 
-                if (D.IsDiagonal()) {
-                    Console.WriteLine(i);
+                if (M.IsDiagonal()) {
                     break;
                 }
             }
+            D = M.Copy();
             return Eigenvector;
         }
 
@@ -74,13 +99,17 @@ namespace Maths {
         /// </summary>
         /// <returns></returns>
         private Complex ComputeShift(Matrix mat) {
-            Matrix subMat = mat.SubMatrix(mat.Height - 2, mat.Height, mat.Width - 2, mat.Width);
-            Complex trace = subMat.Trace();
-            Complex det = subMat.Determinant();
-            Complex eig1 = (trace + ComplexMath.Sqrt(trace * trace - 4 * det)) / 2;
-            Complex eig2 = (trace - ComplexMath.Sqrt(trace * trace - 4 * det)) / 2;
-            Complex eigen = ComplexMath.Min(eig1, eig2);
-            return eigen;
+            try { 
+                Matrix subMat = mat.SubMatrix(mat.Height - 2, mat.Height, mat.Width - 2, mat.Width);
+                Complex trace = subMat.Trace();
+                Complex det = subMat.Determinant();
+                Complex eig1 = (trace + ComplexMath.Sqrt(trace * trace - 4 * det)) / 2;
+                Complex eig2 = (trace - ComplexMath.Sqrt(trace * trace - 4 * det)) / 2;
+                Complex eigen = ComplexMath.Min(eig1, eig2);
+                return eigen;
+            } catch (MatrixException) {
+                return 0;
+            }
         }
 
 

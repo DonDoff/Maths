@@ -19,88 +19,67 @@ namespace Maths {
 
         private void MakeDecomposition() {
             Matrix A = M.Copy();
-            Matrix[] Us;
-            Matrix[] Vs;
+            Matrix P, Q;
+            U = MatrixFactory.IdentityMatrix(M.Height);
+            V = MatrixFactory.IdentityMatrix(M.Width);
+
+            int USize;
+            int VSize;
 
             // Create correct matrix sizes
             if (M.Width == 1) {
-                Us = new Matrix[M.Width];
-                Vs = new Matrix[0];
+                USize = M.Width;
+                VSize = 0;
             } else if (M.Height == 1) {
-                Us = new Matrix[0];
-                Vs = new Matrix[M.Height];
+                USize = 0;
+                VSize = M.Height;
             } else {
                 if (M.Height > M.Width) {
-                    Us = new Matrix[M.Width];
+                    USize = M.Width;
                 } else {
-                    Us = new Matrix[M.Height - 1];
+                    USize = M.Height - 1;
                 }
 
                 if (M.Height >= M.Width) {
-                    Vs = new Matrix[M.Width - 2];
+                    VSize = M.Width - 2;
                 } else if (M.Height == M.Width - 1) {
-                    Vs = new Matrix[M.Height - 1];
+                    VSize = M.Height - 1;
                 } else {
-                    Vs = new Matrix[M.Height];
+                    VSize = M.Height;
                 }
             }
 
-            for (int k = 0; k < Math.Max(Us.Length, Vs.Length); k++) {
+            for (int k = 0; k < Math.Max(USize, VSize); k++) {
                 // Left-hand reduction
-                if (k < Us.Length) {
+                if (k < USize) {
                     Vector x = new Vector(A, 0);
-                    U = MatrixMath.CalculateHouseholderTransform(x);
+                    P = MatrixMath.CalculateHouseholderTransform(x);
 
-                    A = (U * A).SubMatrix(0, A.Height, 1, A.Width);
+                    A = (P * A).SubMatrix(0, A.Height, 1, A.Width);
 
                     Matrix U_k = MatrixFactory.IdentityMatrix(M.Height);
-                    for (int i = 0; i < U.Height; i++) {
-                        for (int j = 0; j < U.Width; j++) {
-                            U_k[i + k, j + k] = U[i, j];
-                        }
-                    }
-                    Us[k] = U_k;
+                    U_k[Vector.Arrange(k, U_k.Height), Vector.Arrange(k, U_k.Width)] = P;
+
+                    U *= U_k.ConjugateTranspose();
                 } else {
                     A = A.SubMatrix(0, A.Height, 1, A.Width);
                 }
 
                 // Right-hand reduction
-                if (k < Vs.Length) {
-                    A = A.Transpose();
-                    Vector x = new Vector(A, 0);
-                    V = MatrixMath.CalculateHouseholderTransform(x);
-                    A = (V * A).SubMatrix(0, A.Height, 1, A.Width);
-                    A = A.Transpose();
+                if (k < VSize) {
+                    Vector x = new Vector(A.Transpose(), 0);
+                    Q = MatrixMath.CalculateHouseholderTransform(x).Transpose();
+                    A = (A * Q).SubMatrix(1, A.Height, 0, A.Width);
 
                     Matrix V_k = MatrixFactory.IdentityMatrix(M.Width);
-                    for (int i = 0; i < V.Height; i++) {
-                        for (int j = 0; j < V.Width; j++) {
-                            V_k[i + k + 1, j + k + 1] = V[i, j];
-                        }
-                    }
-                    Vs[k] = V_k;
+                    V_k[Vector.Arrange(k + 1, V_k.Height), Vector.Arrange(k + 1, V_k.Width)] = Q;
+
+                    V *= V_k;
                 } else {
                     A = A.SubMatrix(1, A.Height, 0, A.Width);
                 }
             }
 
-            if (Us.Length == 0) {
-                U = MatrixFactory.IdentityMatrix(M.Height);
-            } else {
-                U = Us[0];
-                for (int i = 1; i < Us.Length; i++) {
-                    U *= Us[i];
-                }
-            }
-
-            if (Vs.Length == 0) {
-                V = MatrixFactory.IdentityMatrix(M.Width);
-            } else {
-                V = Vs[0];
-                for (int i = 1; i < Vs.Length; i++) {
-                    V *= Vs[i];
-                }
-            }
             B = U.ConjugateTranspose() * M * V;
         }
     }

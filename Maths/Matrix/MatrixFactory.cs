@@ -89,6 +89,17 @@ namespace Maths {
         }
 
         /// <summary>
+        /// Create a matrix with random real numbers.
+        /// </summary>
+        /// <param name="height"></param>
+        /// <param name="width"></param>
+        /// <param name="seed"></param>
+        /// <returns></returns>
+        public static Matrix Real(int height, int width, Random seed = null) {
+            return Complex(height, width, seed).RealPart();
+        }
+
+        /// <summary>
         /// Create a matrix with random pure imaginary numbers.
         /// </summary>
         /// <param name="height"></param>
@@ -100,14 +111,14 @@ namespace Maths {
         }
 
         /// <summary>
-        /// Create a matrix with random real numbers.
+        /// Create a square matrix with random complex numbers.
         /// </summary>
         /// <param name="height"></param>
         /// <param name="width"></param>
         /// <param name="seed"></param>
         /// <returns></returns>
-        public static Matrix Real(int height, int width, Random seed = null) {
-            return Complex(height, width, seed).RealPart();
+        public static Matrix Square(int size, Random seed = null) {
+            return Complex(size, size, seed);
         }
 
         /// <summary>

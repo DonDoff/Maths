@@ -8,9 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace Maths {
     public class Complex {
-
-        private const double EPSILON = 1e-10;
-        private const int roundedDecimals = 2;
+        private const int roundedDecimals = 3;
 
         public static Complex MAX = new Complex(double.MaxValue, double.MaxValue);
         public static Complex MIN = new Complex(double.MinValue, double.MinValue);
@@ -138,7 +136,7 @@ namespace Maths {
         }
 
         private bool fieldsMatch(Complex c) {
-            return Math.Abs(R - c.R) < EPSILON && Math.Abs(I - c.I) < EPSILON;
+            return Math.Abs(R - c.R) < Constants.EPS && Math.Abs(I - c.I) < Constants.EPS;
         }
 
         public override bool Equals(System.Object obj) {

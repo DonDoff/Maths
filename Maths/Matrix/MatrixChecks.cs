@@ -50,7 +50,7 @@ namespace Maths {
 
         public static bool IsUpperTriangular(this Matrix m) {
             for (int i = 0; i < m.Height; i++) {
-                for (int j = 0; j < i; j++) {
+                for (int j = 0; j < i && j < m.Width; j++) {
                     if (m[i, j] != 0) {
                         return false;
                     }
@@ -64,6 +64,9 @@ namespace Maths {
         }
 
         public static bool IsUpperHessenberg(this Matrix m) {
+            if (!m.IsSquare()) {
+                return false;
+            }
             for (int i = 0; i < m.Height; i++) {
                 for (int j = 0; j < i - 1; j++) {
                     if (m[i, j] != 0) {
@@ -73,6 +76,31 @@ namespace Maths {
             }
             return true;
         }
+
+        ///// <summary>
+        ///// This function checks if the matrix is column wise unitary.
+        ///// </summary>
+        ///// <param name="m"></param>
+        ///// <returns></returns>
+        //public static bool IsColumnUnitary(this Matrix m) {
+        //    return (m.ConjugateTranspose() * m) == MatrixFactory.IdentityMatrix(m.Width);
+        //}
+
+        ///// <summary>
+        ///// This function checks if the matrix is column wise unitary, up until the given column.
+        ///// </summary>
+        ///// <param name="m"></param>
+        ///// <param name="checkUntilColumn"></param>
+        ///// <returns></returns>
+        //public static bool IsColumnUnitary(this Matrix m, int checkUntilColumn) {
+        //    Matrix reduced = (m.ConjugateTranspose() * m).SubMatrix(0, checkUntilColumn, 0, checkUntilColumn);
+
+        //    return reduced == MatrixFactory.IdentityMatrix(reduced.Width);
+        //}
+
+        //public static bool IsRowUnitary(this Matrix m) {
+        //    return (m * m.ConjugateTranspose()) == MatrixFactory.IdentityMatrix(m.Height);
+        //}
 
         public static bool IsUnitary(this Matrix m) {
             return m.IsSquare() && (m.ConjugateTranspose() * m) == MatrixFactory.IdentityMatrix(m.Height);

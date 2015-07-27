@@ -25,10 +25,10 @@ namespace Maths {
     public partial class MathsPlotWindow : Window {
         public MathsPlotViewModel ViewModel { get; set; }
 
-        public MathsPlotWindow(MathsPlotViewModel vm)
+        public MathsPlotWindow(List<Vector> xs, List<Vector> ys)
         {
             InitializeComponent();
-            ViewModel = vm;
+            ViewModel = new MathsPlotViewModel(xs, ys);
             DataContext = ViewModel;
         }
     }

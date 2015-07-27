@@ -296,6 +296,15 @@ namespace Maths {
             return newMat;
         }
 
+        public Matrix NormalizeColumns() {
+            Matrix newMat = new Matrix(Width, Height);
+            for (int i = 0; i < Width; i++) {
+                Vector rows = Vector.Arrange(Height);
+                newMat[rows, i] = this[rows, i] / this[rows, i].EuclidianNorm();
+            }
+            return newMat;
+        }
+
         public Complex Determinant() {
             LUDecomposition lu = LU();
             Complex det = lu.DetOfP;

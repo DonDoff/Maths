@@ -7,7 +7,7 @@ namespace MathsTest {
     [TestFixture]
     public class MatrixDecompositionTest {
 
-        [Test, TestCaseSource(typeof(TestMatrices), "RealMatrices")]
+        [Test, TestCaseSource(typeof(TestMatrices), "SquareMatrices")]
         public void MatrixDecompositionTestLUDecomposition(Matrix m) {
             LUDecomposition lu = m.LU();
 
@@ -40,7 +40,7 @@ namespace MathsTest {
 
             Matrix mActual = svd.U * svd.D * svd.V.ConjugateTranspose();
             Matrix mExpected = m;
-            Assert.AreEqual(mExpected, mActual, "A != UDV.T:\n" + mActual);
+            Assert.AreEqual(mExpected, mActual, "A != UDV.T");
         }
 
         [Test, TestCaseSource(typeof(TestMatrices), "ComplexMatrices")]
@@ -53,23 +53,36 @@ namespace MathsTest {
 
             Matrix mActual = svd.U * svd.D * svd.V.ConjugateTranspose();
             Matrix mExpected = m;
-            Assert.AreEqual(mExpected, mActual, "A != UDV.T:\n" + mActual);
+            Assert.AreEqual(mExpected, mActual, "A != UDV.T");
         }
 
         [Test, TestCaseSource(typeof(TestMatrices), "RealMatrices")]
-        public void MatrixDecompositionTestBidiagonalization(Matrix m) {
+        public void MatrixDecompositionTestBidiagonalizationReal(Matrix m) {
             Bidiagonalization bid = m.Bidiagonalization();
 
-            Assert.IsTrue(bid.U.IsUnitary());
-            Assert.IsTrue(bid.B.IsBiDiagonal());
-            Assert.IsTrue(bid.V.IsUnitary());
+            Assert.IsTrue(bid.U.IsUnitary(), "U is not unitary, U.H * U:\n" + bid.U.ConjugateTranspose() * bid.U);
+            Assert.IsTrue(bid.B.IsBiDiagonal(), "B is not bidiagonal, B:\n" + bid.B);
+            Assert.IsTrue(bid.V.IsUnitary(), "V is not unitary, V.H * V:\n" + bid.V.ConjugateTranspose() * bid.V);
 
             Matrix mActual = bid.U * bid.B * bid.V.ConjugateTranspose();
             Matrix mExpected = m;
-            Assert.AreEqual(mExpected, mActual);
+            Assert.AreEqual(mExpected, mActual, "A != UBV.T");
         }
 
         [Test, TestCaseSource(typeof(TestMatrices), "ComplexMatrices")]
+        public void MatrixDecompositionTestBidiagonalizationComplex(Matrix m) {
+            Bidiagonalization bid = m.Bidiagonalization();
+
+            Assert.IsTrue(bid.U.IsUnitary(), "U is not unitary, U.H * U:\n" + bid.U.ConjugateTranspose() * bid.U);
+            Assert.IsTrue(bid.B.IsBiDiagonal(), "B is not bidiagonal, B:\n" + bid.B);
+            Assert.IsTrue(bid.V.IsUnitary(), "V is not unitary, V.H * V:\n" + bid.V.ConjugateTranspose() * bid.V);
+
+            Matrix mActual = bid.U * bid.B * bid.V.ConjugateTranspose();
+            Matrix mExpected = m;
+            Assert.AreEqual(mExpected, mActual, "A != UBV.T");
+        }
+
+        [Test, TestCaseSource(typeof(TestMatrices), "SquareMatrices")]
         public void MatrixDecompositionTestHessenbergDecomposition(Matrix m) {
             HessenbergDecomposition HD = m.Hessen();
 
@@ -101,7 +114,7 @@ namespace MathsTest {
 
             Matrix mActual = qr.Q * qr.R;
             Matrix mExpected = m;
-            Assert.AreEqual(mExpected, mActual, "A != Q*R:\n" + mActual);
+            Assert.AreEqual(mExpected, mActual, "A != Q*R");
         }
 
         [Test, TestCaseSource(typeof(TestMatrices), "RealMatrices")]
@@ -113,7 +126,7 @@ namespace MathsTest {
 
             Matrix mActual = qr.Q * qr.R;
             Matrix mExpected = m;
-            Assert.AreEqual(mExpected, mActual, "A != Q*R:\n" + mActual);
+            Assert.AreEqual(mExpected, mActual, "A != Q*R");
         }
         
         [Test, TestCaseSource(typeof(TestMatrices), "ComplexMatrices")]
@@ -125,7 +138,7 @@ namespace MathsTest {
 
             Matrix mActual = qr.Q * qr.R;
             Matrix mExpected = m;
-            Assert.AreEqual(mExpected, mActual, "A != Q*R:\n" + mActual);
+            Assert.AreEqual(mExpected, mActual, "A != Q*R");
         }
 
         [Test, TestCaseSource(typeof(TestMatrices), "SymmetricPositiveDefiniteMatrices")]

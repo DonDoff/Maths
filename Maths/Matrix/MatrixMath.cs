@@ -104,5 +104,28 @@ namespace Maths {
             return givensRot;
         }
 
+        /// <summary>
+        /// Given a vector space defined by the columns of the matrix x, an orthonormal projection y is calculated using the Gram-Schmidt process.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static Matrix GramSchmidthProcess(Matrix x) {
+            Matrix y = MatrixFactory.Zeros(x.Height, x.Width);
+            y[Vector.Arrange(y.Height), 0] = x[Vector.Arrange(x.Height), 0];
+
+            for (int i = 1; i < x.Width; i++) {
+                Vector xi = x[Vector.Arrange(x.Height), i];
+                Vector projection = new Vector(xi.Size);
+
+                for (int j = 0; j < i - 1; j++) {
+                    Vector yj = y[Vector.Arrange(y.Height), j];
+                    projection += xi.DotProduct(yj) / yj.DotProduct(yj) * yj;
+                }
+
+                y[Vector.Arrange(y.Height), i] = x[Vector.Arrange(x.Height), i] - projection;
+            }
+            return y.NormalizeColumns();
+        }
+
     }
 }

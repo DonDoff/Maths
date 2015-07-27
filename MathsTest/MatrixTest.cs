@@ -138,6 +138,17 @@ namespace MathsTests {
         }
 
         [TestMethod]
+        public void MatrixTestNormalizeColumns() {
+            Matrix m1 = MatrixFactory.ParseFrom("3+i, -6-3i; 2+4i, 4-i").NormalizeColumns();
+
+            for (int i = 0; i < m1.Width; i++) {
+                double mActual = m1[Vector.Arrange(m1.Height), i].EuclidianNorm();
+                double mExpected = 1;
+                Assert.AreEqual(mExpected, mActual, Constants.EPS);
+            }
+        }
+
+        [TestMethod]
         public void MatrixTestDeterminant() {
             Matrix m1 = MatrixFactory.ParseFrom("3, -6; 2, 3");
 

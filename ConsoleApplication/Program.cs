@@ -11,23 +11,26 @@ using MathsTest;
 namespace ConsoleApplication {
     class Program {
         static void Main(string[] args) {
-            TestMatrixGenerator.GenerateAll(5);
+            TestMatrixGenerator.GenerateAll(5, 1);
 
-            Matrix A;
+            Matrix A; 
 
             //A = MatrixFactory.ParseFrom("4, 2, 2, 1, 5; 2, -3, 1, 1, 3; 2, 1, 3, 1, 4; 1, 1, 1, 2, 3; 1, 2, 6, 4, 1");
             //A = MatrixFactory.ParseFrom("1, 0, 0, 0, 2; 0, 0, 3, 0, 0; 0, 0, 0, 0, 0; 0, 4, 0, 0, 0");
-            //A = MatrixFactory.ParseFrom("1, 1, 1; 1, 1, 1; 1, -1, 1; 1, 1, -1");
+            A = MatrixFactory.ParseFrom("1, 1; 0, 1; 1, -1; -1, 2i");
             //A = MatrixFactory.ParseFrom("1, 1, 1, 1; 1, 1, -1, 1; 1, 1, 1, -1");
             //A = MatrixFactory.ParseFrom("1; 1; 3");
             //A = MatrixFactory.ParseFrom("1, 1, 3");
-            //A = MatrixFactory.ParseFrom("4, 2, 0; 2, -3, 1; 3, 2, 5");
+            //A = MatrixFactory.ParseFrom("4, 2, i; 2, -3, 1; 3, 2, 5; 2, 5, 1");
+            //A = MatrixFactory.ParseFrom("4, 2, i; 2, -3, 1; 3, 2, 5; 2, 5, 1; 2, 2i, 1+i");
             //A = MatrixFactory.ParseFrom("1, 1; 1, 2; 1, 3; 1, 4; 1, 5");
             //A = MatrixFactory.ParseFrom("4, 3, 0, 2; 2, 1, 2, 1; 4, 4, 0, 3");
             //A = MatrixFactory.ParseFrom("1, -1, 4; 1, 4, -2; 1, 4, 2; 1, -1, 0");
-            A = MatrixFactory.Real(3, 3, new Random());
-            Console.WriteLine("A:\n" + A + "\n");
+            //A = MatrixFactory.Real(3, 3, new Random());
 
+            A = A.Transpose();
+            Console.WriteLine("A:\n" + A + "\n");
+             
             //HessenbergDecomposition hessen = new HessenbergDecomposition(A);
             //Matrix P = hessen.P;
             //Console.WriteLine("H:\n" + hessen.H + "\n");
@@ -62,23 +65,26 @@ namespace ConsoleApplication {
             //ColumnVector y = x[0] * A.GetColumnVector(0) + x[1] * xx;
             //Plot.CreateMathsPlotWindow(new List<ColumnVector> { xx, xx }, new List<ColumnVector> { b, y });
 
-
             //Bidiagonalization bid = A.Bidiagonalization();
             //Console.WriteLine("U:\n" + bid.U + "\n");
             //Console.WriteLine("B:\n" + bid.B + "\n");
             //Console.WriteLine("V:\n" + bid.V + "\n");
             //Console.WriteLine("UBV:\n" + bid.U * bid.B * bid.V.ConjugateTranspose() + "\n");
 
+            
             SVD svd = A.SVD();
             Console.WriteLine("U:\n" + svd.U + "\n");
-            Console.WriteLine("U*UT:\n" + svd.U * svd.U.ConjugateTranspose() + "\n");
+            Console.WriteLine("UT*U:\n" + svd.U.ConjugateTranspose() * svd.U + "\n");
             Console.WriteLine("D:\n" + svd.D + "\n");
             Console.WriteLine("V:\n" + svd.V + "\n");
-            Console.WriteLine("UDV:\n" + svd.U * svd.D * svd.V.ConjugateTranspose() + "\n");
-
+            Console.WriteLine("UDV.T:\n" + svd.U * svd.D * svd.V.ConjugateTranspose() + "\n");
+ 
             Console.WriteLine("U?:\n" + svd.U.IsUnitary() + "\n");
-            Console.WriteLine("D?:\n" + svd.D.IsDiagonal()  + "\n");
+            Console.WriteLine("D?:\n" + svd.D.IsDiagonal() + "\n");
             Console.WriteLine("V?:\n" + svd.V.IsUnitary() + "\n");
+
+
+
 
             //int N = 1000;
             //double tStart = 0;

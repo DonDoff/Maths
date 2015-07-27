@@ -29,6 +29,15 @@ namespace MathsTest {
             }
         }
 
+        public static IEnumerable SquareMatrices {
+            get {
+                string[] matrixStrings = System.IO.File.ReadAllLines(TestMatrixGenerator.SQM);
+                foreach (string matrixString in matrixStrings) {
+                    yield return new TestCaseData(MatrixFactory.ParseFrom(matrixString));
+                }
+            }
+        }
+
         public static IEnumerable SymmetricMatrices {
             get {
                 string[] matrixStrings = System.IO.File.ReadAllLines(TestMatrixGenerator.SM);
