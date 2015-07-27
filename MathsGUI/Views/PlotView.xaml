@@ -8,6 +8,6 @@
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{Binding Plot, Source={StaticResource Locator}}">
     <Grid>
-        <oxy:PlotView Title="A Graph" Model="{Binding PlotModel}" Margin="10"/>
+        <oxy:PlotView Title="A Graph" Model="{Binding MathsGUI.ViewModels.PlotViewModel.PlotModel}" Margin="10"/>
     </Grid>
 </UserControl>

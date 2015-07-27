@@ -13,16 +13,17 @@ using System.Threading;
 namespace MathsGUI.ViewModels {
     public class PlotDataViewModel : ViewModelBase {
 
-        private ObservableCollection<PlotData> plotDatas;
-        public ObservableCollection<PlotData> PlotDatas {
-            get {
-                return plotDatas;
-            }
-            set {
-                plotDatas = value;
-                //RaisePropertyChanged(() => PlotDatas);
-            }
-        }
+        //private ObservableCollection<PlotData> plotDatas;
+        //public ObservableCollection<PlotData> PlotDatas {
+        //    get {
+        //        return plotDatas;
+        //    }
+        //    set {
+        //        plotDatas = value;
+        //        //RaisePropertyChanged(() => PlotDatas);
+        //    }
+        //}
+        public ObservableCollection<PlotData> PlotDatas { get; set; }
 
         public RelayCommand AddPlotDataButtonHandler { get; set; }
 
