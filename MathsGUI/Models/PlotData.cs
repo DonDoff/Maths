@@ -11,7 +11,6 @@ namespace MathsGUI.Models {
         public Vector X { get; set; }
         public Vector Y { get; set; }
         public string Name { get; set; }
-        public string Legend { get; set; }
 
         public PlotData(Vector x, Vector y, string name) {
             this.X = x;

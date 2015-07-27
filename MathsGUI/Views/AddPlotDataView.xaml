@@ -3,7 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="AddPlotDataView" Height="300" Width="300"
         DataContext="{Binding AddPlotData, Source={StaticResource Locator}}">
-    <Grid>
-        <Button Height="20" Width="20" Content="X" ToolTip="Cancel" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Button Height="30" Width="30" 
+                Content="&#x2713;" ToolTip="Cancel" 
+                HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                Grid.Column="0"
+                Command="{Binding AddPlotDataHandler}"/>
     </Grid>
 </Window>
