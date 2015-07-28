@@ -10,19 +10,35 @@ using MathsGUI.Models;
 
 namespace MathsGUI.ViewModels {
     public class AddPlotDataViewModel : ViewModelBase {
-        RelayCommand AddPlotDataHandler { get; set; }
+
+        private PlotData plotData;
+        public PlotData PlotData {
+            get {
+                return plotData;
+            }
+            set {
+                plotData = value;
+                RaisePropertyChanged(() => PlotData);
+            }
+        }
+
+        public RelayCommand AddPlotDataHandler { get; set; }
 
         public AddPlotDataViewModel() {
+            PlotData = new PlotData(new Vector(0), new Vector(0), "");
             AddPlotDataHandler = new RelayCommand(HandleAddPlotData);
         }
 
         private void HandleAddPlotData() {
-            Vector x = Vector.ParseFrom("1, 2, 3, 4, 5");
-            Vector y = x.ElementMultiply(x).ToColumnVector();
-            string name = "Squared";
+            Vector x = Vector.ParseFrom(PlotData.XString);
+            Vector y = Vector.ParseFrom(PlotData.YString);
+            //Vector x = Vector.Arrange(10);
+            //Vector y = MatrixFactory.Real(x.Size, 1, new Random()).ToColumnVector();
+            string name = PlotData.Name;
 
             PlotData pd = new PlotData(x, y, name);
-            new ViewModelLocator().PlotData.PlotDatas.Add(pd);
+            new ViewModelLocator().PlotDatas.PlotDatas.Add(pd);
+            MessengerInstance.Send<object>(null, MessengerToken.PlotDataAdded);
         }
 
     }

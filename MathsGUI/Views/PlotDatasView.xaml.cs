@@ -17,8 +17,8 @@ namespace MathsGUI.Views {
     /// <summary>
     /// Interaction logic for PlotDataView.xaml
     /// </summary>
-    public partial class PlotDataView : UserControl {
-        public PlotDataView() {
+    public partial class PlotDatasView : UserControl {
+        public PlotDatasView() {
             InitializeComponent();
         }
     }

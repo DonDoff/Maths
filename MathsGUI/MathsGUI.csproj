@@ -80,17 +80,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MessengerToken.cs" />
     <Compile Include="Models\PlotData.cs" />
     <Compile Include="ViewModels\AddPlotDataViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\PlotDataViewModel.cs" />
+    <Compile Include="ViewModels\PlotDatasViewModel.cs" />
     <Compile Include="ViewModels\PlotViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\AddPlotDataView.xaml.cs">
       <DependentUpon>AddPlotDataView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PlotDataView.xaml.cs">
-      <DependentUpon>PlotDataView.xaml</DependentUpon>
+    <Compile Include="Views\PlotDatasView.xaml.cs">
+      <DependentUpon>PlotDatasView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlotView.xaml.cs">
       <DependentUpon>PlotView.xaml</DependentUpon>
@@ -111,7 +112,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PlotDataView.xaml">
+    <Page Include="Views\PlotDatasView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

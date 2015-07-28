@@ -11,23 +11,22 @@ using MathsGUI.Models;
 using System.Threading;
 
 namespace MathsGUI.ViewModels {
-    public class PlotDataViewModel : ViewModelBase {
+    public class PlotDatasViewModel : ViewModelBase {
 
-        //private ObservableCollection<PlotData> plotDatas;
-        //public ObservableCollection<PlotData> PlotDatas {
-        //    get {
-        //        return plotDatas;
-        //    }
-        //    set {
-        //        plotDatas = value;
-        //        //RaisePropertyChanged(() => PlotDatas);
-        //    }
-        //}
-        public ObservableCollection<PlotData> PlotDatas { get; set; }
+        private ObservableCollection<PlotData> plotDatas;
+        public ObservableCollection<PlotData> PlotDatas {
+            get {
+                return plotDatas;
+            }
+            set {
+                plotDatas = value;
+                RaisePropertyChanged(() => PlotDatas);
+            }
+        }
 
         public RelayCommand AddPlotDataButtonHandler { get; set; }
 
-        public PlotDataViewModel() {
+        public PlotDatasViewModel() {
             PlotDatas = new ObservableCollection<PlotData>();
             AddPlotDataButtonHandler = new RelayCommand(CreateAddPlotDataWindow);
         }

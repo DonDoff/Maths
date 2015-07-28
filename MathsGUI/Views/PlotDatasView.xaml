@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="MathsGUI.Views.PlotDataView"
+﻿<UserControl x:Class="MathsGUI.Views.PlotDatasView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-             DataContext="{Binding PlotData, Source={StaticResource Locator}}">
+             DataContext="{Binding PlotDatas, Source={StaticResource Locator}}">
     <Grid>
         <StackPanel>
             <Button Height="20" Width="20" Content="+" ToolTip="Add plot data" Command="{Binding AddPlotDataButtonHandler}" HorizontalAlignment="Left"/>
