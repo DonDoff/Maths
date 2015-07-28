@@ -7,20 +7,21 @@
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{Binding PlotDatas, Source={StaticResource Locator}}">
     <Grid>
-        <StackPanel>
-            <Button Height="20" Width="20" Content="+" ToolTip="Add plot data" Command="{Binding AddPlotDataButtonHandler}" HorizontalAlignment="Left"/>
-            <Label Content="Awesome PlotDataView content"/>
-            <ListView ItemsSource="{Binding PlotDatas}">
+        <StackPanel Margin="10">
+            <DockPanel>
+                <Button Content="Add plot data" Command="{Binding AddPlotDataButtonHandler}"/>
+                <Button Content="Remove plot data" Command="{Binding RemovePlotDataButtonHandler}" HorizontalAlignment="Right"/>
+            </DockPanel>
+
+            <ListView ItemsSource="{Binding PlotDatas}" SelectedItem="{Binding SelectedPlotData}" Margin="0,10">                
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Label Height="50" Width="100" Content="{Binding Name}" />
+                        <DockPanel Margin ="0,10,0,0">
+                            <Label Height="50" Width="Auto" Content="{Binding Name}" DockPanel.Dock="Top"/>
+                        </DockPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
         </StackPanel>
-
-        
-
     </Grid>
 </UserControl>

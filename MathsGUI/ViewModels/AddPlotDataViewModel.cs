@@ -32,8 +32,6 @@ namespace MathsGUI.ViewModels {
         private void HandleAddPlotData() {
             Vector x = Vector.ParseFrom(PlotData.XString);
             Vector y = Vector.ParseFrom(PlotData.YString);
-            //Vector x = Vector.Arrange(10);
-            //Vector y = MatrixFactory.Real(x.Size, 1, new Random()).ToColumnVector();
             string name = PlotData.Name;
 
             PlotData pd = new PlotData(x, y, name);
