@@ -46,8 +46,15 @@ namespace MathsGUI.ViewModels {
         }
 
         private void EditPlotData(PlotData pd) {
+            AddPlotDataViewModel addPlotDataVM = (new ViewModelLocator()).AddPlotData;
+            addPlotDataVM.PlotData = pd;
+            addPlotDataVM.XString = pd.X.ToStringAsInput();
+            addPlotDataVM.YString = pd.Y.ToStringAsInput();
+
+            AddPlotDataView w = new AddPlotDataView();
+            w.Show();
+
             PlotDatas.Remove(pd);
-            MessengerInstance.Send<object>(null, MessengerToken.PlotDataRemoved);
         }
     }
 }

@@ -18,18 +18,20 @@
                             </Grid.ColumnDefinitions>
                             
                             <Label Width="Auto" Content="{Binding Name}" Grid.Column="0"/>
-                            <Button Width="90" Command="{Binding Path=DataContext.RemovePlotDataButtonHandler, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}" 
-                                    Padding="5" Grid.Column="1">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Width="20" Source="..\Images\remove_icon.jpg"/>
-                                    <TextBlock Margin="5,0">Remove</TextBlock>
-                                </StackPanel>
-                            </Button>
+
                             <Button Width="80" Command="{Binding Path=DataContext.EditPlotDataButtonHandler, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"  CommandParameter="{Binding}"
-                                    Padding="5" Grid.Column="2">
+                                    Padding="5" Grid.Column="1">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Width="20" Source="..\Images\edit_icon.png"/>
                                     <TextBlock Margin="5,0">Edit</TextBlock>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Width="90" Command="{Binding Path=DataContext.RemovePlotDataButtonHandler, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}" 
+                                    Padding="5" Grid.Column="2">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="20" Source="..\Images\remove_icon.jpg"/>
+                                    <TextBlock Margin="5,0">Remove</TextBlock>
                                 </StackPanel>
                             </Button>
                         </Grid>
