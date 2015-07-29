@@ -7,11 +7,9 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Maths;
 using MathsGUI.Models;
-using OxyPlot;
-using System.Windows.Media;
 
 namespace MathsGUI.ViewModels {
-    public class PlotDataEditorViewModel : ViewModelBase {
+    public class AddPlotDataViewModel : ViewModelBase {
 
         private PlotData plotData;
         public PlotData PlotData {
@@ -24,26 +22,21 @@ namespace MathsGUI.ViewModels {
             }
         }
 
-        public RelayCommand EditPlotDataHandler { get; set; }
+        public RelayCommand AddPlotDataHandler { get; set; }
 
-        public PlotDataEditorViewModel() {
+        public AddPlotDataViewModel() {
             PlotData = new PlotData(new Vector(0), new Vector(0), "");
-            EditPlotDataHandler = new RelayCommand(HandleEditPlotData);
+            AddPlotDataHandler = new RelayCommand(HandleAddPlotData);
         }
 
-        public PlotDataEditorViewModel(PlotData pd) {
-            PlotData = pd;
-            EditPlotDataHandler = new RelayCommand(HandleEditPlotData);
-        }
-
-        private void HandleEditPlotData() {
+        private void HandleAddPlotData() {
             Vector x = Vector.ParseFrom(PlotData.XString);
             Vector y = Vector.ParseFrom(PlotData.YString);
             string name = PlotData.Name;
 
             PlotData pd = new PlotData(x, y, name);
             new ViewModelLocator().PlotDatas.PlotDatas.Add(pd);
-            MessengerInstance.Send<object>(null, MessengerToken.PlotDataEdited);
+            MessengerInstance.Send<object>(null, MessengerToken.PlotDataAdded);
         }
 
     }

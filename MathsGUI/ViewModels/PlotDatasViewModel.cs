@@ -28,28 +28,29 @@ namespace MathsGUI.ViewModels {
 
         public RelayCommand AddPlotDataButtonHandler { get; set; }
         public RelayCommand RemovePlotDataButtonHandler { get; set; }
-        public RelayCommand<PlotData> EditPlotDataButtonHandler { get; set; }
 
         public PlotDatasViewModel() {
             PlotDatas = new ObservableCollection<PlotData>();
             AddPlotDataButtonHandler = new RelayCommand(CreateAddPlotDataWindow);
             RemovePlotDataButtonHandler = new RelayCommand(RemovePlotData);
-            EditPlotDataButtonHandler = new RelayCommand<PlotData>(EditPlotData);
         }
 
         private void CreateAddPlotDataWindow() {
-            PlotDataEditorView w = new PlotDataEditorView();
+            AddPlotDataView w = new AddPlotDataView();
             w.Show();
         }
 
         private void RemovePlotData() {
-            PlotDatas.Remove(SelectedPlotData);
-            MessengerInstance.Send<object>(null, MessengerToken.PlotDataRemoved);
-        }
-
-        private void EditPlotData(PlotData pd) {
-            PlotDataEditorView w = new PlotDataEditorView();
-            w.Show();
+            //ObservableCollection<PlotData> CopyOfPlotDatas = new ObservableCollection<PlotData>(PlotDatas);
+            //for (int i = 0; i < CopyOfPlotDatas.Count; i++) {
+            //    if (CopyOfPlotDatas[i] == SelectedPlotData) {
+            //        CopyOfPlotDatas.RemoveAt(i);
+            //    }
+            //}
+            //if (PlotDatas.Count > 0) {
+                PlotDatas.Remove(SelectedPlotData);
+                MessengerInstance.Send<object>(null, MessengerToken.PlotDataRemoved);
+            //}
         }
     }
 }

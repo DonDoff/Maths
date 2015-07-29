@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MathsGUI {
     public enum MessengerToken {
-        PlotDataEdited,
+        PlotDataAdded,
         PlotDataRemoved,
     }
 }

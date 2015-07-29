@@ -33,9 +33,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>M#.ico</ApplicationIcon>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="GalaSoft.MvvmLight">
       <HintPath>..\packages\MvvmLightLibs.5.1.1.0\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
@@ -85,13 +82,13 @@
     </ApplicationDefinition>
     <Compile Include="MessengerToken.cs" />
     <Compile Include="Models\PlotData.cs" />
-    <Compile Include="ViewModels\PlotDataEditorViewModel.cs" />
+    <Compile Include="ViewModels\AddPlotDataViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PlotDatasViewModel.cs" />
     <Compile Include="ViewModels\PlotViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
-    <Compile Include="Views\PlotDataEditorView.xaml.cs">
-      <DependentUpon>PlotDataEditorView.xaml</DependentUpon>
+    <Compile Include="Views\AddPlotDataView.xaml.cs">
+      <DependentUpon>AddPlotDataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlotDatasView.xaml.cs">
       <DependentUpon>PlotDatasView.xaml</DependentUpon>
@@ -111,7 +108,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\PlotDataEditorView.xaml">
+    <Page Include="Views\AddPlotDataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -158,9 +155,7 @@
       <Name>Maths</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="M#.ico" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

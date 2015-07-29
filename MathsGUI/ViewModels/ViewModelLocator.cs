@@ -42,7 +42,7 @@ namespace MathsGUI.ViewModels {
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<PlotViewModel>();
             SimpleIoc.Default.Register<PlotDatasViewModel>();
-            SimpleIoc.Default.Register<PlotDataEditorViewModel>();
+            SimpleIoc.Default.Register<AddPlotDataViewModel>();
         }
 
         public MainViewModel Main {
@@ -63,9 +63,9 @@ namespace MathsGUI.ViewModels {
             }
         }
 
-        public PlotDataEditorViewModel PlotDataEditor {
+        public AddPlotDataViewModel AddPlotData {
             get {
-                return ServiceLocator.Current.GetInstance<PlotDataEditorViewModel>();
+                return ServiceLocator.Current.GetInstance<AddPlotDataViewModel>();
             }
         }
 

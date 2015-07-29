@@ -7,22 +7,21 @@
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{Binding PlotDatas, Source={StaticResource Locator}}">
     <Grid>
-        <DockPanel Margin="10">
-            <DockPanel DockPanel.Dock="Top">
-                <Button Content="Add plot data" Command="{Binding AddPlotDataButtonHandler}" Padding="5"/>
-                <Button Content="Remove plot data" Command="{Binding RemovePlotDataButtonHandler}" HorizontalAlignment="Right"  Padding="5"/>
+        <StackPanel Margin="10">
+            <DockPanel>
+                <Button Content="Add plot data" Command="{Binding AddPlotDataButtonHandler}"/>
+                <Button Content="Remove plot data" Command="{Binding RemovePlotDataButtonHandler}" HorizontalAlignment="Right"/>
             </DockPanel>
 
-            <ListView ItemsSource="{Binding PlotDatas}" SelectedItem="{Binding SelectedPlotData}" Margin ="0,10,0,0">                
+            <ListView ItemsSource="{Binding PlotDatas}" SelectedItem="{Binding SelectedPlotData}" Margin="0,10">                
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <DockPanel>
-                            <Label Content="{Binding Name}"/>
-                            <Button Content="Edit plot data" Command="{Binding DataContext.EditPlotDataButtonHandler, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}" DockPanel.Dock="Right" Padding="5"/>
+                        <DockPanel Margin ="0,10,0,0">
+                            <Label Height="50" Width="Auto" Content="{Binding Name}" DockPanel.Dock="Top"/>
                         </DockPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </DockPanel>
+        </StackPanel>
     </Grid>
 </UserControl>
