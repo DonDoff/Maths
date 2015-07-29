@@ -28,7 +28,7 @@ namespace MathsGUI.ViewModels {
         public PlotViewModel() {
             PlotModel = new PlotModel();
             UpdateModel();
-            MessengerInstance.Register<object>(this, MessengerToken.PlotDataAdded, o => UpdateModel());
+            MessengerInstance.Register<object>(this, MessengerToken.PlotDataEdited, o => UpdateModel());
             MessengerInstance.Register<object>(this, MessengerToken.PlotDataRemoved, o => UpdateModel());
         }
 
@@ -51,20 +51,8 @@ namespace MathsGUI.ViewModels {
                     l.Points.Add(new DataPoint(pd.X[i].R, pd.Y[i].R));
                     l.Title = pd.Name;
 
-                    if (MatrixMath.Min(pd.X).R < minX) {
-                        minX = MatrixMath.Min(pd.X).R;
-                    }
-                    if (MatrixMath.Max(pd.X).R > maxX) {
-                        maxX = MatrixMath.Max(pd.X).R;
-                    }
-                    if (MatrixMath.Min(pd.Y).R < minY) {
-                        minY = MatrixMath.Min(pd.Y).R;
-                    }
-                    if (MatrixMath.Max(pd.Y).R > maxY) {
-                        maxY = MatrixMath.Max(pd.Y).R;
-                    }
+                    DetermineAxisBounds(ref minX, ref maxX, ref minY, ref maxY, pd);
                 }
-
                 PlotModel.Series.Add(l);
             }
 
@@ -72,6 +60,21 @@ namespace MathsGUI.ViewModels {
             PlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Minimum = minY, Maximum = maxY });
 
             PlotModel.InvalidatePlot(true);
+        }
+
+        private static void DetermineAxisBounds(ref double minX, ref double maxX, ref double minY, ref double maxY, PlotData pd) {
+            if (MatrixMath.Min(pd.X).R < minX) {
+                minX = MatrixMath.Min(pd.X).R;
+            }
+            if (MatrixMath.Max(pd.X).R > maxX) {
+                maxX = MatrixMath.Max(pd.X).R;
+            }
+            if (MatrixMath.Min(pd.Y).R < minY) {
+                minY = MatrixMath.Min(pd.Y).R;
+            }
+            if (MatrixMath.Max(pd.Y).R > maxY) {
+                maxY = MatrixMath.Max(pd.Y).R;
+            }
         }
     }
 }

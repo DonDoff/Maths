@@ -10,14 +10,15 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace MathsGUI.Views {
     /// <summary>
     /// Interaction logic for AddPlotDataView.xaml
     /// </summary>
-    public partial class AddPlotDataView : Window {
-        public AddPlotDataView() {
+    public partial class PlotDataEditorView : Window {
+        public PlotDataEditorView() {
             InitializeComponent();
         }
     }
