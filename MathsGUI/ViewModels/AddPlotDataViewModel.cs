@@ -46,11 +46,13 @@ namespace MathsGUI.ViewModels {
 
         public RelayCommand AddPlotDataHandler { get; set; }
         public RelayCommand GenerateRandomVectorButtonHandler { get; set; }
+        public RelayCommand GenerateSinusoidButtonHandler { get; set; }
         
         public AddPlotDataViewModel() {
             PlotData = new PlotData(new Vector(0), new Vector(0), "");
             AddPlotDataHandler = new RelayCommand(HandleAddPlotData);
             GenerateRandomVectorButtonHandler = new RelayCommand(HandleGenerateRandomData);
+            GenerateSinusoidButtonHandler = new RelayCommand(HandleSinusoid);
         }
 
         private void HandleAddPlotData() {
@@ -67,6 +69,15 @@ namespace MathsGUI.ViewModels {
             PlotData.X = Vector.Arrange(10);
             PlotData.Y = MatrixFactory.Real(10, 1, new Random()).ToColumnVector();
             PlotData.Name = "Random data";
+
+            XString = PlotData.X.ToStringAsInput();
+            YString = PlotData.Y.ToStringAsInput();
+        }
+
+        private void HandleSinusoid() {
+            PlotData.X = Vector.Arrange(10);
+            PlotData.Y = MatrixMath.Sin(PlotData.X).ToColumnVector();
+            PlotData.Name = "Sinusoid";
 
             XString = PlotData.X.ToStringAsInput();
             YString = PlotData.Y.ToStringAsInput();

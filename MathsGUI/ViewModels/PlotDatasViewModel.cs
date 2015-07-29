@@ -45,16 +45,21 @@ namespace MathsGUI.ViewModels {
             MessengerInstance.Send<object>(null, MessengerToken.PlotDataRemoved);
         }
 
+        // Todo: abstract window from the edit plot data viewer
+        // thus create a general window view and put an edit plot data viewer in, with an edit button --> the edit data plot viewer
+        // and create a general window view and put an edit plot data viewer in, with an add, generate and some more buttons --> the add data plot viewer
         private void EditPlotData(PlotData pd) {
             AddPlotDataViewModel addPlotDataVM = (new ViewModelLocator()).AddPlotData;
             addPlotDataVM.PlotData = pd;
             addPlotDataVM.XString = pd.X.ToStringAsInput();
             addPlotDataVM.YString = pd.Y.ToStringAsInput();
 
+            // Bring up the edit plot data view
             AddPlotDataView w = new AddPlotDataView();
             w.Show();
 
-            PlotDatas.Remove(pd);
+            // remove the current data plot
+            RemovePlotData(pd);
         }
     }
 }
