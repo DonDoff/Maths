@@ -43,6 +43,8 @@ namespace MathsGUI.ViewModels {
             SimpleIoc.Default.Register<PlotViewModel>();
             SimpleIoc.Default.Register<PlotDatasViewModel>();
             SimpleIoc.Default.Register<AddPlotDataViewModel>();
+            SimpleIoc.Default.Register<EditPlotDataViewModel>();
+            SimpleIoc.Default.Register<EditPlotDataWindowViewModel>();
         }
 
         public MainViewModel Main {
@@ -66,6 +68,18 @@ namespace MathsGUI.ViewModels {
         public AddPlotDataViewModel AddPlotData {
             get {
                 return ServiceLocator.Current.GetInstance<AddPlotDataViewModel>();
+            }
+        }
+
+        public EditPlotDataViewModel EditPlotData {
+            get {
+                return ServiceLocator.Current.GetInstance<EditPlotDataViewModel>();
+            }
+        }
+
+        public EditPlotDataWindowViewModel EditPlotDataWindow {
+            get {
+                return ServiceLocator.Current.GetInstance<EditPlotDataWindowViewModel>();
             }
         }
 

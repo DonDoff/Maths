@@ -26,13 +26,13 @@ namespace MathsGUI.ViewModels {
 
         public RelayCommand AddPlotDataButtonHandler { get; set; }
         public RelayCommand<PlotData> RemovePlotDataButtonHandler { get; set; }
-        public RelayCommand<PlotData> EditPlotDataButtonHandler { get; set; }
+        public RelayCommand EditPlotDataWindowButtonHandler { get; set; }
 
         public PlotDatasViewModel() {
             PlotDatas = new ObservableCollection<PlotData>();
             AddPlotDataButtonHandler = new RelayCommand(CreateAddPlotDataWindow);
             RemovePlotDataButtonHandler = new RelayCommand<PlotData>(RemovePlotData);
-            EditPlotDataButtonHandler = new RelayCommand<PlotData>(EditPlotData);
+            EditPlotDataWindowButtonHandler = new RelayCommand(EditPlotDataWindow);
         }
 
         private void CreateAddPlotDataWindow() {
@@ -45,21 +45,9 @@ namespace MathsGUI.ViewModels {
             MessengerInstance.Send<object>(null, MessengerToken.PlotDataRemoved);
         }
 
-        // Todo: abstract window from the edit plot data viewer
-        // thus create a general window view and put an edit plot data viewer in, with an edit button --> the edit data plot viewer
-        // and create a general window view and put an edit plot data viewer in, with an add, generate and some more buttons --> the add data plot viewer
-        private void EditPlotData(PlotData pd) {
-            AddPlotDataViewModel addPlotDataVM = (new ViewModelLocator()).AddPlotData;
-            addPlotDataVM.PlotData = pd;
-            addPlotDataVM.XString = pd.X.ToStringAsInput();
-            addPlotDataVM.YString = pd.Y.ToStringAsInput();
-
-            // Bring up the edit plot data view
-            AddPlotDataView w = new AddPlotDataView();
+        private void EditPlotDataWindow() {
+            EditPlotDataWindowView w = new EditPlotDataWindowView();
             w.Show();
-
-            // remove the current data plot
-            RemovePlotData(pd);
         }
     }
 }

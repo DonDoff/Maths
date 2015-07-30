@@ -49,7 +49,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>M#.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\M#.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GalaSoft.MvvmLight">
@@ -78,6 +78,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.1.1.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -98,15 +100,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MessengerToken.cs" />
+    <Compile Include="Resources\ICloseable.cs" />
+    <Compile Include="Resources\MessengerToken.cs" />
     <Compile Include="Models\PlotData.cs" />
     <Compile Include="ViewModels\AddPlotDataViewModel.cs" />
+    <Compile Include="ViewModels\EditPlotDataViewModel.cs" />
+    <Compile Include="ViewModels\EditPlotDataWindowViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PlotDatasViewModel.cs" />
     <Compile Include="ViewModels\PlotViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\AddPlotDataView.xaml.cs">
       <DependentUpon>AddPlotDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditPlotDataWindowView.xaml.cs">
+      <DependentUpon>EditPlotDataWindowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditPlotDataView.xaml.cs">
+      <DependentUpon>EditPlotDataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlotDatasView.xaml.cs">
       <DependentUpon>PlotDatasView.xaml</DependentUpon>
@@ -127,6 +138,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\AddPlotDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditPlotDataWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditPlotDataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -197,7 +216,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="M#.ico" />
+    <Resource Include="Resources\M#.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\remove_icon.jpg" />

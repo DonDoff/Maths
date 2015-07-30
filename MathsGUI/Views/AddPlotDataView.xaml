@@ -1,32 +1,18 @@
 ﻿<Window x:Class="MathsGUI.Views.AddPlotDataView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Views="clr-namespace:MathsGUI.Views"
         Title="Add plot data" Height="500" Width="400"
         DataContext="{Binding AddPlotData, Source={StaticResource Locator}}">
 
     <DockPanel Margin="10">
-        <Grid DockPanel.Dock="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <Label Content="Plot name:" Grid.Row="0"/>
-            <TextBox AcceptsReturn="True" TextWrapping="Wrap"
-                     Grid.Row="1" Text="{Binding PlotData.Name}"/>
-        </Grid>
-
-        <Grid Margin="0,10,0,0" DockPanel.Dock="Bottom">
+        <Views:EditPlotDataView DockPanel.Dock="Top"/>
+        
+        <Grid DockPanel.Dock="Bottom">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -34,22 +20,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Content="X vector data:" Grid.Row="0" Grid.Column="0"/>
-            <Label Content="Y vector data:" Grid.Row="0" Grid.Column="1"/>
-
-            <TextBox AcceptsReturn="True" TextWrapping="Wrap"
-                     Grid.Row="1"  Grid.Column="0" Text="{Binding XString}"/>
-            <TextBox AcceptsReturn="True" TextWrapping="Wrap"
-                     Grid.Row="1"  Grid.Column="1" Text="{Binding YString}"/>
-
-            <Button Height="30" Width="150" Grid.Column="0" Grid.Row="2" Padding="5" 
+            <Button Height="30" Width="150" Grid.Column="0" Grid.Row="0" Padding="5" 
                     Content="Generate random vector" Command="{Binding GenerateRandomVectorButtonHandler}"/>
 
-            <Button Height="30" Width="150" Grid.Column="1" Grid.Row="2" Padding="5" 
+            <Button Height="30" Width="150" Grid.Column="1" Grid.Row="0" Padding="5" 
                     Content="Generate sinusoid" Command="{Binding GenerateSinusoidButtonHandler}"/>
 
             <Button Height="30"  Width="80" Command="{Binding AddPlotDataHandler}" 
-                    Grid.Column="0" Grid.Row="3" Padding="5" >
+                    Grid.Column="0" Grid.Row="1" Padding="5" >
                 <StackPanel Orientation="Horizontal">
                     <Image Width="20" Source="..\Images\add_icon.jpg"/>
                     <TextBlock Margin="5,0">Add</TextBlock>

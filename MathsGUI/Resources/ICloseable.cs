@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MathsGUI {
-    public enum MessengerToken {
-        PlotDataAdded,
-        PlotDataRemoved,
+    public interface ICloseable {
+        event EventHandler<EventArgs> RequestClose;
     }
 }

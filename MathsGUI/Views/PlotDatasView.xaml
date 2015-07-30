@@ -19,7 +19,7 @@
                             
                             <Label Width="Auto" Content="{Binding Name}" Grid.Column="0"/>
 
-                            <Button Width="80" Command="{Binding Path=DataContext.EditPlotDataButtonHandler, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"  CommandParameter="{Binding}"
+                            <Button Width="80" Command="{Binding Path=DataContext.EditPlotDataWindowButtonHandler, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"  CommandParameter="{Binding}"
                                     Padding="5" Grid.Column="1">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Width="20" Source="..\Images\edit_icon.png"/>

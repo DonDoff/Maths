@@ -27,9 +27,14 @@ namespace MathsGUI.ViewModels {
 
         public PlotViewModel() {
             PlotModel = new PlotModel();
-            UpdateModel();
+            RegisterMessengers();
+            //UpdateModel();
+        }
+
+        private void RegisterMessengers() {
             MessengerInstance.Register<object>(this, MessengerToken.PlotDataAdded, o => UpdateModel());
             MessengerInstance.Register<object>(this, MessengerToken.PlotDataRemoved, o => UpdateModel());
+            MessengerInstance.Register<object>(this, MessengerToken.PlotDataEdited, o => UpdateModel());
         }
 
         private void UpdateModel() {

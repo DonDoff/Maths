@@ -11,54 +11,23 @@ using MathsGUI.Models;
 namespace MathsGUI.ViewModels {
     public class AddPlotDataViewModel : ViewModelBase {
 
-        private PlotData plotData;
-        public PlotData PlotData {
-            get {
-                return plotData;
-            }
-            set {
-                plotData = value;
-                RaisePropertyChanged(() => PlotData);
-            }
-        }
-
-        private string xString;
-        public string XString {
-            get {
-                return xString;
-            }
-            set {
-                xString = value;
-                RaisePropertyChanged(() => XString);
-            }
-        }
-
-        private string yString;
-        public string YString {
-            get {
-                return yString;
-            }
-            set {
-                yString = value;
-                RaisePropertyChanged(() => YString);
-            }
-        }
-
         public RelayCommand AddPlotDataHandler { get; set; }
         public RelayCommand GenerateRandomVectorButtonHandler { get; set; }
         public RelayCommand GenerateSinusoidButtonHandler { get; set; }
+        private EditPlotDataViewModel editPlotDataViewModel;
         
         public AddPlotDataViewModel() {
-            PlotData = new PlotData(new Vector(0), new Vector(0), "");
+            editPlotDataViewModel = new ViewModelLocator().EditPlotData;
+
             AddPlotDataHandler = new RelayCommand(HandleAddPlotData);
             GenerateRandomVectorButtonHandler = new RelayCommand(HandleGenerateRandomData);
             GenerateSinusoidButtonHandler = new RelayCommand(HandleSinusoid);
         }
 
         private void HandleAddPlotData() {
-            Vector x = Vector.ParseFrom(XString);
-            Vector y = Vector.ParseFrom(YString);
-            string name = PlotData.Name;
+            Vector x = Vector.ParseFrom(editPlotDataViewModel.XString);
+            Vector y = Vector.ParseFrom(editPlotDataViewModel.YString);
+            string name = editPlotDataViewModel.PlotData.Name;
 
             PlotData pd = new PlotData(x, y, name);
             new ViewModelLocator().PlotDatas.PlotDatas.Add(pd);
@@ -66,21 +35,21 @@ namespace MathsGUI.ViewModels {
         }
 
         private void HandleGenerateRandomData() {
-            PlotData.X = Vector.Arrange(10);
-            PlotData.Y = MatrixFactory.Real(10, 1, new Random()).ToColumnVector();
-            PlotData.Name = "Random data";
+            editPlotDataViewModel.PlotData.X = Vector.Arrange(10);
+            editPlotDataViewModel.PlotData.Y = MatrixFactory.Real(10, 1, new Random()).ToColumnVector();
+            editPlotDataViewModel.PlotData.Name = "Random data";
 
-            XString = PlotData.X.ToStringAsInput();
-            YString = PlotData.Y.ToStringAsInput();
+            editPlotDataViewModel.XString = editPlotDataViewModel.PlotData.X.ToStringAsInput();
+            editPlotDataViewModel.YString = editPlotDataViewModel.PlotData.Y.ToStringAsInput();
         }
 
         private void HandleSinusoid() {
-            PlotData.X = Vector.Arrange(10);
-            PlotData.Y = MatrixMath.Sin(PlotData.X).ToColumnVector();
-            PlotData.Name = "Sinusoid";
+            editPlotDataViewModel.PlotData.X = Vector.Arrange(10);
+            editPlotDataViewModel.PlotData.Y = MatrixMath.Sin(editPlotDataViewModel.PlotData.X).ToColumnVector();
+            editPlotDataViewModel.PlotData.Name = "Sinusoid";
 
-            XString = PlotData.X.ToStringAsInput();
-            YString = PlotData.Y.ToStringAsInput();
+            editPlotDataViewModel.XString = editPlotDataViewModel.PlotData.X.ToStringAsInput();
+            editPlotDataViewModel.YString = editPlotDataViewModel.PlotData.Y.ToStringAsInput();
         }
 
     }
