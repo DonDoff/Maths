@@ -12,7 +12,7 @@
         
         <Views:EditPlotDataView Grid.Row="0"/>
 
-        <Button Width="80" Command="{Binding EditPlotDataButtonHandler}" Padding="5" Grid.Row="1">
+        <Button Width="80" Command="{Binding EditPlotDataButtonHandler}" CommandParameter="{Binding EditPlotData.PlotData}" Padding="5" Grid.Row="1">
             <StackPanel Orientation="Horizontal">
                 <Image Width="20" Source="..\Images\edit_icon.png"/>
                 <TextBlock Margin="5,0">Edit</TextBlock>

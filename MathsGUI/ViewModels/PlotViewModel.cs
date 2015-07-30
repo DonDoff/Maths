@@ -28,7 +28,6 @@ namespace MathsGUI.ViewModels {
         public PlotViewModel() {
             PlotModel = new PlotModel();
             RegisterMessengers();
-            //UpdateModel();
         }
 
         private void RegisterMessengers() {
@@ -58,7 +57,7 @@ namespace MathsGUI.ViewModels {
 
                     DetermineAxisBounds(ref minX, ref maxX, ref minY, ref maxY, pd);
                 }
-
+                
                 PlotModel.Series.Add(l);
             }
 
